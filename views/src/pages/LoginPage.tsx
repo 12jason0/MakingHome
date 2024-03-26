@@ -2,27 +2,38 @@ import React from 'react';
 import {useForm} from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 export default function LoginPage() {
-  // 뒤로가기 버튼 
+  // 페이지 이동 navigate 
   const navigate = useNavigate();
-  // 뒤로가기 버튼 끝
-  // 로그인 form 양식
+  // 로그인 hook-form 
   const {
     register,
     handleSubmit,
     formState:{errors},
   } = useForm()
+  // 로그인 기본 입력 양식에 맞을 시, 로그인 유효성 검증 API 호출 
+  // 로그인 기본 입력 양식에 맞지 않을 시, 아이디나 비밀번호창 Focus 맞추기
   const onValid = ():void =>{}
   const onInValid = ():void =>{}
-  // 로그인 form 양식 끝
+  // 카카오 로그인 양식
+  const Rest_api_key='34596871e6b97db995c419d12fd24a01';
+  const redirect_uri = 'http://localhost:3000/login';
+  const kakaoURL =`https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
+
+  const handleLogin = () => {
+    window.location.href = kakaoURL;
+  }
+    // HTML
     return (
-    <div style={{width:'500px',display:'absolute',margin: '0 auto'}}>
+    <div style={{width:'500px',margin: '0 auto'}}>
       <header style={{display:'flex', justifyContent:'space-between'}}>
         <img src="./image/back.png" alt="뒤로가기" style={{width:'30px',cursor:'pointer'}} onClick={()=>{navigate(-1)}}/>
         <img src="./image/home.png" alt="홈으로 이동" style={{width:'30px',cursor:'pointer'}} onClick={()=>{navigate('/')}}/>
       </header>
       <body>
-        <h4>로그인 페이지</h4>
-        <button>카카오 1초 로그인/회원가입</button>
+        <div style={{display:'flex', justifyContent:'center'}}>
+          <h4>로그인 페이지</h4>
+        </div>
+        <img src="./image/kakao_login.png" alt="카카오 로그인 이미지" style={{display:'block', margin:'0 auto'}} onClick={handleLogin}/>  
         <hr />
         <form onSubmit={handleSubmit(onValid,onInValid)}>
           <input type="text" placeholder ="아이디"id="userId"/><br />
