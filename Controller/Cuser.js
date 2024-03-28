@@ -15,7 +15,7 @@ const kakaoUser = async(req,res) => {
             res.json({result:userInfo.data});
         }
         catch(e){
-            console.log('e',e);
+            console.log('e : ',e);
         }
     }   
     catch(e) {
