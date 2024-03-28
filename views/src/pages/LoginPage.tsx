@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import {useForm} from 'react-hook-form';
 import { useNavigate,useLocation, Link} from 'react-router-dom';
-import Cookie from 'js-cookie';
+import Cookie from 'js-conpokie';
 import axios from 'axios';
 
 export default function LoginPage() {
