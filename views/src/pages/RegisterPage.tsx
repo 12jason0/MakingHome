@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -22,9 +22,6 @@ export default function RegisterPage() {
     setFocus,
   } = useForm<FormValues>();
   const onValid = (data: FormValues): void => {
-    console.log('data :', data);
-
-    alert('회원가입 성공');
     const result = async () => {
       const res = await axios.post('http://localhost:5000/api/register', {
         userInfo: {
@@ -36,6 +33,10 @@ export default function RegisterPage() {
           userPw: data.userPw,
         },
       });
+      const { success, message } = res.data;
+      if (success) {
+        alert(`${message}`);
+      } else alert(`${message}`);
     };
     result();
   };
@@ -63,24 +64,6 @@ export default function RegisterPage() {
 
   return (
     <div style={{ position: 'relative', width: '500px', margin: '0 auto' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <img
-          src="./image/back.png"
-          alt="뒤로가기"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-        <img
-          src="./image/home.png"
-          alt="홈으로 이동"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate('/');
-          }}
-        />
-      </header>
       <body>
         <form onSubmit={handleSubmit(onValid, onInValid)}>
           <div style={{ position: 'absolute', left: '35%' }}>
@@ -91,8 +74,7 @@ export default function RegisterPage() {
                 required: '이름은 필수 항목입니다.',
                 validate: {
                   trimValid: (name: string) => {
-                    if (name?.trim() === '')
-                      return '이름은 필수 항목입니다....';
+                    if (name?.trim() === '') return '이름을 입력하세요...';
                     else {
                       return true;
                     }
@@ -128,7 +110,7 @@ export default function RegisterPage() {
             <br />
             {errors.age && (
               <div style={{ fontSize: '12px', color: 'red' }}>
-                {errors.age.message}
+                나이를 입력하십시오
               </div>
             )}
             {/* 이메일 */}
@@ -138,14 +120,18 @@ export default function RegisterPage() {
                 required: false,
                 validate: {
                   trimValid: (email: string) => {
-                    if (email?.trim() === '')
-                      return '이름은 필수 항목입니다....';
+                    if (email?.trim() === '') return '이메일을 입력하세요...';
                     else return true;
                   },
                 },
               })}
               placeholder="이메일"
             />
+            {errors.email && (
+              <div style={{ fontSize: '12px', color: 'red' }}>
+                이메일을 입력하세요
+              </div>
+            )}
             <br />
             {/* 전화번호 */}
             <input
@@ -162,6 +148,11 @@ export default function RegisterPage() {
               })}
               placeholder="전화번호"
             />
+            {errors.phone && (
+              <div style={{ fontSize: '12px', color: 'red' }}>
+                전화번호를 입력하십시오
+              </div>
+            )}
             <br />
             {/* 유저아이디 */}
             <input
@@ -170,14 +161,18 @@ export default function RegisterPage() {
                 required: '아이디는 필수 항목입니다.',
                 validate: {
                   trimValid: (userId: string) => {
-                    if (userId?.trim() === '')
-                      return '이름은 필수 항목입니다....';
+                    if (userId?.trim() === '') return '아이디를 입력하세요...';
                     else return true;
                   },
                 },
               })}
               placeholder="아이디"
             />
+            {errors.userId && (
+              <div style={{ fontSize: '12px', color: 'red' }}>
+                아이디를 입력하세요
+              </div>
+            )}
             <br />
             {/* 유저 비밀번호 */}
             <input
@@ -187,7 +182,7 @@ export default function RegisterPage() {
                 validate: {
                   trimValid: (userPw: string) => {
                     if (userPw?.trim() === '')
-                      return '비밀번호는 필수 항목입니다....';
+                      return '비밀번호를 입력하세요....';
                     else {
                       return true;
                     }
@@ -196,6 +191,11 @@ export default function RegisterPage() {
               })}
               placeholder="비밀번호"
             />
+            {errors.userPw && (
+              <div style={{ fontSize: '12px', color: 'red' }}>
+                비밀번호를 입력하세요
+              </div>
+            )}
             <br />
             <button>회원가입</button>
           </div>

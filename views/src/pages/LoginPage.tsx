@@ -4,6 +4,12 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import axios from 'axios';
 
+type serverData = 'userId' | 'userPw';
+type FormValues = {
+  userId?: string;
+  userPw?: string;
+};
+
 export default function LoginPage() {
   let code: string | null;
   // navigate, location, state
@@ -85,34 +91,46 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
-  } = useForm();
-  // 로그인 기본 입력 양식에 맞을 시, 로그인 유효성 검증 API 호출
-  // 로그인 기본 입력 양식에 맞지 않을 시, 아이디나 비밀번호창 Focus 맞추기
-  const onValid = (): void => {};
-  const onInValid = (): void => {};
+  } = useForm<FormValues>();
+
+  // oneroom 로그인 양식
+  const onValid = (data: FormValues): void => {
+    const result = async () => {
+      const res = await axios.post('http://localhost:5000/api/login', {
+        userInput: {
+          userId: data.userId,
+          userPw: data.userPw,
+        },
+      });
+      const { success, message } = res.data;
+      console.log('resdata', res.data);
+      const item: serverData = res.data.item;
+      if (success) {
+        alert(`${message}`);
+        setIsLoggedIn(true);
+        // navigate('/');
+      } else {
+        alert(`${message}`);
+        setFocus(`${item}`);
+      }
+    };
+    result();
+  };
+  const onInValid = (): void => {
+    if (errors?.userId) {
+      alert(errors.userId?.message);
+      setFocus('userId');
+    } else if (errors?.userPw) {
+      alert(errors.userPw?.message);
+      setFocus('userPw');
+    }
+  };
 
   // HTML
   return (
     <div style={{ width: '500px', margin: '0 auto' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <img
-          src="./image/back.png"
-          alt="뒤로가기"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-        <img
-          src="./image/home.png"
-          alt="홈으로 이동"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate('/');
-          }}
-        />
-      </header>
       <body>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <h3>{isLoggedIn ? `${userInfo}님 환영합니다` : '로그인 페이지'}</h3>
@@ -134,9 +152,23 @@ export default function LoginPage() {
         )}
         <hr />
         <form onSubmit={handleSubmit(onValid, onInValid)}>
-          <input type="text" placeholder="아이디" id="userId" />
+          <input
+            type="text"
+            {...register('userId', {
+              required: '아이디를 입력하세요',
+            })}
+            placeholder="아이디"
+            id="userId"
+          />
           <br />
-          <input type="password" placeholder="비밀번호" id="userPw" />
+          <input
+            type="password"
+            {...register('userPw', {
+              required: '비밀번호를 입력하세요',
+            })}
+            placeholder="비밀번호"
+            id="userPw"
+          />
           <br />
           <button>로그인</button>
           <button>
