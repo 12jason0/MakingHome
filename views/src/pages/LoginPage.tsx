@@ -40,7 +40,7 @@ export default function LoginPage() {
   }, [location.search, userInfo]);
   // 카카오 액세스 토큰 발급
   const getKakao_Access_Token = async (code: string): Promise<void> => {
-    const res = await axios.post('http://localhost:5000/login/kakao', {
+    const res = await axios.post('http://localhost:5000/api/login/kakao', {
       code: code,
     });
     const access_token = res.data.access_token;
