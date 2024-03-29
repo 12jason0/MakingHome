@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { MiddleImages, MiddleCategory } from '../Comment/tool/MainTool';
+import { MiddleImages } from '../Comment/tool/MainTool';
+import { MiddleCategory } from '../Comment/tool/MainMiddleTool';
+import { MainsetImg } from '../Comment/tool/MainSetTool';
+import { MainGiftImg } from '../Comment/tool/MainGiftTool';
+import { MainUnderGift } from '../Comment/tool/MainGiftUnderTool';
 import './css/Main.scss';
 
 function MainPage() {
@@ -26,7 +30,7 @@ function MainPage() {
         img: 'https://m.oneroommaking.com/web/product/medium/202402/2552f300917e6066714b5dbb7a8d0e43.jpg',
       },
     ];
-
+    /////////////////////////////메인 화면 자동 슬라이드//////////////////////////////////////////////////////
     const [currentIdx, setCurrentIdx] = useState(0);
     useEffect(() => {
       const interval = setInterval(() => {
@@ -45,35 +49,82 @@ function MainPage() {
       setCurrentIdx((preIdx) => (preIdx + 1) % slideImages.length);
     };
 
-    ////////////////////////////////// /////////////////////////////////
+    /////////////////////////////인기템 슬라이드//////////////////////////////////////////////////////////
     const [slideImg, setSlideImg] = useState(0);
     const leftSlide = () => {
-      setSlideImg(
-        (prevIdx) => (prevIdx - 4 + MiddleImages.length) % MiddleImages.length
-      );
+      const nextIndex = slideImg - 1;
+      if (nextIndex >= 0) {
+        setSlideImg(nextIndex);
+      } else {
+        setSlideImg(MiddleImages.length - 4);
+      }
     };
     const rightSlide = () => {
-      setSlideImg((prevIdx) => (prevIdx + 1) % MiddleImages.length);
+      const nextIndex = slideImg + 1;
+      if (nextIndex + 3 < MiddleImages.length) {
+        setSlideImg(nextIndex);
+      } else {
+        setSlideImg(0);
+      }
     };
     const startIndex = slideImg;
     const endIndex = Math.min(startIndex + 4, MiddleImages.length);
-    if (slideImg >= MiddleImages.length) {
-      setSlideImg(0);
-    }
-    //////////////////////////////카테고리//////////////////////////////////
-    const [CategoryImg, setCategoryImg] = useState(0);
-    // const MiddleCategory =() => ()
+    /////////////////////////////////카테고리///////////////////////////////////////////////////
 
+    const [slideCategoryIdx, setSlideCategoryIdx] = useState(0);
     const leftCategory = () => {
-      setCategoryImg(
-        (prevIdx) =>
-          (prevIdx - 1 + MiddleCategory.length) % MiddleCategory.length
+      setSlideCategoryIdx((prevIdx) => Math.max(prevIdx - 1, 0));
+    };
+
+    const rightCategory = () => {
+      const nextIndex = slideCategoryIdx + 1;
+      if (nextIndex <= MiddleCategory.length - 6) {
+        setSlideCategoryIdx(nextIndex);
+      } else {
+        setSlideCategoryIdx(0);
+      }
+    };
+    const startCategoryIndex = slideCategoryIdx;
+    const endCategoryIndex = Math.min(
+      startCategoryIndex + 6,
+      MiddleCategory.length
+    );
+
+    ////////////////////////////////////세트 추천/////////////////////////////////////////////
+    const [imgset, setImgSet] = useState(0);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setNextSlide();
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }, [imgset]);
+
+    const setPreSlide = () => {
+      setImgSet(
+        (preIdx) => (preIdx - 1 + MainsetImg.length) % MainsetImg.length
       );
     };
-    const rightCategory = () => {
-      setCategoryImg((prevIdx) => (prevIdx + 1) % MiddleCategory.length);
+    const setNextSlide = () => {
+      setImgSet((preIdx) => (preIdx + 1) % MainsetImg.length);
     };
 
+    //////////////////////////////////////집들이 선물/////////////////////////////////////////////
+    const [giftImg, setGiftImg] = useState(0);
+    const startGitfIndex = slideCategoryIdx;
+    const endGiftIndex = Math.min(
+      startCategoryIndex + 4,
+      MiddleCategory.length
+    );
+    //////////////////////////////////////집들이 선물/////////////////////////////////////////////
+    const [giftUnderImg, setGiftUnderImg] = useState(0);
+    const startGitfUnderIndex = slideCategoryIdx;
+    const endGiftUnderIndex = Math.min(
+      startCategoryIndex + 4,
+      MiddleCategory.length
+    );
+
+    /////////////////////////////////////////////////////////////////////////////////////
     return (
       <>
         <div className="BannerSlide">
@@ -88,13 +139,13 @@ function MainPage() {
               <div className="buttonDiv">
                 <div className="leftButton" onClick={preSlide}>
                   <img
-                    src={`${process.env.PUBLIC_URL}/image/MainLeftArrow.png`}
+                    src={`${process.env.PUBLIC_URL}/image/slideleftarrow.png`}
                     alt="이전"
                   />
                 </div>
                 <div className="rightButton" onClick={nextSlide}>
                   <img
-                    src={`${process.env.PUBLIC_URL}/image/mainRightArrow.png`}
+                    src={`${process.env.PUBLIC_URL}/image/sliderightarrow.png`}
                     alt="다음"
                   />
                 </div>
@@ -102,7 +153,6 @@ function MainPage() {
             </div>
           </div>
         </div>
-        <div className="MainLine"></div>
         <div className="MainMiddle">
           <div className="PopolarTitle">
             인기템부터 보여드립니다
@@ -113,11 +163,13 @@ function MainPage() {
               </button>
             </a>
           </div>
-          <div className="PopolarMiddle">매일 추가되는 인기템</div>
+          <div className="PopolarMiddle">
+            매일 추가되는 <span>인기템</span>
+          </div>
           <div className="PopularMain">
             <div className="MiddleButton" onClick={leftSlide}>
               <img
-                src={`${process.env.PUBLIC_URL}/image/MainLeftArrow.png`}
+                src={`${process.env.PUBLIC_URL}/image/setLeftArrow.png`}
                 alt="이전"
               />
             </div>
@@ -136,7 +188,7 @@ function MainPage() {
             ))}
             <div className="MiddleButton" onClick={rightSlide}>
               <img
-                src={`${process.env.PUBLIC_URL}/image/mainRightArrow.png`}
+                src={`${process.env.PUBLIC_URL}/image/setRightArrow.png`}
                 alt="다음"
               />
             </div>
@@ -146,32 +198,116 @@ function MainPage() {
           <div className="MainCategoryDiv">
             <span>카테고리별 상품 찾기</span>
             <div className="CategoryCon">
-              <div className="MiddleButton" onClick={leftCategory}>
+              <div className="leftButton" onClick={leftCategory}>
                 <img
-                  src={`${process.env.PUBLIC_URL}/image/MainLeftArrow.png`}
+                  src={`${process.env.PUBLIC_URL}/image/setLeftArrow.png`}
                   alt="이전"
                 />
               </div>
-              {MiddleCategory.map((item, index) => (
-                <a href="">
-                  <div key={index} className="CategoryImg">
-                    <img src={item.src} alt={`slide ${CategoryImg + index}`} />
+              {MiddleCategory.slice(startCategoryIndex, endCategoryIndex).map(
+                (item, index) => (
+                  <a href="#" key={index}>
+                    <div className="CategoryImg">
+                      <img
+                        src={item.src}
+                        alt={`slide ${startCategoryIndex + index}`}
+                      />
+                    </div>
                     <div>{item.title}</div>
-                  </div>
-                </a>
-              ))}
-              <div className="MiddleButton" onClick={rightCategory}>
+                  </a>
+                )
+              )}
+              <div className="rightButton" onClick={rightCategory}>
                 <img
-                  src={`${process.env.PUBLIC_URL}/image/mainRightArrow.png`}
+                  src={`${process.env.PUBLIC_URL}/image/setRightArrow.png`}
                   alt="다음"
                 />
               </div>
             </div>
           </div>
         </div>
+        <div className="MainSetCon">
+          <div className="MainSetDiv">
+            <span>자취 로망 세트 메뉴</span>
+            <div className="MainSetMenu">
+              <div className="leftButton" onClick={setPreSlide}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/image/setLeftArrow.png`}
+                  alt="이전"
+                />
+              </div>
+              <a href="">
+                <div className="setImgDiv">
+                  <img src={MainsetImg[imgset].img} alt={`Slide${imgset}`} />
+                </div>
+              </a>
+              <div className="rightButton" onClick={setNextSlide}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/image/setRightArrow.png`}
+                  alt="다음"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="giftCon">
+          <div className="giftTitle">
+            <span>
+              집들이 선물 Best4{' '}
+              <img src={`${process.env.PUBLIC_URL}/image/fire.png`} />
+            </span>
+            <div className="giftDiv">
+              {MainGiftImg.slice(startGitfIndex, endGiftIndex).map(
+                (item, index) => (
+                  <a href="/" key={index}>
+                    <div className="giftImgdiv">
+                      <img
+                        src={item.img}
+                        alt={`slide ${startGitfIndex + index}`}
+                      />
+                      <div className="title">{item.title}</div>
+                      <div className="body">{item.body}</div>
+                      <div className="sale">
+                        {item.sale} <span>{item.price}</span>
+                      </div>
+                      <div className="delivery">{item.delivery}</div>
+                    </div>
+                  </a>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="giftUnder">
+          <div className="giftUnderTitle">
+            <span>만원 이하 Best4 ! 가성비 짱</span>
+            <div className="giftUnder">
+              {MainUnderGift.slice(startGitfUnderIndex, endGiftUnderIndex).map(
+                (item, index) => (
+                  <a href="/" key={index}>
+                    <div className="giftImgUnderdiv">
+                      <img
+                        src={item.img}
+                        alt={`slide ${startGitfUnderIndex + index}`}
+                      />
+                      <div className="title">{item.title}</div>
+                      <div className="body">{item.body}</div>
+                      <div className="sale">
+                        {item.sale} <span>{item.price}</span>
+                      </div>
+                      <div className="delivery">{item.delivery}</div>
+                    </div>
+                  </a>
+                )
+              )}
+            </div>
+          </div>
+        </div>
       </>
     );
   };
+
   return <Slide />;
 }
+
 export default MainPage;

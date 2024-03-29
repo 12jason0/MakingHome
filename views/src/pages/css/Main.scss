@@ -9,6 +9,7 @@
   display: flex;
   position: relative;
   justify-content: center;
+
   .swiperNumber {
     height: 100%;
     width: 1000px;
@@ -35,7 +36,6 @@
         border-radius: 8px;
         background: rgba(24, 29, 31, 0.5);
         color: rgb(255, 255, 255);
-        z-index: 100;
         .leftButton {
           width: 50px;
           height: 30px;
@@ -56,11 +56,8 @@
     }
   }
 }
-.MainLine {
-  width: 100%;
-  height: 6px;
-  background: white;
-}
+
+//////////////////////////////인기템//////////////////////////////////////////////////
 .MainMiddle {
   display: flex;
   justify-content: center;
@@ -104,6 +101,9 @@
     font-size: 19px;
     padding: 10px 0 0 20px;
     width: 980px;
+    span {
+      color: red;
+    }
   }
   .PopularMain {
     display: flex;
@@ -114,11 +114,13 @@
     padding: 20px 75px;
     align-items: center;
     .MiddleSlide {
+      border-radius: 20px 20px 0 0;
       width: 235px;
       height: 235px;
       img {
         width: 100%;
         height: 100%;
+        border-radius: 20px 20px 0 0;
       }
     }
   }
@@ -128,22 +130,43 @@
   height: 50px;
   background-color: black;
   border-radius: 50px;
-  margin-left: 10px;
+  margin: 10px;
+  &:hover {
+    cursor: pointer;
+  }
   img {
     width: 100%;
     height: 100%;
   }
 }
 .ImgBox {
-  padding-left: 15px;
+  margin-left: 15px;
+  background-color: white;
+  border-radius: 20px;
+  img {
+    object-fit: cover;
+    transition: all 0.2s ease-in-out 0s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
   .ImgText {
     height: 100px;
-    background-color: white;
+    color: black;
+  }
+  a {
+    text-decoration: none;
+  }
+  h3,
+  p {
+    margin-left: 5px;
   }
 }
+
+//////////////////////카테고리 메뉴/////////////////////////
 .MainCategoryCon {
   width: 100%;
-  height: 500px;
+  height: 300px;
   padding: 50px 0;
   display: flex;
   justify-content: center;
@@ -153,17 +176,50 @@
       display: flex;
       padding: 50px 0;
       width: 1000px;
+      align-items: center;
+      justify-content: center;
+      .leftButton,
+      .rightButton {
+        position: static;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 50%;
+        background-color: black;
+        cursor: pointer;
+        margin-right: 20px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
       a {
         padding-right: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        object-fit: cover;
+        transition: all 0.2s ease-in-out 0s;
+        &:hover {
+          transform: scale(1.2);
+        }
+        div {
+          font-weight: bold;
+          font-size: 15px;
+          color: black;
+        }
       }
       .CategoryImg {
-        width: 100px;
+        width: calc(740px / 6);
         height: 150px;
         border-radius: 50%;
         background-color: #dff5ff;
+        margin-bottom: 25px;
         img {
           width: 100%;
           height: 80%;
+          padding-top: 18px;
         }
         div {
           text-align: center;
@@ -174,5 +230,182 @@
   span {
     font-size: 22px;
     font-weight: bold;
+  }
+}
+
+//자취 로망 세트 메뉴
+
+.MainSetCon {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(247, 248, 249);
+  padding-bottom: 10px;
+  .MainSetDiv {
+    padding: 30px 0;
+    width: 1000px;
+    height: auto;
+    span {
+      font-size: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}
+
+.MainSetMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 400px;
+  padding-top: 50px;
+  .setImgDiv {
+    width: 800px;
+    height: 400px;
+    img {
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+  .leftButton,
+  .rightButton {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+//////////////////// 집들이 선물//////////////////////////////////////
+.giftCon {
+  display: flex;
+  padding: 30px 0;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  .giftTitle {
+    width: 1000px;
+    border-bottom: rgb(233, 235, 238) 2px solid;
+    height: 500px;
+    span {
+      font-size: 25px;
+      font-weight: bold;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+.giftDiv {
+  display: flex;
+  height: auto;
+  padding-top: 15px;
+  justify-content: center;
+  a {
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+    padding-right: 20px;
+    .giftImgdiv {
+      width: 235px;
+      height: 400px;
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px 0;
+      }
+      .sale {
+        color: red;
+        span {
+          color: black;
+        }
+      }
+      .delivery {
+        border-radius: 4px;
+        padding: 4px 5px;
+        margin: 0px 6px 0px 0px;
+        color: rgb(83, 91, 99);
+        background: rgb(241, 243, 246);
+        width: 70px;
+      }
+    }
+  }
+  img {
+    border-radius: 8px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: all 0.2s ease-in-out 0s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+//////////////////// 만원 이하//////////////////////////////////////
+.giftUnder {
+  display: flex;
+  padding-bottom: 30px;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  .giftUnderTitle {
+    width: 1000px;
+    height: 500px;
+    span {
+      font-size: 25px;
+      font-weight: bold;
+    }
+  }
+}
+.giftUnder {
+  display: flex;
+  height: auto;
+  padding-top: 15px;
+  justify-content: center;
+  a {
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+    padding-right: 20px;
+    .giftImgUnderdiv {
+      width: 235px;
+      height: 400px;
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px 0;
+      }
+      .sale {
+        color: red;
+        span {
+          color: black;
+        }
+      }
+      .delivery {
+        border-radius: 4px;
+        padding: 4px 5px;
+        margin: 0px 6px 0px 0px;
+        color: rgb(83, 91, 99);
+        background: rgb(241, 243, 246);
+        width: 70px;
+      }
+    }
+  }
+  img {
+    border-radius: 8px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: all 0.2s ease-in-out 0s;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
