@@ -49,15 +49,27 @@ export default function RegisterPage() {
       alert(errors.age?.message);
       setFocus('age');
     } else if (errors?.email) {
+      if (errors?.email.type === 'pattern') {
+        alert('이메일 형식에 맞춰 입력해주세요');
+        return;
+      }
       alert(errors.email?.message);
       setFocus('email');
     } else if (errors?.phone) {
+      if (errors?.phone.type === 'pattern') {
+        alert('올바른 전화번호를 입력해주세요');
+        return;
+      }
       alert(errors.phone?.message);
       setFocus('phone');
     } else if (errors?.userId) {
       alert(errors.userId?.message);
       setFocus('userId');
     } else if (errors?.userPw) {
+      if (errors?.userPw.type === 'pattern') {
+        alert('비밀번호를 형식에 맞춰 입력해주세요');
+        return;
+      }
       alert(errors.userPw?.message);
       setFocus('userPw');
     }
@@ -79,7 +91,6 @@ export default function RegisterPage() {
                     else {
                       return true;
                     }
-                    // 이름 유효성 패턴 정규식 받아오기
                   },
                 },
               })}
@@ -125,6 +136,8 @@ export default function RegisterPage() {
                     else return true;
                   },
                 },
+                pattern:
+                  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
               })}
               placeholder="이메일"
             />
@@ -146,6 +159,7 @@ export default function RegisterPage() {
                     else return true;
                   },
                 },
+                pattern: /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/,
               })}
               placeholder="전화번호"
             />
@@ -189,16 +203,23 @@ export default function RegisterPage() {
                     }
                   },
                 },
+                // 비밀번호 유효성 : 8 ~ 10자 영문, 숫자 조합
+                pattern: /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/,
               })}
               placeholder="비밀번호"
             />
-            {errors.userPw && (
-              <div style={{ fontSize: '12px', color: 'red' }}>
+            {errors.userPw?.message && (
+              <p style={{ fontSize: '12px', color: 'red' }}>
                 비밀번호를 입력하세요
-              </div>
+              </p>
             )}
-            <br />
+            {errors.userPw?.type === 'pattern' && (
+              <p style={{ margin: '0', fontSize: '12px', color: 'red' }}>
+                비밀번호를 형식에 맞춰입력해주세요
+              </p>
+            )}
             <button>회원가입</button>
+            <br />
           </div>
         </form>
       </body>
