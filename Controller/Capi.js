@@ -1,4 +1,6 @@
 const axios = require('axios');
+const bcrypt = require('bcrypt'); // 암호화 모듈
+const jwt = require('jsonwebtoken'); // jwt token 발급 모듈
 const { User, UserProfile } = require('../models');
 
 // 카카오 로그인
@@ -37,7 +39,7 @@ const kakaoLogin = async (req, res) => {
 
 // oneRoom 회원가입
 const register = async (req, res) => {
-  const { name, age, email, phone, userId, userPw } = req.body.userInfo;
+  const { name, age, email, phone, userId, password } = req.body.userInfo;
   const findUserName = await UserProfile.findOne({ where: { name } }); // 중복 회원가입 방지
   const findUserId = await User.findOne({ where: { userId } }); // 중복 아이디 방지
   if (findUserName) {
@@ -45,19 +47,23 @@ const register = async (req, res) => {
   } else if (findUserId) {
     res.json({ success: false, message: '사용중인 아이디입니다.' });
   } else {
+    const userPw = await bcrypt.hash(password, 11); // 비밀번호 암호화
     await User.create({ userId, userPw });
     await UserProfile.create({ name, age, email, phone });
     res.json({ success: true, message: '회원가입에 성공하셨습니다' });
   }
 };
-// oneroom 로그인 + findUserId,findUserPw(이렇게 해놓고 비밀번호 암호화 > jwt 적용시키면 지울거)
+// oneroom 로그인
 const login = async (req, res) => {
-  const { userId, userPw } = req.body.userInput;
-  const findUserId = await User.findOne({ where: { userId } });
-  const findUserPw = await User.findOne({ where: { userPw } });
-  if (findUserId) {
-    if (findUserPw) {
-      res.json({ success: true, message: '로그인 성공' });
+  const { userId, password } = req.body.userInput;
+  const findUser = await User.findOne({ where: { userId } });
+  if (findUser) {
+    const userPw = await bcrypt.compare(password, findUser.userPw);
+    if (userPw) {
+      const token = jwt.sign({ id: findUser.id }, process.env.SECRET, {
+        expiresIn: '1h',
+      });
+      res.json({ success: true, message: '로그인 성공!', token });
     } else {
       res.json({
         success: false,

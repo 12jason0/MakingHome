@@ -30,12 +30,13 @@ export default function RegisterPage() {
           email: data.email,
           phone: data.phone,
           userId: data.userId,
-          userPw: data.userPw,
+          password: data.userPw,
         },
       });
       const { success, message } = res.data;
       if (success) {
         alert(`${message}`);
+        navigate('/login ');
       } else alert(`${message}`);
     };
     result();

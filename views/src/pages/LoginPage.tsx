@@ -101,15 +101,17 @@ export default function LoginPage() {
       const res = await axios.post('http://localhost:5000/api/login', {
         userInput: {
           userId: data.userId,
-          userPw: data.userPw,
+          password: data.userPw,
         },
       });
-      const { success, message } = res.data;
+      const { success, message, token } = res.data;
       console.log('resdata', res.data);
       const item: serverData = res.data.item;
       if (success) {
         alert(`${message}`);
         setIsLoggedIn(true);
+        localStorage.setItem('oneroomToken', token);
+        console.log('oneroomToken', localStorage.getItem('oneroomToken'));
         // navigate('/');
       } else {
         alert(`${message}`);
