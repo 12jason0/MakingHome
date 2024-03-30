@@ -4,13 +4,17 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import axios from 'axios';
 
+interface LoginPageProps {
+  setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
+}
 type serverData = 'userId' | 'userPw';
 type FormValues = {
   userId?: string;
   userPw?: string;
 };
 
-export default function LoginPage() {
+export default function LoginPage({ setShowHeader }: LoginPageProps) {
+  setShowHeader(false);
   let code: string | null;
   // navigate, location, state
   const navigate = useNavigate();
