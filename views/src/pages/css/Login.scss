@@ -1,21 +1,9 @@
-// .MiddleButton {
-//   width: 50px;
-//   height: 50px;
-//   background-color: black;
-//   border-radius: 50px;
-//   margin-left: 10px;
-//   img {
-//     width: 100%;
-//     height: 100%;
-//   }
-// }
-
-.form {
+.loginForm {
   display: flex;
   justify-content: center;
   .formBox {
     width: 350px;
-    .inputForm {
+    .inputDiv {
       border-bottom: 2px solid #adadad;
       margin: 30px;
       padding: 10px 10px;
@@ -29,11 +17,11 @@
         background: none;
       }
     }
-    .reigsterBtn {
+    .Btn {
       position: relative;
       left: 50%;
       transform: translateX(-50%);
-      margin-bottom: 40px;
+      margin-bottom: 10px;
       width: 80%;
       height: 40px;
       background: linear-gradient(125deg, #81ecec, #6c5ce7, #81ecec);

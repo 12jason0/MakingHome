@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import axios from 'axios';
+import './css/Login.scss';
 
 interface LoginPageProps {
   setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +15,7 @@ type FormValues = {
 };
 
 export default function LoginPage({ setShowHeader }: LoginPageProps) {
-  setShowHeader(false);
+  // setShowHeader(false);
   let code: string | null;
   // navigate, location, state
   const navigate = useNavigate();
@@ -137,51 +138,56 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
   // HTML
   return (
     <div style={{ width: '500px', margin: '0 auto' }}>
-      <body>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <h3>{isLoggedIn ? `${userInfo}님 환영합니다` : '로그인 페이지'}</h3>
-        </div>
-        {isLoggedIn ? (
-          <img
-            src="./image/logout.png"
-            alt="카카오 로그아웃 이미지"
-            style={{ display: 'block', margin: '0 auto' }}
-            onClick={KakaoLogout}
-          ></img>
-        ) : (
-          <img
-            src="./image/kakao_login.png"
-            alt="카카오 로그인 이미지"
-            style={{ display: 'block', margin: '0 auto' }}
-            onClick={KakaoLogin}
-          ></img>
-        )}
-        <hr />
-        <form onSubmit={handleSubmit(onValid, onInValid)}>
-          <input
-            type="text"
-            {...register('userId', {
-              required: '아이디를 입력하세요',
-            })}
-            placeholder="아이디"
-            id="userId"
-          />
-          <br />
-          <input
-            type="password"
-            {...register('userPw', {
-              required: '비밀번호를 입력하세요',
-            })}
-            placeholder="비밀번호"
-            id="userPw"
-          />
-          <br />
-          <button>로그인</button>
-          <button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <h2>{isLoggedIn ? `${userInfo}님 환영합니다` : ''}</h2>
+      </div>
+      {isLoggedIn ? (
+        <img
+          src="./image/logout.png"
+          alt="카카오 로그아웃 이미지"
+          style={{ display: 'block', margin: '0 auto' }}
+          onClick={KakaoLogout}
+        ></img>
+      ) : (
+        <img
+          src="./image/kakao_login.png"
+          alt="카카오 로그인 이미지"
+          style={{ display: 'block', margin: '0 auto' }}
+          onClick={KakaoLogin}
+        ></img>
+      )}
+      <br />
+      <hr />
+      <form onSubmit={handleSubmit(onValid, onInValid)} className="loginForm">
+        <div className="formBox">
+          <div className="inputDiv">
+            <input
+              type="text"
+              className="userInput"
+              {...register('userId', {
+                required: '아이디를 입력하세요',
+              })}
+              placeholder="아이디"
+              id="userId"
+            />
+          </div>
+          <div className="inputDiv">
+            <input
+              type="password"
+              className="userInput"
+              {...register('userPw', {
+                required: '비밀번호를 입력하세요',
+              })}
+              placeholder="비밀번호"
+              id="userPw"
+            />
+          </div>
+          <button className="Btn loginBtn">로그인</button>
+          <button className="Btn registerBtn">
             <Link to="/register">회원가입</Link>
           </button>
-        </form>
-      </body>
+        </div>
+      </form>
     </div>
   );
 }
