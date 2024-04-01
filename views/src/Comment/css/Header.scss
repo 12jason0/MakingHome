@@ -162,12 +162,69 @@
   z-index: 9999;
   position: fixed;
   top: 100px;
-  right: 220px;
-  width: 350px;
-  height: 450px;
+  right: 500px;
+  width: 400px;
+  height: 500px;
   border-radius: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  background-color: black;
+  background-color: rgb(145, 200, 228);
+  flex-direction: column;
+}
+.search {
+  font-size: 16px;
+  font-weight: bold;
+  width: 200px;
+  border: 2px solid #333;
+  height: 40px;
+  line-height: normal;
+  padding: 0 50px 0 10px;
+  border-radius: 5px;
+  width: 180px;
+}
+.searchForm {
+  display: flex;
+  padding-top: 40px;
+}
+.serchButton {
+  cursor: pointer;
+  display: block;
+  background: none;
+  width: 44px;
+  height: 44px;
+  border-style: none;
+  img {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+.popupList {
+  display: flex;
+  padding-bottom: 40px;
+  ul {
+    cursor: pointer;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 10px;
+    li {
+      padding: 3px 10px;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+.searchPoppupDiv {
+  background-color: white;
+  border-radius: 50px;
+  width: 300px;
+  height: 400px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }

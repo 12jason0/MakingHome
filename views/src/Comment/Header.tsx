@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Link, Routes, Route } from 'react-router-dom';
 import './css/Header.scss';
 import {
   items,
@@ -14,9 +14,38 @@ import {
 } from './tool/MenuTool';
 
 export default function Header() {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [searchPopup, setSearchPopup] = useState(false);
+  const searchUseRef = useRef<HTMLDivElement>(null);
+  const OpenPopup = () => {
+    setSearchPopup(true);
+  };
+  const closePopup = () => {
+    setSearchPopup(false);
+  };
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (
+      searchPopup &&
+      searchUseRef.current &&
+      !searchUseRef.current.contains(e.target as Node) &&
+      !(e.target as HTMLElement).classList.contains('serchdiv') // 팝업 외의 영역을 클릭하고 chatDiv가 아닌 경우에만 모든 팝업 닫기
+    ) {
+      closePopup();
+    }
+  };
+  useEffect(() => {
+    if (searchPopup) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [searchPopup]);
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 
@@ -24,10 +53,9 @@ export default function Header() {
     setSelectedItem((prev) => (prev === item ? null : item));
 
   const handleMouseLeave = () => {
-    // 팝업창을 닫는 로직은 이 함수에서 제거
-    // setSelectedItem(null);
+    setShowPopup(false);
+    setSelectedItem(null);
   };
-
   useEffect(() => {
     if (showPopup) {
       document.body.style.overflow = 'hidden';
@@ -52,62 +80,32 @@ export default function Header() {
         return hobby;
       case '조명':
         return Lighting;
-      case '셀프인테리어':
+      case '셀프인테리어/공구':
         return Tool;
       default:
         return [];
     }
   };
-
-  interface TranslationMap {
-    [key: string]: string;
-  }
-
-  const translationMap: TranslationMap = {
-    '침대/깔판': 'bed/mattress pad',
-    // 다른 항목들도 추가해주세요
-  };
-
-  const translateToEnglish = (koreanText: string) => {
-    return translationMap[koreanText] || koreanText;
-  };
-
-  const popupRef = useRef<HTMLDivElement>(null);
-
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  const openSearch = () => {
-    setIsSearchOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsSearchOpen(false);
-  };
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (
-      isSearchOpen &&
-      popupRef.current &&
-      !popupRef.current.contains(e.target as Node) &&
-      !(e.target as HTMLElement).classList.contains('chatDiv')
-    ) {
-      closePopup();
-    }
-  };
-
-  useEffect(() => {
-    if (isSearchOpen) {
-      document.addEventListener('mousedown', handleOutsideClick);
-    } else {
-      document.removeEventListener('mousedown', handleOutsideClick);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const inputValue = (event.target as HTMLFormElement).querySelector(
+      'input'
+    )?.value;
+    if (!inputValue || inputValue.trim() === '') {
+      alert('검색어를 입력하세요!');
+      return;
     }
 
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [isSearchOpen]);
+    // // 검색된 내용을 URL에 추가하여 새로운 URL을 생성합니다.
+    // const searchQuery = encodeURIComponent(inputValue.trim());
+    // const newUrl = `/?q=${searchQuery}`;
+
+    // // 새로운 URL로 페이지를 이동합니다.
+    // window.location.href = newUrl;
+  };
+
   return (
-    <div>
+    <>
       <div className="headerDiv">
         <div className="header">
           <div className="headerCon">
@@ -121,7 +119,7 @@ export default function Header() {
             </button>
             {showPopup && (
               <nav className="popup" onMouseLeave={handleMouseLeave}>
-                <div className="popup_inner" ref={popupRef}>
+                <div className="popup_inner">
                   <div className="spanDiv">
                     <div className="menutoggle">
                       {items.map((item, index) => (
@@ -144,15 +142,7 @@ export default function Header() {
                     {selectedItem && (
                       <div className="itemTrees">
                         {getPopupItems().map((tree, index) => (
-                          <span key={index}>
-                            <Link
-                              to={`/category/${translateToEnglish(tree)}`}
-                              key={index}
-                              className="popup-link"
-                            >
-                              {tree}
-                            </Link>
-                          </span>
+                          <span key={index}>{tree}</span>
                         ))}
                       </div>
                     )}
@@ -169,17 +159,12 @@ export default function Header() {
               </span>
             </a>
             <span className="rightCon">
-              <div onClick={openSearch}>
+              <div className="serchdiv" onClick={OpenPopup}>
                 <img
                   src={`${process.env.PUBLIC_URL}/image/search.png`}
                   alt="search"
                 />
               </div>
-              {isSearchOpen && (
-                <div className="SearchPopupLayout">
-                  {/* 검색 팝업 내용을 추가하세요 */}
-                </div>
-              )}
               <Link to="/shopping">
                 <div>
                   <img
@@ -216,9 +201,50 @@ export default function Header() {
               모든 상품
             </Link>
           </div>
-          <div className="line"></div>
+          {searchPopup && (
+            <div ref={searchUseRef} className="SearchPopupLayout">
+              <div className="searchPoppupDiv">
+                <form onSubmit={handleSubmit} className="searchForm">
+                  {' '}
+                  <input
+                    type="text"
+                    placeholder="입력해주세요"
+                    required
+                    className="search
+                  "
+                  />
+                  <button type="submit" className="serchButton">
+                    <img
+                      src={`${process.env.PUBLIC_URL}/image/search.png`}
+                      alt=""
+                    />
+                  </button>{' '}
+                </form>
+                <div>
+                  <h3>자취 순위 키워드</h3>
+                  <div className="popupList">
+                    <ul>
+                      <li>행거</li>
+                      <li>사계절 이불</li>
+                      <li>불끄기 스위치</li>
+                      <li>호텔수건</li>
+                      <li>보풀제거기</li>
+                    </ul>
+                    <ul>
+                      {' '}
+                      <li>화장품 정리함</li>
+                      <li>압축백</li>
+                      <li>디퓨저</li>
+                      <li>접이식 매트리스</li>
+                      <li>청소기</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

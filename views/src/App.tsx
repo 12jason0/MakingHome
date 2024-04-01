@@ -10,6 +10,7 @@ import Footer from './Comment/Footer';
 import Announcement1 from './pages/Announcement1';
 import Announcement2 from './pages/Announcement2';
 import Announcement3 from './pages/Announcement3';
+import Shopping from './pages/Shopping';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Announcement1" element={<Announcement1 />} />
         <Route path="/Announcement2" element={<Announcement2 />} />
         <Route path="/Announcement3" element={<Announcement3 />} />
+        <Route path="/shopping" element={<Shopping />} />
       </Routes>
       <Footer />
     </BrowserRouter>
