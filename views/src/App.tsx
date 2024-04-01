@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './App.css';
+
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -12,13 +14,20 @@ import Announcement2 from './pages/Announcement2';
 import Announcement3 from './pages/Announcement3';
 
 function App() {
+  const [showHeader, setShowHeader] = useState<boolean>(true);
   return (
     <BrowserRouter>
-      <Header />
+      {showHeader && <Header />}
       <Routes>
-        <Route path="/" element={<MainPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/register" element={<RegisterPage />}></Route>
+        <Route
+          path="/login"
+          element={<LoginPage setShowHeader={setShowHeader} />}
+        />
+        <Route
+          path="/register"
+          element={<RegisterPage setShowHeader={setShowHeader} />}
+        />
+        <Route path="/" element={<MainPage />} />
         <Route path="/Sale" element={<Sale />} />
         <Route path="/Popular" element={<Popular />} />
         <Route path="/Announcement1" element={<Announcement1 />} />
