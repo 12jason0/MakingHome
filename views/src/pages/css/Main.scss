@@ -11,14 +11,14 @@
 
   .swiperNumber {
     height: 100%;
-    width: 1000px;
+    width: 900px;
     transition-timing-function: linear;
     .slideImgContainer {
-      width: 1000px;
+      width: 900px;
       height: 100%;
       img {
         height: 100%;
-        width: 100%;
+        width: 900px;
       }
     }
     .buttonCon {
@@ -32,7 +32,7 @@
         display: flex;
         position: absolute;
         height: 30px;
-        right: calc(50% - 480px);
+        right: calc(50% - 430px);
         bottom: 40px;
         border-radius: 8px;
         background: rgba(24, 29, 31, 0.5);
@@ -40,7 +40,7 @@
         font-size: 22px;
         font-weight: bold;
         .leftButton {
-          width: 50px;
+          width: 40px;
           height: 30px;
           img {
             width: 100%;
@@ -48,7 +48,7 @@
           }
         }
         .rightButton {
-          width: 50px;
+          width: 40px;
           height: 30px;
           img {
             width: 100%;
@@ -71,7 +71,7 @@
   .PopolarTitle {
     display: flex;
     justify-content: space-between;
-    width: 1000px;
+    width: 900px;
     font-size: 22px;
     font-weight: bold;
     button {
@@ -103,7 +103,7 @@
   .PopolarMiddle {
     font-size: 19px;
     padding: 10px 0 0 20px;
-    width: 980px;
+    width: 880px;
     span {
       color: red;
     }
@@ -113,13 +113,16 @@
     height: auto;
     padding: 30px 0px 30px;
     background: rgb(247, 248, 249);
-    width: 1150px;
+    width: 1050px;
     padding: 20px 75px;
     align-items: center;
     .MiddleSlide {
       border-radius: 20px 20px 0 0;
-      width: 235px;
+      width: 210px;
       height: 235px;
+      .ImgBox {
+        width: 200px;
+      }
       img {
         width: 100%;
         height: 100%;
@@ -175,11 +178,11 @@
   display: flex;
   justify-content: center;
   .MainCategoryDiv {
-    width: 1000px;
+    width: 900px;
     .CategoryCon {
       display: flex;
       padding: 50px 0;
-      width: 1000px;
+      width: 900px;
       align-items: center;
       justify-content: center;
       .leftButton,
@@ -215,7 +218,7 @@
         }
       }
       .CategoryImg {
-        width: calc(740px / 6);
+        width: calc(840px / 8);
         height: 150px;
         border-radius: 50%;
         background-color: #dff5ff;
@@ -248,7 +251,7 @@
   padding-bottom: 10px;
   .MainSetDiv {
     padding: 30px 0;
-    width: 1000px;
+    width: 900px;
     height: auto;
     span {
       font-size: 25px;
@@ -265,7 +268,7 @@
   height: 400px;
   padding-top: 50px;
   .setImgDiv {
-    width: 800px;
+    width: 780px;
     height: 400px;
     border-radius: 20px;
     box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
@@ -296,7 +299,7 @@
   height: auto;
   justify-content: center;
   .giftTitle {
-    width: 1000px;
+    width: 900px;
     border-bottom: rgb(233, 235, 238) 2px solid;
     height: 500px;
     span {
@@ -322,7 +325,7 @@
     padding-right: 20px;
     .giftImgdiv {
       position: relative;
-      width: 235px;
+      width: 205px;
       height: 400px;
       .title {
         font-size: 20px;
@@ -378,7 +381,7 @@
   height: auto;
   justify-content: center;
   .giftUnderTitle {
-    width: 1000px;
+    width: 900px;
     height: 500px;
     span {
       font-size: 25px;
@@ -399,7 +402,7 @@
     position: relative;
     .giftImgUnderdiv {
       position: relative;
-      width: 235px;
+      width: 205px;
       height: 400px;
       .title {
         font-size: 20px;

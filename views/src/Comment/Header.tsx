@@ -14,7 +14,7 @@ import {
 } from './tool/MenuTool';
 
 export default function Header() {
-  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
@@ -24,9 +24,10 @@ export default function Header() {
     setSelectedItem((prev) => (prev === item ? null : item));
 
   const handleMouseLeave = () => {
-    setShowPopup(false);
-    setSelectedItem(null);
+    // 팝업창을 닫는 로직은 이 함수에서 제거
+    // setSelectedItem(null);
   };
+
   useEffect(() => {
     if (showPopup) {
       document.body.style.overflow = 'hidden';
@@ -51,12 +52,13 @@ export default function Header() {
         return hobby;
       case '조명':
         return Lighting;
-      case '셀프인테리어/공구':
+      case '셀프인테리어':
         return Tool;
       default:
         return [];
     }
   };
+
   interface TranslationMap {
     [key: string]: string;
   }
@@ -69,6 +71,7 @@ export default function Header() {
   const translateToEnglish = (koreanText: string) => {
     return translationMap[koreanText] || koreanText;
   };
+
   const popupRef = useRef<HTMLDivElement>(null);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -76,6 +79,7 @@ export default function Header() {
   const openSearch = () => {
     setIsSearchOpen(true);
   };
+
   const closePopup = () => {
     setIsSearchOpen(false);
   };
@@ -85,7 +89,7 @@ export default function Header() {
       isSearchOpen &&
       popupRef.current &&
       !popupRef.current.contains(e.target as Node) &&
-      !(e.target as HTMLElement).classList.contains('chatDiv') // 팝업 외의 영역을 클릭하고 chatDiv가 아닌 경우에만 모든 팝업 닫기
+      !(e.target as HTMLElement).classList.contains('chatDiv')
     ) {
       closePopup();
     }
@@ -102,10 +106,9 @@ export default function Header() {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [isSearchOpen]);
-
   return (
-    <>
-      <div>
+    <div>
+      <div className="headerDiv">
         <div className="header">
           <div className="headerCon">
             <button className="open" onClick={togglePopup}>
@@ -118,7 +121,7 @@ export default function Header() {
             </button>
             {showPopup && (
               <nav className="popup" onMouseLeave={handleMouseLeave}>
-                <div className="popup_inner">
+                <div className="popup_inner" ref={popupRef}>
                   <div className="spanDiv">
                     <div className="menutoggle">
                       {items.map((item, index) => (
@@ -173,10 +176,8 @@ export default function Header() {
                 />
               </div>
               {isSearchOpen && (
-                <div ref={popupRef}>
-                  <div className="SearchPopupLayout">
-                    <div></div>
-                  </div>
+                <div className="SearchPopupLayout">
+                  {/* 검색 팝업 내용을 추가하세요 */}
                 </div>
               )}
               <Link to="/shopping">
@@ -218,6 +219,6 @@ export default function Header() {
           <div className="line"></div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

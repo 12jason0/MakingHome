@@ -133,7 +133,7 @@ function MainPage() {
 
     /////////////////////////////////////////////////////////////////////////////////////
     return (
-      <>
+      <div className="main">
         <div className="BannerSlide">
           <div className="swiperNumber">
             <div className="slideImgContainer">
@@ -191,7 +191,7 @@ function MainPage() {
                     <img src={item.img} alt={`Slide ${slideImg + index}`} />
                   </div>
                   <div className="ImgText">
-                    <h3>{item.title}</h3>
+                    <h5>{item.title}</h5>
                     <p>{item.body}</p>
                   </div>
                 </a>
@@ -334,7 +334,7 @@ function MainPage() {
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   };
 

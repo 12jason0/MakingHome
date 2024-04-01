@@ -10,7 +10,7 @@
   background: rgb(247, 248, 249);
   .footerMenuCon {
     height: auto;
-    width: 1000px;
+    width: 900px;
     ul {
       list-style-type: none;
       display: flex;
@@ -72,7 +72,7 @@
   }
   .footerCon {
     height: 300px;
-    width: 1000px;
+    width: 900px;
     display: flex;
     justify-content: space-between;
     .footerImgCon {
@@ -97,7 +97,7 @@
 
 .footerUnderCon {
   height: auto;
-  width: 1000px;
+  width: 900px;
   display: flex;
   justify-content: space-between;
   padding-bottom: 50px;
@@ -108,8 +108,8 @@
 ////////////////////////////////chat///////////////////////////////////////////
 .chatDiv {
   position: fixed;
-  bottom: 150px;
-  right: 200px;
+  bottom: 100px;
+  right: 170px;
   width: 100px;
   height: 100px;
   z-index: 999999999;
