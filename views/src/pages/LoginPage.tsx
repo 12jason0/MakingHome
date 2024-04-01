@@ -3,8 +3,19 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import axios from 'axios';
+import './css/Login.scss';
 
-export default function LoginPage() {
+interface LoginPageProps {
+  setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
+}
+type serverData = 'userId' | 'userPw';
+type FormValues = {
+  userId?: string;
+  userPw?: string;
+};
+
+export default function LoginPage({ setShowHeader }: LoginPageProps) {
+  // setShowHeader(false);
   let code: string | null;
   // navigate, location, state
   const navigate = useNavigate();
@@ -85,65 +96,98 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
-  } = useForm();
-  // 로그인 기본 입력 양식에 맞을 시, 로그인 유효성 검증 API 호출
-  // 로그인 기본 입력 양식에 맞지 않을 시, 아이디나 비밀번호창 Focus 맞추기
-  const onValid = (): void => {};
-  const onInValid = (): void => {};
+  } = useForm<FormValues>();
+
+  // oneroom 로그인 양식
+  const onValid = (data: FormValues): void => {
+    const result = async () => {
+      const res = await axios.post('http://localhost:5000/api/login', {
+        userInput: {
+          userId: data.userId,
+          password: data.userPw,
+        },
+      });
+      const { success, message, token } = res.data;
+      console.log('resdata', res.data);
+      const item: serverData = res.data.item;
+      if (success) {
+        alert(`${message}`);
+        setIsLoggedIn(true);
+        localStorage.setItem('oneroomToken', token);
+        console.log('oneroomToken', localStorage.getItem('oneroomToken'));
+        // navigate('/');
+      } else {
+        alert(`${message}`);
+        setFocus(`${item}`);
+      }
+    };
+    result();
+  };
+  const onInValid = (): void => {
+    if (errors?.userId) {
+      alert(errors.userId?.message);
+      setFocus('userId');
+    } else if (errors?.userPw) {
+      alert(errors.userPw?.message);
+      setFocus('userPw');
+    }
+  };
 
   // HTML
   return (
     <div style={{ width: '500px', margin: '0 auto' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <h2>{isLoggedIn ? `${userInfo}님 환영합니다` : ''}</h2>
+      </div>
+      {isLoggedIn ? (
         <img
-          src="./image/back.png"
-          alt="뒤로가기"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
+          src="./image/logout.png"
+          alt="카카오 로그아웃 이미지"
+          style={{ display: 'block', margin: '0 auto' }}
+          onClick={KakaoLogout}
+        ></img>
+      ) : (
         <img
-          src="./image/home.png"
-          alt="홈으로 이동"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate('/');
-          }}
-        />
-      </header>
-      <body>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <h3>{isLoggedIn ? `${userInfo}님 환영합니다` : '로그인 페이지'}</h3>
-        </div>
-        {isLoggedIn ? (
-          <img
-            src="./image/logout.png"
-            alt="카카오 로그아웃 이미지"
-            style={{ display: 'block', margin: '0 auto' }}
-            onClick={KakaoLogout}
-          ></img>
-        ) : (
-          <img
-            src="./image/kakao_login.png"
-            alt="카카오 로그인 이미지"
-            style={{ display: 'block', margin: '0 auto' }}
-            onClick={KakaoLogin}
-          ></img>
-        )}
-        <hr />
-        <form onSubmit={handleSubmit(onValid, onInValid)}>
-          <input type="text" placeholder="아이디" id="userId" />
-          <br />
-          <input type="password" placeholder="비밀번호" id="userPw" />
-          <br />
-          <button>로그인</button>
-          <button>
+          src="./image/kakao_login.png"
+          alt="카카오 로그인 이미지"
+          style={{ display: 'block', margin: '0 auto' }}
+          onClick={KakaoLogin}
+        ></img>
+      )}
+      <br />
+      <hr />
+      <form onSubmit={handleSubmit(onValid, onInValid)} className="loginForm">
+        <div className="formBox">
+          <div className="inputDiv">
+            <input
+              type="text"
+              className="userInput"
+              {...register('userId', {
+                required: '아이디를 입력하세요',
+              })}
+              placeholder="아이디"
+              id="userId"
+            />
+          </div>
+          <div className="inputDiv">
+            <input
+              type="password"
+              className="userInput"
+              {...register('userPw', {
+                required: '비밀번호를 입력하세요',
+              })}
+              placeholder="비밀번호"
+              id="userPw"
+            />
+          </div>
+          <button className="Btn loginBtn">로그인</button>
+          <button className="Btn registerBtn">
             <Link to="/register">회원가입</Link>
           </button>
-        </form>
-      </body>
+        </div>
+      </form>
     </div>
   );
 }

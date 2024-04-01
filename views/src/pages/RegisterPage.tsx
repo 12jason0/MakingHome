@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-
+import './css/Register.scss';
+interface RegisterPageProps {
+  setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
+}
 type FormValues = {
   name: string;
   age: number;
@@ -12,7 +15,8 @@ type FormValues = {
   userPw: string;
 };
 
-export default function RegisterPage() {
+export default function RegisterPage({ setShowHeader }: RegisterPageProps) {
+  setShowHeader(false);
   const navigate = useNavigate();
   // 로그인 hook-form
   const {
@@ -22,9 +26,6 @@ export default function RegisterPage() {
     setFocus,
   } = useForm<FormValues>();
   const onValid = (data: FormValues): void => {
-    console.log('data :', data);
-
-    alert('회원가입 성공');
     const result = async () => {
       const res = await axios.post('http://localhost:5000/api/register', {
         userInfo: {
@@ -33,9 +34,14 @@ export default function RegisterPage() {
           email: data.email,
           phone: data.phone,
           userId: data.userId,
-          userPw: data.userPw,
+          password: data.userPw,
         },
       });
+      const { success, message } = res.data;
+      if (success) {
+        alert(`${message}`);
+        navigate('/login ');
+      } else alert(`${message}`);
     };
     result();
   };
@@ -47,70 +53,105 @@ export default function RegisterPage() {
       alert(errors.age?.message);
       setFocus('age');
     } else if (errors?.email) {
+      if (errors?.email.type === 'pattern') {
+        alert('이메일 형식에 맞춰 입력해주세요');
+        return;
+      }
       alert(errors.email?.message);
       setFocus('email');
     } else if (errors?.phone) {
+      if (errors?.phone.type === 'pattern') {
+        alert('올바른 전화번호를 입력해주세요');
+        return;
+      }
       alert(errors.phone?.message);
       setFocus('phone');
     } else if (errors?.userId) {
       alert(errors.userId?.message);
       setFocus('userId');
     } else if (errors?.userPw) {
+      if (errors?.userPw.type === 'pattern') {
+        alert('비밀번호를 형식에 맞춰 입력해주세요');
+        return;
+      }
       alert(errors.userPw?.message);
       setFocus('userPw');
     }
   };
 
   return (
-    <div style={{ position: 'relative', width: '500px', margin: '0 auto' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <img
-          src="./image/back.png"
-          alt="뒤로가기"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-        <img
-          src="./image/home.png"
-          alt="홈으로 이동"
-          style={{ width: '30px', cursor: 'pointer' }}
-          onClick={() => {
-            navigate('/');
-          }}
-        />
-      </header>
-      <body>
-        <form onSubmit={handleSubmit(onValid, onInValid)}>
-          <div style={{ position: 'absolute', left: '35%' }}>
-            {/* 이름 */}
+    <div
+      className="top"
+      style={{ position: 'relative', width: '500px', margin: '2% auto' }}
+    >
+      <div
+        className="header"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Link to={'/'}>
+          <img
+            src="./image/logo.png"
+            alt="원룸 만들기 로고"
+            style={{ width: '250px' }}
+          />
+        </Link>
+      </div>
+      <div
+        className="navigate"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          position: 'relative',
+          top: '-20px',
+        }}
+      >
+        <h3>
+          이미 계정이 있으신가요? <Link to="/login">로그인</Link>
+        </h3>
+      </div>
+      <hr style={{ marginTop: '-3%' }} />
+      {/* <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '-3%' }}
+      >
+        <h3>회원가입</h3>
+      </div> */}
+      {/* ======================================================================================================*/}
+      {/* ==================================Table Form 회원 정보 입력 창========================================= */}
+      {/* ====================================================================================================== */}
+      <form onSubmit={handleSubmit(onValid, onInValid)} className="form">
+        <div className="formBox">
+          {/* 이름 */}
+          <div className="inputForm">
             <input
+              className="userInput userName"
               type="text"
               {...register('name', {
                 required: '이름은 필수 항목입니다.',
                 validate: {
                   trimValid: (name: string) => {
-                    if (name?.trim() === '')
-                      return '이름은 필수 항목입니다....';
+                    if (name?.trim() === '') return '이름을 입력하세요...';
                     else {
                       return true;
                     }
-                    // 이름 유효성 패턴 정규식 받아오기
                   },
                 },
               })}
               placeholder="이름"
             />
-            <br />
             {errors.name && (
-              <div style={{ fontSize: '12px', color: 'red' }}>
+              <span style={{ fontSize: '12px', color: 'red' }}>
                 이름을 입력하십시오
-              </div>
+              </span>
             )}
-            {/* 나이 */}
+          </div>
+          {/* 나이 */}
+          <div className="inputForm">
             <input
               type="text"
+              className="userInput userAge"
               {...register('age', {
                 required: '나이는 필수 항목입니다.',
                 validate: {
@@ -127,29 +168,40 @@ export default function RegisterPage() {
             />
             <br />
             {errors.age && (
-              <div style={{ fontSize: '12px', color: 'red' }}>
-                {errors.age.message}
-              </div>
+              <span style={{ fontSize: '12px', color: 'red' }}>
+                나이를 입력하십시오
+              </span>
             )}
-            {/* 이메일 */}
+          </div>
+          {/* 이메일 */}
+          <div className="inputForm">
             <input
               type="email"
+              className="userInput userEmail"
               {...register('email', {
                 required: false,
                 validate: {
                   trimValid: (email: string) => {
-                    if (email?.trim() === '')
-                      return '이름은 필수 항목입니다....';
+                    if (email?.trim() === '') return '이메일을 입력하세요...';
                     else return true;
                   },
                 },
+                pattern:
+                  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
               })}
               placeholder="이메일"
             />
-            <br />
-            {/* 전화번호 */}
+            {errors.email && (
+              <span style={{ fontSize: '12px', color: 'red' }}>
+                이메일을 입력하세요
+              </span>
+            )}
+          </div>
+          {/* 전화번호 */}
+          <div className="inputForm">
             <input
               type="text"
+              className="userInput userPhone"
               {...register('phone', {
                 required: false,
                 validate: {
@@ -159,48 +211,73 @@ export default function RegisterPage() {
                     else return true;
                   },
                 },
+                pattern: /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/,
               })}
               placeholder="전화번호"
             />
-            <br />
-            {/* 유저아이디 */}
+            {errors.phone && (
+              <span style={{ fontSize: '12px', color: 'red' }}>
+                전화번호를 입력하십시오
+              </span>
+            )}
+          </div>
+          {/* 유저아이디 */}
+          <div className="inputForm">
             <input
               type="text"
+              className="userInput userId"
               {...register('userId', {
                 required: '아이디는 필수 항목입니다.',
                 validate: {
                   trimValid: (userId: string) => {
-                    if (userId?.trim() === '')
-                      return '이름은 필수 항목입니다....';
+                    if (userId?.trim() === '') return '아이디를 입력하세요...';
                     else return true;
                   },
                 },
               })}
               placeholder="아이디"
             />
-            <br />
-            {/* 유저 비밀번호 */}
+            {errors.userId && (
+              <span style={{ fontSize: '12px', color: 'red' }}>
+                아이디를 입력하세요
+              </span>
+            )}
+          </div>
+          {/* 유저 비밀번호 */}
+          <div className="inputForm">
             <input
               type="password"
+              className="userInput userPw"
               {...register('userPw', {
                 required: '비밀번호는 필수 항목입니다.',
                 validate: {
                   trimValid: (userPw: string) => {
                     if (userPw?.trim() === '')
-                      return '비밀번호는 필수 항목입니다....';
+                      return '비밀번호를 입력하세요....';
                     else {
                       return true;
                     }
                   },
                 },
+                // 비밀번호 유효성 : 8 ~ 10자 영문, 숫자 조합
+                pattern: /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/,
               })}
               placeholder="비밀번호"
             />
-            <br />
-            <button>회원가입</button>
+            {errors.userPw?.message && (
+              <span style={{ fontSize: '12px', color: 'red' }}>
+                비밀번호를 입력하세요
+              </span>
+            )}
+            {errors.userPw?.type === 'pattern' && (
+              <span style={{ margin: '0', fontSize: '12px', color: 'red' }}>
+                비밀번호를 형식에 맞춰입력해주세요
+              </span>
+            )}
           </div>
-        </form>
-      </body>
+          <button className="reigsterBtn">회원가입</button>
+        </div>
+      </form>
     </div>
   );
 }
