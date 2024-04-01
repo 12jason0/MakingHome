@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './css/Header.scss';
 import {
   items,
@@ -57,6 +57,51 @@ export default function Header() {
         return [];
     }
   };
+  interface TranslationMap {
+    [key: string]: string;
+  }
+
+  const translationMap: TranslationMap = {
+    '침대/깔판': 'bed/mattress pad',
+    // 다른 항목들도 추가해주세요
+  };
+
+  const translateToEnglish = (koreanText: string) => {
+    return translationMap[koreanText] || koreanText;
+  };
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const openSearch = () => {
+    setIsSearchOpen(true);
+  };
+  const closePopup = () => {
+    setIsSearchOpen(false);
+  };
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (
+      isSearchOpen &&
+      popupRef.current &&
+      !popupRef.current.contains(e.target as Node) &&
+      !(e.target as HTMLElement).classList.contains('chatDiv') // 팝업 외의 영역을 클릭하고 chatDiv가 아닌 경우에만 모든 팝업 닫기
+    ) {
+      closePopup();
+    }
+  };
+
+  useEffect(() => {
+    if (isSearchOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isSearchOpen]);
 
   return (
     <>
@@ -96,7 +141,15 @@ export default function Header() {
                     {selectedItem && (
                       <div className="itemTrees">
                         {getPopupItems().map((tree, index) => (
-                          <span key={index}>{tree}</span>
+                          <span key={index}>
+                            <Link
+                              to={`/category/${translateToEnglish(tree)}`}
+                              key={index}
+                              className="popup-link"
+                            >
+                              {tree}
+                            </Link>
+                          </span>
                         ))}
                       </div>
                     )}
@@ -113,14 +166,19 @@ export default function Header() {
               </span>
             </a>
             <span className="rightCon">
-              <Link to="/Search">
-                <div>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/image/search.png`}
-                    alt="search"
-                  />
+              <div onClick={openSearch}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/image/search.png`}
+                  alt="search"
+                />
+              </div>
+              {isSearchOpen && (
+                <div ref={popupRef}>
+                  <div className="SearchPopupLayout">
+                    <div></div>
+                  </div>
                 </div>
-              </Link>
+              )}
               <Link to="/shopping">
                 <div>
                   <img
