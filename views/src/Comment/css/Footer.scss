@@ -1,5 +1,6 @@
 .footerMenu {
   display: flex;
+  position: relative;
   flex-direction: column;
   -webkit-box-align: center;
   align-items: center;
@@ -8,8 +9,31 @@
   height: auto;
   background: rgb(247, 248, 249);
   .footerMenuCon {
-    height: 200px;
+    height: auto;
     width: 1000px;
+    ul {
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      a {
+        text-decoration: none;
+        color: black;
+      }
+      padding: 0;
+      li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 15px;
+        font-weight: bold;
+      }
+      img {
+        width: 80px;
+        height: 80px;
+        padding-bottom: 5px;
+      }
+    }
   }
 }
 .footer {
@@ -80,4 +104,14 @@
   div {
     font-size: 20px;
   }
+}
+////////////////////////////////chat///////////////////////////////////////////
+.chatDiv {
+  position: fixed;
+  bottom: 300px;
+  right: 200px;
+  width: 50px;
+  height: 50px;
+  z-index: 999999999;
+  cursor: pointer;
 }

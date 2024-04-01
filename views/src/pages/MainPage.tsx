@@ -30,6 +30,7 @@ function MainPage() {
         img: 'https://m.oneroommaking.com/web/product/medium/202402/2552f300917e6066714b5dbb7a8d0e43.jpg',
       },
     ];
+
     /////////////////////////////메인 화면 자동 슬라이드//////////////////////////////////////////////////////
     const [currentIdx, setCurrentIdx] = useState(0);
     useEffect(() => {
@@ -69,11 +70,16 @@ function MainPage() {
     };
     const startIndex = slideImg;
     const endIndex = Math.min(startIndex + 4, MiddleImages.length);
-    /////////////////////////////////카테고리///////////////////////////////////////////////////
 
+    /////////////////////////////////카테고리///////////////////////////////////////////////////
     const [slideCategoryIdx, setSlideCategoryIdx] = useState(0);
     const leftCategory = () => {
-      setSlideCategoryIdx((prevIdx) => Math.max(prevIdx - 1, 0));
+      const nextIndex = slideCategoryIdx - 1;
+      if (nextIndex >= 0) {
+        setSlideCategoryIdx(nextIndex);
+      } else {
+        setSlideCategoryIdx(MiddleCategory.length - 6);
+      }
     };
 
     const rightCategory = () => {
@@ -111,14 +117,15 @@ function MainPage() {
 
     //////////////////////////////////////집들이 선물/////////////////////////////////////////////
     const [giftImg, setGiftImg] = useState(0);
-    const startGitfIndex = slideCategoryIdx;
+    const startGitfIndex = giftImg;
     const endGiftIndex = Math.min(
       startCategoryIndex + 4,
       MiddleCategory.length
     );
-    //////////////////////////////////////집들이 선물/////////////////////////////////////////////
+
+    //////////////////////////////////////만원 이하 선물/////////////////////////////////////////////
     const [giftUnderImg, setGiftUnderImg] = useState(0);
-    const startGitfUnderIndex = slideCategoryIdx;
+    const startGitfUnderIndex = giftUnderImg;
     const endGiftUnderIndex = Math.min(
       startCategoryIndex + 4,
       MiddleCategory.length
@@ -143,6 +150,9 @@ function MainPage() {
                     alt="이전"
                   />
                 </div>
+                <div>
+                  {currentIdx + 1} / {slideImages.length}
+                </div>
                 <div className="rightButton" onClick={nextSlide}>
                   <img
                     src={`${process.env.PUBLIC_URL}/image/sliderightarrow.png`}
@@ -153,6 +163,7 @@ function MainPage() {
             </div>
           </div>
         </div>
+        {/* /////////////////////////////인기템 슬라이드////////////////////////////////////////////////////////// */}
         <div className="MainMiddle">
           <div className="PopolarTitle">
             인기템부터 보여드립니다
@@ -194,6 +205,7 @@ function MainPage() {
             </div>
           </div>
         </div>
+        {/* /////////////////////////////////카테고리/////////////////////////////////////////////////// */}
         <div className="MainCategoryCon">
           <div className="MainCategoryDiv">
             <span>카테고리별 상품 찾기</span>
@@ -226,6 +238,9 @@ function MainPage() {
             </div>
           </div>
         </div>
+
+        {/* ////////////////////////////////////세트 추천///////////////////////////////////////////// */}
+
         <div className="MainSetCon">
           <div className="MainSetDiv">
             <span>자취 로망 세트 메뉴</span>
@@ -250,6 +265,8 @@ function MainPage() {
             </div>
           </div>
         </div>
+
+        {/*    //////////////////////////////////////집들이 선물///////////////////////////////////////////// */}
         <div className="giftCon">
           <div className="giftTitle">
             <span>
@@ -270,7 +287,9 @@ function MainPage() {
                       <div className="sale">
                         {item.sale} <span>{item.price}</span>
                       </div>
-                      <div className="delivery">{item.delivery}</div>
+                      {item.delivery && (
+                        <div className="delivery">{item.delivery}</div>
+                      )}
                     </div>
                   </a>
                 )
@@ -278,6 +297,8 @@ function MainPage() {
             </div>
           </div>
         </div>
+
+        {/*    //////////////////////////////////////만원 이하 선물///////////////////////////////////////////// */}
         <div className="giftUnder">
           <div className="giftUnderTitle">
             <span>만원 이하 Best4 ! 가성비 짱</span>
@@ -287,15 +308,25 @@ function MainPage() {
                   <a href="/" key={index}>
                     <div className="giftImgUnderdiv">
                       <img
+                        className="giftImg"
                         src={item.img}
                         alt={`slide ${startGitfUnderIndex + index}`}
                       />
+                      <div className="heartDiv">
+                        <img
+                          className="heart"
+                          src="https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png"
+                          alt=""
+                        />
+                      </div>
                       <div className="title">{item.title}</div>
                       <div className="body">{item.body}</div>
                       <div className="sale">
                         {item.sale} <span>{item.price}</span>
                       </div>
-                      <div className="delivery">{item.delivery}</div>
+                      {item.delivery && (
+                        <div className="delivery">{item.delivery}</div>
+                      )}
                     </div>
                   </a>
                 )
