@@ -19,10 +19,8 @@ function App() {
     <BrowserRouter>
       {showHeader && <Header />}
       <Routes>
-        <Route
-          path="/login"
-          element={<LoginPage setShowHeader={setShowHeader} />}
-        />x
+        <Route path="/login" element={<LoginPage setShowHeader={setShowHeader}/>}
+        />
         <Route
           path="/register"
           element={<RegisterPage setShowHeader={setShowHeader} />}
