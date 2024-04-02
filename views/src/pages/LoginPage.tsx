@@ -228,6 +228,14 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
               id="userPw"
             />
           </div>
+          {
+          localStorage.getItem('oneroomToken') ?
+            (<button className="Btn loginBtn">로그아웃</button>):
+            (<button className="Btn loginBtn">로그인</button>)
+          }
+          <button className="Btn registerBtn">
+            <Link to="/register">회원가입</Link>
+          </button>
         </div>
         }
       </form>

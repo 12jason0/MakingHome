@@ -23,7 +23,7 @@ function App() {
         <Route
           path="/login"
           element={<LoginPage setShowHeader={setShowHeader} />}
-        />
+        />x
         <Route
           path="/register"
           element={<RegisterPage setShowHeader={setShowHeader} />}
