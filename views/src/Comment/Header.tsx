@@ -173,7 +173,7 @@ export default function Header() {
                   />
                 </div>
               </Link>
-              <Link to="user">
+              <Link to="login">
                 <div>
                   <img
                     src={`${process.env.PUBLIC_URL}/image/user.png`}

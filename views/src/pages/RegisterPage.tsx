@@ -91,13 +91,13 @@ export default function RegisterPage({ setShowHeader }: RegisterPageProps) {
           justifyContent: 'center',
         }}
       >
-        <Link to={'/'}>
+        <a href="/">
           <img
             src="./image/logo.png"
             alt="원룸 만들기 로고"
             style={{ width: '250px' }}
           />
-        </Link>
+        </a>
       </div>
       <div
         className="navigate"
