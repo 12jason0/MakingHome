@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import './css/Header.scss';
 import {
@@ -17,6 +17,35 @@ export default function Header() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [searchPopup, setSearchPopup] = useState(false);
+  const searchUseRef = useRef<HTMLDivElement>(null);
+  const OpenPopup = () => {
+    setSearchPopup(true);
+  };
+  const closePopup = () => {
+    setSearchPopup(false);
+  };
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (
+      searchPopup &&
+      searchUseRef.current &&
+      !searchUseRef.current.contains(e.target as Node) &&
+      !(e.target as HTMLElement).classList.contains('serchdiv') // 팝업 외의 영역을 클릭하고 chatDiv가 아닌 경우에만 모든 팝업 닫기
+    ) {
+      closePopup();
+    }
+  };
+  useEffect(() => {
+    if (searchPopup) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [searchPopup]);
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 
@@ -57,10 +86,27 @@ export default function Header() {
         return [];
     }
   };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const inputValue = (event.target as HTMLFormElement).querySelector(
+      'input'
+    )?.value;
+    if (!inputValue || inputValue.trim() === '') {
+      alert('검색어를 입력하세요!');
+      return;
+    }
+
+    // // 검색된 내용을 URL에 추가하여 새로운 URL을 생성합니다.
+    // const searchQuery = encodeURIComponent(inputValue.trim());
+    // const newUrl = `/?q=${searchQuery}`;
+
+    // // 새로운 URL로 페이지를 이동합니다.
+    // window.location.href = newUrl;
+  };
 
   return (
     <>
-      <div>
+      <div className="headerDiv">
         <div className="header">
           <div className="headerCon">
             <button className="open" onClick={togglePopup}>
@@ -113,14 +159,12 @@ export default function Header() {
               </span>
             </a>
             <span className="rightCon">
-              <Link to="/Search">
-                <div>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/image/search.png`}
-                    alt="search"
-                  />
-                </div>
-              </Link>
+              <div className="serchdiv" onClick={OpenPopup}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/image/search.png`}
+                  alt="search"
+                />
+              </div>
               <Link to="/shopping">
                 <div>
                   <img
@@ -129,7 +173,7 @@ export default function Header() {
                   />
                 </div>
               </Link>
-              <Link to="user">
+              <Link to="login">
                 <div>
                   <img
                     src={`${process.env.PUBLIC_URL}/image/user.png`}
@@ -157,7 +201,48 @@ export default function Header() {
               모든 상품
             </Link>
           </div>
-          <div className="line"></div>
+          {searchPopup && (
+            <div ref={searchUseRef} className="SearchPopupLayout">
+              <div className="searchPoppupDiv">
+                <form onSubmit={handleSubmit} className="searchForm">
+                  {' '}
+                  <input
+                    type="text"
+                    placeholder="입력해주세요"
+                    required
+                    className="search
+                  "
+                  />
+                  <button type="submit" className="serchButton">
+                    <img
+                      src={`${process.env.PUBLIC_URL}/image/search.png`}
+                      alt=""
+                    />
+                  </button>{' '}
+                </form>
+                <div>
+                  <h3>자취 순위 키워드</h3>
+                  <div className="popupList">
+                    <ul>
+                      <li>행거</li>
+                      <li>사계절 이불</li>
+                      <li>불끄기 스위치</li>
+                      <li>호텔수건</li>
+                      <li>보풀제거기</li>
+                    </ul>
+                    <ul>
+                      {' '}
+                      <li>화장품 정리함</li>
+                      <li>압축백</li>
+                      <li>디퓨저</li>
+                      <li>접이식 매트리스</li>
+                      <li>청소기</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
