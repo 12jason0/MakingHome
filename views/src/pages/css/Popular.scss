@@ -1,0 +1,26 @@
+.navigate {
+    width: 900px;
+    height: 50px;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+
+    .allBest {
+        width: 100%;
+        background: blue;
+        color: white;
+        font-size: 2vw;
+        text-align: center;
+        line-height: 50px;
+    }
+    .categoryBest {
+        width: 100%;
+        background: rgb(247, 248, 249);
+        color: gray;
+        font-size: 2vw;
+        text-align: center;
+        line-height: 50px;
+    }
+}

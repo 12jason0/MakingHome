@@ -26,7 +26,7 @@ function App() {
           path="/register"
           element={<RegisterPage setShowHeader={setShowHeader} />}
         />
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<MainPage setShowHeader={setShowHeader}/>} />
         <Route path="/Sale" element={<Sale />} />
         <Route path="/Popular" element={<Popular />} />
         <Route path="/Announcement1" element={<Announcement1 />} />

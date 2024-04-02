@@ -6,7 +6,11 @@ import { MainGiftImg } from '../Comment/tool/MainGiftTool';
 import { MainUnderGift } from '../Comment/tool/MainGiftUnderTool';
 import './css/Main.scss';
 
-function MainPage() {
+interface RMainPageProps {
+  setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
+}
+function MainPage({setShowHeader}:RMainPageProps) {
+  setShowHeader(true);
   const Slide = () => {
     const slideImages = [
       {
