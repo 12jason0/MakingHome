@@ -88,11 +88,11 @@ export default function Shopping() {
                     setItems(updatedItems);
                   }}
                 />
-                <div>
+                <div className="shoppingImg">
                   <img src={item.img} alt="" />
                 </div>
-                <span>{item.title}</span>
-                <div>{item.body}</div>
+                <span className="shoppingTitle">{item.title}</span>
+                <div className="shoppingPrice">{item.body}</div>
               </form>
             ))}
           </div>
