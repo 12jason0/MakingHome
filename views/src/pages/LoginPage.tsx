@@ -48,6 +48,14 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
       setUserInfo(username);
     }
   }, []);
+  // 로그인 시 페이지 강제 넘기기
+  useEffect(() => {
+    if(localStorage.getItem('oneroomToken') || localStorage.getItem('Token')) {
+      navigate('-1');
+    }
+  }, []);
+
+
   // useEffect : 카카오 로그인 클릭 - url 업데이트 - stoarge <-> code 저장
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -187,7 +195,16 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
       <hr />
       <form onSubmit={handleSubmit(onValid, onInValid)} className="loginForm">
         {localStorage.getItem('oneroomToken') || localStorage.getItem('Token') ?
-        <></> :
+        <>
+        {
+            localStorage.getItem('oneroomToken') ?
+            (<button className="Btn loginBtn">로그아웃</button>):
+            (<button className="Btn loginBtn">로그인</button>)
+          }
+          <button className="Btn registerBtn">
+            <Link to="/register">회원가입</Link>
+          </button>
+        </> :
         <div className="formBox">
           <div className="inputDiv">
             <input
@@ -211,17 +228,6 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
               id="userPw"
             />
           </div>
-          {
-            isLoggedIn ? 
-            localStorage.getItem('oneroomToken') ?
-            (<button className="Btn loginBtn">로그아웃</button>):
-            (<button className="Btn loginBtn">로그인</button>)
-            :
-            (<button className="Btn loginBtn">로그인</button>)
-          }
-          <button className="Btn registerBtn">
-            <Link to="/register">회원가입</Link>
-          </button>
         </div>
         }
       </form>
