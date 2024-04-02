@@ -63,7 +63,7 @@ const login = async (req, res) => {
       const token = jwt.sign({ id: findUser.id }, process.env.SECRET, {
         expiresIn: '1h',
       });
-      res.json({ success: true, message: '로그인 성공!', token });
+      res.json({ success: true, message: '로그인 성공!', token , userId : findUser.userId});
     } else {
       res.json({
         success: false,

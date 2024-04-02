@@ -25,11 +25,19 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
 
   // 다른 페이지 탐색 후 돌아왔을 때, 사용자 정보 유지
   useEffect(() => {
-    if (localStorage.getItem('Token') && Cookie.get('username')) {
+    if (localStorage.getItem('Token') && Cookie.get('username') || localStorage.getItem('oneroomToken') && Cookie.get('oneroomUsername')) {
       setIsLoggedIn(true);
-      const username: string | undefined = Cookie.get('username');
-      if (username !== undefined) {
-        setUserInfo(username);
+      if(localStorage.getItem('Token')) {
+        const username: string | undefined = Cookie.get('username');
+        if (username !== undefined) {
+          setUserInfo(username);
+        }
+      }
+      else {
+        const username: string | undefined = Cookie.get('oneroomUsername');
+        if (username !== undefined) {
+          setUserInfo(username);
+        }
       }
     }
   });
@@ -47,6 +55,7 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
     if (code !== null) {
       getKakao_Access_Token(code);
       setIsLoggedIn(true);
+      navigate('/');
     }
   }, [location.search, userInfo]);
   // 카카오 액세스 토큰 발급
@@ -102,28 +111,37 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
 
   // oneroom 로그인 양식
   const onValid = (data: FormValues): void => {
-    const result = async () => {
-      const res = await axios.post('http://localhost:5000/api/login', {
-        userInput: {
-          userId: data.userId,
-          password: data.userPw,
-        },
-      });
-      const { success, message, token } = res.data;
-      console.log('resdata', res.data);
-      const item: serverData = res.data.item;
-      if (success) {
-        alert(`${message}`);
-        setIsLoggedIn(true);
-        localStorage.setItem('oneroomToken', token);
-        console.log('oneroomToken', localStorage.getItem('oneroomToken'));
-        // navigate('/');
-      } else {
-        alert(`${message}`);
-        setFocus(`${item}`);
-      }
-    };
-    result();
+    console.log(data);
+    // 로그인
+      const result = async () => {
+        const res = await axios.post('http://localhost:5000/api/login', {
+          userInput: {
+            userId: data.userId,
+            password: data.userPw,
+          },
+        });
+        const { success, message, token,userId } = res.data;
+        console.log('resdata', res.data);
+        const item: serverData = res.data.item;
+        if (success) {
+          alert(`${message}`);
+          setIsLoggedIn(true);
+          setUserInfo(userId);
+          localStorage.setItem('oneroomToken', token);
+          Cookie.set(
+            'oneroomUsername',
+            userId,
+            { expires: 1 }
+          );
+          console.log('oneroomToken', localStorage.getItem('oneroomToken'));
+
+          navigate('/');
+        } else {
+          alert(`${message}`);
+          setFocus(`${item}`);
+        }
+      };
+      result();
   };
   const onInValid = (): void => {
     if (errors?.userId) {
@@ -134,14 +152,15 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
       setFocus('userPw');
     }
   };
-
   // HTML
   return (
     <div style={{ width: '500px', margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <h2>{isLoggedIn ? `${userInfo}님 환영합니다` : ''}</h2>
       </div>
-      {isLoggedIn ? (
+      {isLoggedIn ? 
+      localStorage.getItem('Token') ?
+      (
         <img
           src="./image/logout.png"
           alt="카카오 로그아웃 이미지"
@@ -155,10 +174,20 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
           style={{ display: 'block', margin: '0 auto' }}
           onClick={KakaoLogin}
         ></img>
+      )
+      : (
+        <img
+          src="./image/kakao_login.png"
+          alt="카카오 로그인 이미지"
+          style={{ display: 'block', margin: '0 auto' }}
+          onClick={KakaoLogin}
+        ></img>
       )}
       <br />
       <hr />
       <form onSubmit={handleSubmit(onValid, onInValid)} className="loginForm">
+        {localStorage.getItem('oneroomToken') || localStorage.getItem('Token') ?
+        <></> :
         <div className="formBox">
           <div className="inputDiv">
             <input
@@ -182,11 +211,19 @@ export default function LoginPage({ setShowHeader }: LoginPageProps) {
               id="userPw"
             />
           </div>
-          <button className="Btn loginBtn">로그인</button>
+          {
+            isLoggedIn ? 
+            localStorage.getItem('oneroomToken') ?
+            (<button className="Btn loginBtn">로그아웃</button>):
+            (<button className="Btn loginBtn">로그인</button>)
+            :
+            (<button className="Btn loginBtn">로그인</button>)
+          }
           <button className="Btn registerBtn">
             <Link to="/register">회원가입</Link>
           </button>
         </div>
+        }
       </form>
     </div>
   );
