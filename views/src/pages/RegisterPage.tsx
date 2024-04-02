@@ -5,6 +5,7 @@ import axios from 'axios';
 import './css/Register.scss';
 interface RegisterPageProps {
   setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
+  
 }
 type FormValues = {
   name: string;
@@ -83,40 +84,26 @@ export default function RegisterPage({ setShowHeader }: RegisterPageProps) {
   return (
     <div
       className="top"
-      style={{ position: 'relative', width: '500px', margin: '2% auto' }}
     >
       <div
-        className="header"
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
+        className="header1"
       >
-        <a href="/">
+        <Link to={'/'}>
           <img
             src="./image/logo.png"
             alt="원룸 만들기 로고"
-            style={{ width: '250px' }}
           />
-        </a>
+        </Link>
       </div>
       <div
         className="navigate"
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          position: 'relative',
-          top: '-20px',
-        }}
       >
         <h3>
           이미 계정이 있으신가요? <Link to="/login">로그인</Link>
         </h3>
       </div>
-      <hr style={{ marginTop: '-3%' }} />
-      {/* ======================================================================================================*/}
-      {/* ==================================Table Form 회원 정보 입력 창========================================= */}
-      {/* ====================================================================================================== */}
+      <hr />
+      {/* form 태그 */}
       <form onSubmit={handleSubmit(onValid, onInValid)} className="form">
         <div className="formBox">
           {/* 이름 */}
