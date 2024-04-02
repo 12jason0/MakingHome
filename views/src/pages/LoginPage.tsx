@@ -233,9 +233,10 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
         </div>
         }
       </form>
-      <button className="Btn registerBtn">
-        <Link to="/register">회원가입</Link>
-      </button>
+        <Link className = "registerLink" to="/register">
+        <button className="Btn registerBtn">회원가입</button>
+        </Link>
+      
     </div>
   );
 }
