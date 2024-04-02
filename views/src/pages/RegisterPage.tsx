@@ -16,6 +16,7 @@ type FormValues = {
 };
 
 export default function RegisterPage({ setShowHeader }: RegisterPageProps) {
+  // 헤더 안보이기
   setShowHeader(false);
   const navigate = useNavigate();
   // 로그인 hook-form
@@ -113,11 +114,6 @@ export default function RegisterPage({ setShowHeader }: RegisterPageProps) {
         </h3>
       </div>
       <hr style={{ marginTop: '-3%' }} />
-      {/* <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '-3%' }}
-      >
-        <h3>회원가입</h3>
-      </div> */}
       {/* ======================================================================================================*/}
       {/* ==================================Table Form 회원 정보 입력 창========================================= */}
       {/* ====================================================================================================== */}
