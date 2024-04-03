@@ -10,7 +10,7 @@ export interface Item {
   sale: number;
   body: string;
   delivery: string;
-  review: number | null; // 리뷰가 없는 경우를 고려하여 null로 타입 설정
+  review: number | null;
 }
 
 export default function Sale() {
@@ -70,7 +70,7 @@ export default function Sale() {
             </select>
           </div>
           {sortedGoods.slice(startAllIndex, endAllIndex).map((item, index) => (
-            <div key={index} className="AllImgDiv">
+            <div key={index * 2 - 1} className="AllImgDiv">
               <a href="/">
                 <div>
                   <img src={item.img} alt={item.title} />

@@ -18,15 +18,11 @@ function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
   return (
     <BrowserRouter>
-      {showHeader && <Header /> }
+      {showHeader && <Header />}
       <Routes>
-<<<<<<< HEAD
         <Route
           path="/login"
           element={<LoginPage setShowHeader={setShowHeader} />}
-=======
-        <Route path="/login" element={<LoginPage setShowHeader={setShowHeader} />}
->>>>>>> b1f44e3b22ceefef344d3a4d22fa98eee973b2d1
         />
         <Route
           path="/register"
