@@ -185,7 +185,7 @@ export default function Header() {
           </div>
           <div className="line"></div>
           <div className="headerConUnder">
-            <Link to="/Sale" className="Sale">
+            <Link to="/sale" className="Sale">
               단독 세일
             </Link>
             <Link to="/Popular" className="menu-link">
@@ -197,7 +197,7 @@ export default function Header() {
             <Link to="/housewarming-gift" className="menu-link">
               집들이 선물
             </Link>
-            <Link to="/all-products" className="menu-link">
+            <Link to="/all" className="menu-link">
               모든 상품
             </Link>
           </div>
