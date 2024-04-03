@@ -18,16 +18,17 @@ function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
   return (
     <BrowserRouter>
-      {showHeader && <Header /> }
+      {showHeader && <Header />}
       <Routes>
         <Route
           path="/login"
-          element={<LoginPage setShowHeader={setShowHeader} />} />
+          element={<LoginPage setShowHeader={setShowHeader} />}
+        />
         <Route
           path="/register"
           element={<RegisterPage setShowHeader={setShowHeader} />}
         />
-        <Route path="/" element={<MainPage setShowHeader={setShowHeader}/>} />
+        <Route path="/" element={<MainPage setShowHeader={setShowHeader} />} />
         <Route path="/all" element={<AllGood />} />
         <Route path="/Popular" element={<Popular />} />
         <Route path="/Announcement1" element={<Announcement1 />} />

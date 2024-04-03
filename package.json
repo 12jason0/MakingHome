@@ -22,7 +22,7 @@
     "mysql2": "^3.9.3",
     "react": "^18.2.0",
     "sass": "^1.72.0",
-    "sequelize": "^6.37.1",
+    "sequelize": "^6.37.2",
     "sequelize-cli": "^6.6.2"
   }
 }
