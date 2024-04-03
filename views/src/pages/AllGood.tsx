@@ -1,52 +1,43 @@
-import React, { useState } from 'react';
-import { GoodsTool } from '../Comment/tool/allTool';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './css/all.scss';
 
-export interface Item {
-  id: string;
+interface Item {
+  id: number;
+  body: string;
   img: string;
   title: string;
-  price: number;
-  sale: number;
-  body: string;
+  sale: string;
+  price: string;
   delivery: string;
-  review: number | null;
+  review: number;
+  chart: number;
 }
 
 export default function Sale() {
+  const [items, setItems] = useState<Item[]>([]);
+  const [navigate1State, setNavigate1State] = useState<string>('activeAllBest');
+  const [navigate2State, setNavigate2State] = useState<string>('viewAll');
+  useEffect(() => {
+    const chart_ALL = async () => {
+      setItems([]);
+      const best_items = await axios.get(
+        'http://localhost:5000/api/item/chart'
+      );
+      const { best_item } = best_items.data;
+      console.log(best_item);
+      setItems(best_item);
+      console.log('items', items);
+    };
+    if (navigate1State === 'activeAllBest' && navigate2State === 'viewAll') {
+      chart_ALL();
+    }
+    // 전체 베스트 20 누른 상태에서 전체보기 / 주간 차트.. 누를 시 메뉴에 맞는 메뉴 띄우기
+  }, [navigate1State, navigate2State]);
   const [searchInput, setSearchInput] = useState('');
   const [sortOption, setSortOption] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // 페이지당 아이템 수
-
-  const startAllIndex = (currentPage - 1) * itemsPerPage;
-  const endAllIndex = Math.min(startAllIndex + 5, GoodsTool.length);
-
-  const totalPages = Math.ceil(GoodsTool.length / itemsPerPage); // 전체 페이지 수
-
-  const processedGoods = GoodsTool.map((item) => ({
-    ...item,
-    price: Number(item.price.replace(/[^0-9]/g, '')), // 숫자 이외의 문자열 제거 후 숫자로 변환
-    sale: Number(item.sale.replace(/[^0-9]/g, '')),
-  }));
-
-  // 입력된 텍스트를 기준으로 상품을 필터링합니다.
-  const filteredGoods = processedGoods.filter((item: Item) =>
-    item.title.toLowerCase().includes(searchInput.toLowerCase())
-  );
-
-  // 정렬 함수
-  const sortGoods = (option: string): Item[] => {
-    if (option === '리뷰 많은 수') {
-      return filteredGoods.sort((a, b) => (b.review || 0) - (a.review || 0));
-    } else if (option === '리뷰 적은 수') {
-      return filteredGoods.sort((a, b) => (a.review || 0) - (b.review || 0));
-    }
-    return filteredGoods;
-  };
-
-  // 정렬된 상품 목록
-  const sortedGoods = sortGoods(sortOption);
 
   // 페이지 변경 함수
   const changePage = (pageNumber: number) => {
@@ -69,53 +60,23 @@ export default function Sale() {
               <option value="리뷰 적은 수">리뷰 적은 수</option>
             </select>
           </div>
-          {sortedGoods.slice(startAllIndex, endAllIndex).map((item, index) => (
-            <div key={index * 2 - 1} className="AllImgDiv">
-              <a href="/">
-                <div>
-                  <img src={item.img} alt={item.title} />
-                  <div className="titleDiv">
-                    <h3> {item.title}</h3>
-                    <div className="allPrice">
-                      <div className="allSale">{item.sale}%</div> {item.price}원
-                    </div>
-                    <div className="allBody"> {item.body}</div>
-                    <div style={{ display: 'flex' }}>
-                      {item.delivery && (
-                        <div className="allDelivery">{item.delivery}</div>
-                      )}{' '}
-                      {item.review && (
-                        <a href="/">
-                          <div className="allReview"> 리뷰 : {item.review}</div>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          ))}
         </div>
         <div className="allButtonDiv">
+          <div>
+            {' '}
+            {items.length > 0 &&
+              items.map((item) => {
+                return <div key={item.id}>{item.body}</div>;
+              })}
+          </div>
           <button
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
             <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
           </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <div
-              key={i}
-              onClick={() => changePage(i + 1)}
-              className={currentPage === i + 1 ? 'activePage' : ''}
-            >
-              {i + 1}
-            </div>
-          ))}
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
+
+          <button>
             <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
           </button>
         </div>
