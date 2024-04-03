@@ -1,0 +1,100 @@
+.AllCon {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  .AllKind {
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    select {
+      margin-right: 20px;
+    }
+  }
+  .AllDiv {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+.AllImgDiv {
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  flex-wrap: wrap;
+  padding-bottom: 25px;
+  h3 {
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  img {
+    width: 250px;
+    height: 290px;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+.titleDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 20px;
+}
+.ImgCon {
+  width: 425px;
+}
+.allPrice {
+  display: flex;
+  font-size: 25px;
+  font-weight: bold;
+  .allSale {
+    padding-right: 5px;
+    color: red;
+  }
+}
+.allReview {
+  display: flex;
+}
+.allDelivery {
+  border-radius: 4px;
+  padding: 4px 5px;
+  margin: 0px 6px 0px 0px;
+  color: rgb(83, 91, 99);
+  background: rgb(241, 243, 246);
+  width: 70px;
+  text-align: center;
+}
+.allButtonDiv {
+  width: 900px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    width: 30px;
+    height: 30px;
+    margin: 0 20px;
+    border: 0;
+    background-color: white;
+    margin-right: 0;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  div {
+    padding-left: 10px;
+    cursor: pointer;
+  }
+}
