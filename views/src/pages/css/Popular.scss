@@ -1,26 +1,107 @@
-.navigate {
+.top {
     width: 900px;
-    height: 50px;
-    margin-top: 10%;
+    margin-top: 10.5%;
     margin-left: auto;
     margin-right: auto;
-    display: flex;
-    justify-content: center;
+    .navigate1 {
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        font-size: 1.5vw;
+        text-align: center;
+        line-height: 50px;
+        .allBest {
+            width: 100%;
+            background: rgb(247, 248, 249);
+            color: gray;   
+            cursor: pointer;       
+        }
+        .categoryBest {
+            width: 100%;
+            background: rgb(247, 248, 249);
+            color: gray;
+            cursor: pointer;
+        }
+    }
+    .navigate2 {
+        height: 50px;
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 3%;
+        font-size: 1.3vw;
+        div {
+            p {
+                cursor: pointer;
+            }
+        }
+    }
+    hr {
+        margin-top: 1vw;
+    }
+    
+}
 
-    .allBest {
-        width: 100%;
-        background: blue;
-        color: white;
-        font-size: 2vw;
-        text-align: center;
-        line-height: 50px;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.viewAll {
+    border-bottom: 4px solid blue;
+    p {
+        margin: 0.5vw;
     }
-    .categoryBest {
-        width: 100%;
-        background: rgb(247, 248, 249);
-        color: gray;
-        font-size: 2vw;
-        text-align: center;
-        line-height: 50px;
+}
+.viewWeekChart {
+    border-bottom: 4px solid blue;
+    p {
+        margin: 0.5vw;
     }
+}
+.viewMonthChart {
+    border-bottom: 4px solid blue;
+    p {
+        margin: 0.5vw;
+    }
+}
+.viewGood {
+    border-bottom: 4px solid blue;
+    p {
+        margin: 0.5vw;
+    }
+}
+
+.activeAllBest {
+    background: blue;
+    width: 100%;
+    color: white;
+}
+
+.activeCategoryBest {
+    background: blue;
+    width: 100%;
+    color: white;
 }

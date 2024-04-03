@@ -15,10 +15,9 @@ console.log(sequelize);
 //모델
 db.User = require('./user')(sequelize);
 db.UserProfile = require('./userProfile')(sequelize);
-// db.Post = require('./post')(sequelize);
-// db.Member = require('./member')(sequelize);
-// db.Profile = require('./profile')(sequelize);
-// db.Comment = require('./comment')(sequelize);
+db.Items = require('./items')(sequelize);
+
+
 // 1:1 관계
 // db.Member.hasOne(db.Profile, { foreignKey: 'id', onDelete: 'CASCADE' });
 // db.Profile.belongsTo(db.Member, {

@@ -14,6 +14,9 @@ app.use('/api', apiRouter);
 // http://localhost:5000/user/
 const userRouter = require('./serverRoutes/userRouter');
 app.use('/user', userRouter);
+// http://localhost:5000/user/
+const itemRouter = require('./serverRoutes/itemRouter');
+app.use('/api/item', itemRouter);
 
 // true : DB 초기화
 // db.sequelize.sync({ force: true }).then(() => {
