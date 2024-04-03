@@ -16,32 +16,50 @@ interface Item {
 
 export default function Sale() {
   const [items, setItems] = useState<Item[]>([]);
-  const [navigate1State, setNavigate1State] = useState<string>('activeAllBest');
-  const [navigate2State, setNavigate2State] = useState<string>('viewAll');
-  useEffect(() => {
-    const chart_ALL = async () => {
-      setItems([]);
-      const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart'
-      );
-      const { best_item } = best_items.data;
-      console.log(best_item);
-      setItems(best_item);
-      console.log('items', items);
-    };
-    if (navigate1State === 'activeAllBest' && navigate2State === 'viewAll') {
-      chart_ALL();
-    }
-    // 전체 베스트 20 누른 상태에서 전체보기 / 주간 차트.. 누를 시 메뉴에 맞는 메뉴 띄우기
-  }, [navigate1State, navigate2State]);
-  const [searchInput, setSearchInput] = useState('');
-  const [sortOption, setSortOption] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // 페이지당 아이템 수
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(5);
 
-  // 페이지 변경 함수
-  const changePage = (pageNumber: number) => {
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/item/all');
+        const { all_item } = response.data;
+        setItems(all_item);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchItems();
+  }, []);
+  ////////////////////////////////정렬 방식/////////////////////////////////////////
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const option = e.target.value;
+    const sortedItems = sortGoods(option);
+    setItems(sortedItems);
+  };
+
+  const sortGoods = (option: string): Item[] => {
+    if (option === '리뷰 많은 수') {
+      return items.slice().sort((a, b) => (b.review || 0) - (a.review || 0));
+    } else if (option === '리뷰 적은 수') {
+      return items.slice().sort((a, b) => (a.review || 0) - (b.review || 0));
+    } else if (option === '정렬방식') {
+      return items;
+    }
+    return items;
+  };
+
+  ////////////////////////페이지 버튼 및 숫자//////////////////////////
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+  };
+  ////////////////////////////////////////////////////////////////////
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -49,34 +67,126 @@ export default function Sale() {
       <div className="AllCon">
         <div className="AllDiv">
           <div className="AllKind">
-            <select
-              name=""
-              id=""
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-            >
-              <option value="">정렬방식</option>
+            <select name="" id="" onChange={handleSortChange}>
+              <option value="정렬방식">정렬방식</option>
               <option value="리뷰 많은 수">리뷰 많은 수</option>
               <option value="리뷰 적은 수">리뷰 적은 수</option>
             </select>
           </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}
+          >
+            <div className="allToolCon">
+              {items
+                .filter((_, index) => index % 2 !== 1)
+                .slice(
+                  (currentPage - 1) * itemsPerPage,
+                  currentPage * itemsPerPage
+                )
+                .map((item) => (
+                  <div key={item.id} className="AllImgDiv">
+                    <a href="/">
+                      <div>
+                        <img src={item.img} alt={item.title} />
+                        <div className="titleDiv">
+                          <h4>{item.title}</h4>
+                          <div className="allPrice">
+                            <div className="allSale">{item.sale}</div>{' '}
+                            {item.price}
+                          </div>
+                          <div className="allBody">{item.body}</div>
+                          <div style={{ display: 'flex' }}>
+                            {item.delivery && (
+                              <div className="allDelivery">{item.delivery}</div>
+                            )}{' '}
+                            {item.review && (
+                              <a href="/">
+                                <div className="allReview">
+                                  {' '}
+                                  리뷰 : {item.review}
+                                </div>
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                ))}
+            </div>
+            <div className="allToolCon">
+              {items
+                .filter((_, index) => index % 2 !== 0)
+                .slice(
+                  (currentPage - 1) * itemsPerPage,
+                  currentPage * itemsPerPage
+                )
+                .map((item) => (
+                  <div key={item.id} className="AllImgDiv">
+                    <a href="/">
+                      <div>
+                        <img src={item.img} alt={item.title} />
+                        <div className="titleDiv">
+                          <h4>{item.title}</h4>
+                          <div className="allPrice">
+                            <div className="allSale">{item.sale}</div>{' '}
+                            {item.price}
+                          </div>
+                          <div className="allBody">{item.body}</div>
+                          <div style={{ display: 'flex' }}>
+                            {item.delivery && (
+                              <div className="allDelivery">{item.delivery}</div>
+                            )}{' '}
+                            {item.review && (
+                              <a href="/">
+                                <div className="allReview">
+                                  {' '}
+                                  리뷰 : {item.review}
+                                </div>
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
         <div className="allButtonDiv">
-          <div>
-            {' '}
-            {items.length > 0 &&
-              items.map((item) => {
-                return <div key={item.id}>{item.body}</div>;
-              })}
-          </div>
           <button
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => {
+              handlePageChange(currentPage - 1);
+              scrollToTop();
+            }}
             disabled={currentPage === 1}
           >
             <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
           </button>
-
-          <button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <div
+              key={i}
+              onClick={() => {
+                handlePageChange(i + 1);
+                scrollToTop();
+              }}
+              className={currentPage === i + 1 ? 'activePage' : ''}
+            >
+              {i + 1}
+            </div>
+          ))}
+          <button
+            onClick={() => {
+              handlePageChange(currentPage + 1);
+              scrollToTop();
+            }}
+            disabled={currentPage === totalPages}
+          >
             <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
           </button>
         </div>

@@ -24,24 +24,26 @@
   }
 }
 .AllImgDiv {
-  width: 900px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   align-content: space-around;
   flex-wrap: wrap;
   padding-bottom: 25px;
-  h3 {
-    padding: 0;
-    margin: 0;
-    font-size: 20px;
-    font-weight: bold;
+  box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+  margin-bottom: 25px;
+  border-radius: 20px;
+  &:hover {
+    transform: scale(1.05);
+  }
+  h4 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
   }
   img {
     width: 250px;
     height: 290px;
-    &:hover {
-      transform: scale(1.05);
-    }
+    border-radius: 20px;
   }
 }
 .titleDiv {
@@ -55,15 +57,23 @@
 }
 .allPrice {
   display: flex;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
+  padding-top: 10px;
   .allSale {
     padding-right: 5px;
     color: red;
   }
 }
+.allBody {
+  color: gray;
+  padding: 10px 0;
+}
 .allReview {
   display: flex;
+  &:hover {
+    font-weight: bold;
+  }
 }
 .allDelivery {
   border-radius: 4px;
@@ -97,4 +107,10 @@
     padding-left: 10px;
     cursor: pointer;
   }
+}
+.allToolCon {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -32,8 +32,11 @@ const ItemModel = (sequelize) => {
         // NULL 추가
       },
       delivery: {
-          type: DataTypes.STRING(255),
-          // NULL 추가해야됨
+        type: DataTypes.STRING(255),
+        // NULL 추가해야됨
+      },
+      review: {
+        type: DataTypes.INTEGER,
       },
       chart: {
         type: DataTypes.INTEGER,
