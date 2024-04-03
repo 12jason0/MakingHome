@@ -22,13 +22,12 @@ function App() {
       <Routes>
         <Route
           path="/login"
-          element={<LoginPage setShowHeader={setShowHeader} />}
+          element={<LoginPage setShowHeader={setShowHeader} />} />
         <Route
           path="/register"
           element={<RegisterPage setShowHeader={setShowHeader} />}
         />
         <Route path="/" element={<MainPage setShowHeader={setShowHeader}/>} />
-        <Route path="/Sale" element={<Sale />} />
         <Route path="/all" element={<AllGood />} />
         <Route path="/Popular" element={<Popular />} />
         <Route path="/Announcement1" element={<Announcement1 />} />
