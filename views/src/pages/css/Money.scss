@@ -4,19 +4,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  a {
-    text-decoration: none;
-    color: black;
-  }
-  .AllKind {
-    height: auto;
+  .navigate2 {
+    height: 50px;
     display: flex;
-    justify-content: flex-end;
-    padding: 10px 0;
-    position: fixed;
-    width: 900px;
-    select {
-      margin-right: 20px;
+    justify-content: space-evenly;
+    margin-top: 3%;
+    font-size: 1.3vw;
+    div {
+      border-bottom: 4px solid blue;
+      p {
+        margin: 0.5vw;
+        font-size: 18px;
+        color: rgb(128, 128, 128);
+        padding-bottom: 20px;
+      }
     }
   }
   .AllDiv {
@@ -134,4 +135,9 @@
 
 .activePage {
   background-color: blue;
+}
+hr {
+  margin-top: 1vw;
+  width: 100%;
+  background-color: gray;
 }

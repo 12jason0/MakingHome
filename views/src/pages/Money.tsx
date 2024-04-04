@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/all.scss';
+import './css/Money.scss';
 
 interface Item {
   id: number;
@@ -14,7 +14,7 @@ interface Item {
   chart: number;
 }
 
-export default function AllGood() {
+export default function Money() {
   const [items, setItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -32,26 +32,6 @@ export default function AllGood() {
     };
     fetchItems();
   }, []);
-  ////////////////////////////////정렬 방식/////////////////////////////////////////
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const option = e.target.value;
-    const sortedItems = sortGoods(option);
-    if (sortedItems !== undefined) {
-      setItems(sortedItems);
-      setCurrentPage(1);
-      scrollToTop();
-    }
-  };
-
-  const sortGoods = (option: string): Item[] => {
-    if (option === '리뷰 많은 수') {
-      return items.slice().sort((a, b) => (b.review || 0) - (a.review || 0));
-    } else if (option === '리뷰 적은 수') {
-      return items.slice().sort((a, b) => (a.review || 0) - (b.review || 0));
-    } else {
-      return items;
-    }
-  };
 
   ////////////////////////페이지 버튼 및 숫자//////////////////////////
   const handlePageChange = (pageNumber: number) => {
@@ -69,15 +49,24 @@ export default function AllGood() {
     <>
       <div className="AllCon">
         <div className="AllDiv">
-          <div className="AllKind">
-            <select name="" id="" onChange={handleSortChange}>
-              <option value="정렬방식" hidden>
-                정렬방식
-              </option>
-              <option value="리뷰 많은 수">리뷰 많은 수</option>
-              <option value="리뷰 적은 수">리뷰 적은 수</option>
-            </select>
+          <div className="navigate2">
+            <div className="AllMoney">
+              <p>전체 보기</p>
+              <div />
+
+              <div className="div1000"></div>
+              <div className="div3000"></div>
+              <div className="div5000"></div>
+              <div className="div7000"></div>
+              <div className="div9000"></div>
+              <p>천원 코너</p>
+              <p>3천원 코너</p>
+              <p>5천원 코너</p>
+              <p>7천원 코너</p>
+              <p>9천원 코너</p>
+            </div>
           </div>
+          <hr />
           <div
             style={{
               display: 'flex',
