@@ -80,7 +80,7 @@ export default function Header() {
         return hobby;
       case '조명':
         return Lighting;
-      case '셀프인테리어/공구':
+      case '셀프인테리어':
         return Tool;
       default:
         return [];
@@ -191,10 +191,10 @@ export default function Header() {
             <Link to="/Popular" className="menu-link">
               인기 차트
             </Link>
-            <Link to="/under-10000" className="menu-link">
+            <Link to="/Money" className="menu-link">
               만원 이하
             </Link>
-            <Link to="/housewarming-gift" className="menu-link">
+            <Link to="/housewarming-gift" className="menu-link ">
               집들이 선물
             </Link>
             <Link to="/all" className="menu-link">

@@ -1,107 +1,78 @@
 .top {
-    width: 900px;
-    margin-top: 10.5%;
-    margin-left: auto;
-    margin-right: auto;
-    .navigate1 {
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        font-size: 1.5vw;
-        text-align: center;
-        line-height: 50px;
-        .allBest {
-            width: 100%;
-            background: rgb(247, 248, 249);
-            color: gray;   
-            cursor: pointer;       
-        }
-        .categoryBest {
-            width: 100%;
-            background: rgb(247, 248, 249);
-            color: gray;
-            cursor: pointer;
-        }
+  width: 900px;
+  margin-top: 10.5%;
+  margin-left: auto;
+  margin-right: auto;
+  .navigate1 {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5vw;
+    text-align: center;
+    line-height: 50px;
+    .allBest {
+      width: 100%;
+      background: rgb(247, 248, 249);
+      color: gray;
+      cursor: pointer;
     }
-    .navigate2 {
-        height: 50px;
-        display: flex;
-        justify-content: space-evenly;
-        margin-top: 3%;
-        font-size: 1.3vw;
-        div {
-            p {
-                cursor: pointer;
-            }
-        }
+    .categoryBest {
+      width: 100%;
+      background: rgb(247, 248, 249);
+      color: gray;
+      cursor: pointer;
     }
-    hr {
-        margin-top: 1vw;
+  }
+  .navigate2 {
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 3%;
+    font-size: 1.3vw;
+    div {
+      p {
+        cursor: pointer;
+      }
     }
-    
+  }
+  hr {
+    margin-top: 1vw;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .viewAll {
-    border-bottom: 4px solid blue;
-    p {
-        margin: 0.5vw;
-    }
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
 }
 .viewWeekChart {
-    border-bottom: 4px solid blue;
-    p {
-        margin: 0.5vw;
-    }
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
 }
 .viewMonthChart {
-    border-bottom: 4px solid blue;
-    p {
-        margin: 0.5vw;
-    }
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
 }
 .viewGood {
-    border-bottom: 4px solid blue;
-    p {
-        margin: 0.5vw;
-    }
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
 }
 
 .activeAllBest {
-    background: blue;
-    width: 100%;
-    color: white;
+  background: blue;
+  width: 100%;
+  color: white;
 }
 
 .activeCategoryBest {
-    background: blue;
-    width: 100%;
-    color: white;
+  background: blue;
+  width: 100%;
+  color: white;
 }

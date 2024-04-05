@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/all.scss';
+import '../css/ItemPage.scss';
 
 interface Item {
   id: number;
@@ -16,11 +16,11 @@ interface Item {
   category2: string;
 }
 
-export default function AllGood() {
+export default function CleanUp() {
   const [items, setItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(6);
+  const totalPages = Math.ceil(1);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -34,7 +34,6 @@ export default function AllGood() {
     };
     fetchItems();
   }, []);
-  ////////////////////////////////정렬 방식/////////////////////////////////////////
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const option = e.target.value;
     const sortedItems = sortGoods(option);
@@ -44,7 +43,6 @@ export default function AllGood() {
       scrollToTop();
     }
   };
-
   const sortGoods = (option: string): Item[] => {
     if (option === '리뷰 많은 수') {
       return items.slice().sort((a, b) => (b.review || 0) - (a.review || 0));
@@ -55,18 +53,22 @@ export default function AllGood() {
     }
   };
 
-  ////////////////////////페이지 버튼 및 숫자//////////////////////////
+  // category 필터링
+  const furnitureItems = items.filter(
+    (item) => item.category2 === '청소 가전' || item.category2 === '화장실'
+  );
+
+  // 페이지 변경 처리 함수, 필터링된 항목 개수에 따라 totalPages 갱신
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-  ////////////////////////////////////////////////////////////////////
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   };
-
   return (
     <>
       <div className="AllCon">
@@ -89,7 +91,7 @@ export default function AllGood() {
             }}
           >
             <div className="allToolCon">
-              {items
+              {furnitureItems
                 .filter((_, index) => index % 2 !== 1)
                 .slice(
                   (currentPage - 1) * itemsPerPage,
@@ -128,7 +130,7 @@ export default function AllGood() {
                 ))}
             </div>
             <div className="allToolCon">
-              {items
+              {furnitureItems
                 .filter((_, index) => index % 2 !== 0)
                 .slice(
                   (currentPage - 1) * itemsPerPage,
