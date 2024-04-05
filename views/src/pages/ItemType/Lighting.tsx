@@ -103,7 +103,8 @@ export default function Lighting() {
                           <h4>{item.title}</h4>
                           <div className="allPrice">
                             <div className="allSale">{item.sale}</div>
-                            {item.price}원
+                            {item.price.toLocaleString()}원{' '}
+                            {/* 원화 표시 추가 */}
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
@@ -140,8 +141,9 @@ export default function Lighting() {
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>{' '}
-                            {item.price}
+                            <div className="allSale">{item.sale}</div>
+                            {item.price.toLocaleString()}원{' '}
+                            {/* 원화 표시 추가 */}
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>

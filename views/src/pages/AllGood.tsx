@@ -8,10 +8,12 @@ interface Item {
   img: string;
   title: string;
   sale: string;
-  price: string;
+  price: number;
   delivery: string;
   review: number;
   chart: number;
+  category1: string;
+  category2: string;
 }
 
 export default function AllGood() {
@@ -101,8 +103,9 @@ export default function AllGood() {
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>{' '}
-                            {item.price}원
+                            <div className="allSale">{item.sale}</div>
+                            {item.price.toLocaleString()}원{' '}
+                            {/* 원화 표시 추가 */}
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
@@ -139,8 +142,9 @@ export default function AllGood() {
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>{' '}
-                            {item.price}
+                            <div className="allSale">{item.sale}</div>
+                            {item.price.toLocaleString()}원{' '}
+                            {/* 원화 표시 추가 */}
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
