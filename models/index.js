@@ -16,7 +16,7 @@ console.log(sequelize);
 db.User = require('./user')(sequelize);
 db.UserProfile = require('./userProfile')(sequelize);
 db.Items = require('./items')(sequelize);
-
+db.ItemChart = require('./itemChart')(sequelize);
 
 // 1:1 관계
 // db.Member.hasOne(db.Profile, { foreignKey: 'id', onDelete: 'CASCADE' });

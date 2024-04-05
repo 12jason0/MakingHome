@@ -1,9 +1,9 @@
 const DataTypes = require('sequelize');
 
 // 단수형태 지정해주지 않으면 테이블 복수형태로 생성됨 : members
-const ItemModel = (sequelize) => {
+const ItemChartModel = (sequelize) => {
   return sequelize.define(
-    'items',
+    'itemChart',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -29,11 +29,9 @@ const ItemModel = (sequelize) => {
       },
       price: {
         type: DataTypes.INTEGER,
-        // NULL 추가
       },
       delivery: {
         type: DataTypes.STRING(255),
-        // NULL 추가해야됨
       },
       review: {
         type: DataTypes.INTEGER,
@@ -57,4 +55,4 @@ const ItemModel = (sequelize) => {
   );
 };
 
-module.exports = ItemModel;
+module.exports = ItemChartModel;
