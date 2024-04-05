@@ -326,7 +326,7 @@ export default function Popular() {
                           <h4>{item.title}</h4>
                           <div className="childPrice">
                             <div className="childSale">{item.sale}</div>
-                            {item.price}원
+                            {item.price.toLocaleString()}원{' '}
                           </div>
                           <div className="childBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
@@ -364,7 +364,7 @@ export default function Popular() {
                           <h4>{item.title}</h4>
                           <div className="childPrice">
                             <div className="childSale">{item.sale}</div>
-                            {item.price}원
+                            {item.price.toLocaleString()}원{' '}
                           </div>
                           <div className="childBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
