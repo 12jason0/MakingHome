@@ -23,6 +23,7 @@ const MainsetImg = [
     id: '4',
     img: 'https://m.oneroommaking.com/web/upload/appfiles/ZaReJam3QiELznoZeGGkMG/39a5fff965fcdc404b2d1ddaf6faf65e.jpg',
     title: '대청소 세트',
+    url: '/Cleanup',
   },
   {
     id: '5',

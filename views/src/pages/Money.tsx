@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/all.scss';
+import './css/Money.scss';
 
 interface Item {
   id: number;
@@ -16,12 +16,37 @@ interface Item {
   category2: string;
 }
 
-export default function AllGood() {
+export default function Money() {
   const [items, setItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(6);
+  const totalPages = Math.ceil(2);
+  const [navigate2State, setNavigate2State] = useState<string>('viewAll');
 
+  const all = () => {
+    setNavigate2State('viewAll');
+  };
+
+  const view1000 = () => {
+    setNavigate2State('view1000');
+  };
+
+  const view3000 = () => {
+    setNavigate2State('view3000');
+  };
+
+  const view5000 = () => {
+    setNavigate2State('view5000');
+  };
+
+  const view7000 = () => {
+    setNavigate2State('view7000');
+  };
+
+  const view9000 = () => {
+    setNavigate2State('view9000');
+  };
+  /////////////////////////////////////////데이터 가져오기///////////////////////////////////////////////
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -33,8 +58,8 @@ export default function AllGood() {
       }
     };
     fetchItems();
-  }, []);
-  ////////////////////////////////정렬 방식/////////////////////////////////////////
+  }, [navigate2State]);
+
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const option = e.target.value;
     const sortedItems = sortGoods(option);
@@ -44,7 +69,7 @@ export default function AllGood() {
       scrollToTop();
     }
   };
-
+  /////////////////////////////////////////option///////////////////////////////////////////////
   const sortGoods = (option: string): Item[] => {
     if (option === '리뷰 많은 수') {
       return items.slice().sort((a, b) => (b.review || 0) - (a.review || 0));
@@ -54,12 +79,30 @@ export default function AllGood() {
       return items;
     }
   };
+  ////////////////////////////////////가격 별로 해당 데이터 불러오기///////////////////////////////////
+  const furnitureItems = items.filter((item) => {
+    switch (navigate2State) {
+      case 'viewAll':
+        return item.price <= 10000;
+      case 'view1000':
+        return item.price <= 1000;
+      case 'view3000':
+        return item.price >= 1001 && item.price <= 3000;
+      case 'view5000':
+        return item.price >= 3001 && item.price <= 5000;
+      case 'view7000':
+        return item.price >= 5001 && item.price <= 7000;
+      case 'view9000':
+        return item.price >= 7001 && item.price <= 9000;
+      default:
+        return true;
+    }
+  });
 
-  ////////////////////////페이지 버튼 및 숫자//////////////////////////
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-  ////////////////////////////////////////////////////////////////////
+  /////////////////////////////////option, 페이지 번호, 이동 할 시 페이지 맨 위로 이동//////////////////////////////////////
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -71,6 +114,45 @@ export default function AllGood() {
     <>
       <div className="AllCon">
         <div className="AllDiv">
+          <div className="navigate2">
+            <div
+              className={navigate2State === 'viewAll' ? navigate2State : ''}
+              onClick={all}
+            >
+              <p>전체보기</p>
+            </div>
+            <div
+              className={navigate2State === 'view1000' ? navigate2State : ''}
+              onClick={view1000}
+            >
+              <p>천원 코너</p>
+            </div>
+            <div
+              className={navigate2State === 'view3000' ? navigate2State : ''}
+              onClick={view3000}
+            >
+              <p>3천원 코너</p>
+            </div>
+            <div
+              className={navigate2State === 'view5000' ? navigate2State : ''}
+              onClick={view5000}
+            >
+              <p>5천원 코너</p>
+            </div>
+            <div
+              className={navigate2State === 'view7000' ? navigate2State : ''}
+              onClick={view7000}
+            >
+              <p>7천원 코너</p>
+            </div>
+            <div
+              className={navigate2State === 'view9000' ? navigate2State : ''}
+              onClick={view9000}
+            >
+              <p>9천원 코너</p>
+            </div>
+          </div>
+          <hr />
           <div className="AllKind">
             <select name="" id="" onChange={handleSortChange}>
               <option value="정렬방식" hidden>
@@ -80,6 +162,16 @@ export default function AllGood() {
               <option value="리뷰 적은 수">리뷰 적은 수</option>
             </select>
           </div>
+          {/* ///////////////////////////////////////해당 데이터가 없을 때///////////////////////////////////////////////////////// */}
+          {furnitureItems.length === 0 && (
+            <div className="emptyMessage">
+              <div className="imageContainer">
+                <div className="spinner"></div>
+              </div>
+              더 열심히 하겠습니다.
+            </div>
+          )}
+          {/* //////////////////////////////////////결과 화면 시작//////////////////////////////////////// */}
           <div
             style={{
               display: 'flex',
@@ -89,7 +181,7 @@ export default function AllGood() {
             }}
           >
             <div className="allToolCon">
-              {items
+              {furnitureItems
                 .filter((_, index) => index % 2 !== 1)
                 .slice(
                   (currentPage - 1) * itemsPerPage,
@@ -104,18 +196,16 @@ export default function AllGood() {
                           <h4>{item.title}</h4>
                           <div className="allPrice">
                             <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원{' '}
-                            {/* 원화 표시 추가 */}
+                            {item.price.toLocaleString()}원
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
                             {item.delivery && (
                               <div className="allDelivery">{item.delivery}</div>
-                            )}{' '}
+                            )}
                             {item.review && (
                               <a href="/">
                                 <div className="allReview">
-                                  {' '}
                                   리뷰 : {item.review}
                                 </div>
                               </a>
@@ -128,7 +218,7 @@ export default function AllGood() {
                 ))}
             </div>
             <div className="allToolCon">
-              {items
+              {furnitureItems
                 .filter((_, index) => index % 2 !== 0)
                 .slice(
                   (currentPage - 1) * itemsPerPage,
@@ -143,18 +233,16 @@ export default function AllGood() {
                           <h4>{item.title}</h4>
                           <div className="allPrice">
                             <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원{' '}
-                            {/* 원화 표시 추가 */}
+                            {item.price.toLocaleString()}원
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
                             {item.delivery && (
                               <div className="allDelivery">{item.delivery}</div>
-                            )}{' '}
+                            )}
                             {item.review && (
                               <a href="/">
                                 <div className="allReview">
-                                  {' '}
                                   리뷰 : {item.review}
                                 </div>
                               </a>
@@ -167,44 +255,45 @@ export default function AllGood() {
                 ))}
             </div>
           </div>
-        </div>
-        <div className="allButtonDiv">
-          <button
-            onClick={() => {
-              handlePageChange(currentPage - 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === 1}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <div
-              key={i}
+
+          <div className="allButtonDiv">
+            <button
               onClick={() => {
-                handlePageChange(i + 1);
+                handlePageChange(currentPage - 1);
                 scrollToTop();
               }}
-              className="pageNumber"
+              disabled={currentPage === 1}
             >
+              <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
               <div
-                className={`pageNumberCircle ${
-                  currentPage === i + 1 ? 'activePage' : ''
-                }`}
+                key={i}
+                onClick={() => {
+                  handlePageChange(i + 1);
+                  scrollToTop();
+                }}
+                className="pageNumber"
               >
-                {i + 1}
+                <div
+                  className={`pageNumberCircle ${
+                    currentPage === i + 1 ? 'activePage' : ''
+                  }`}
+                >
+                  {i + 1}
+                </div>
               </div>
-            </div>
-          ))}
-          <button
-            onClick={() => {
-              handlePageChange(currentPage + 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === totalPages}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
-          </button>
+            ))}
+            <button
+              onClick={() => {
+                handlePageChange(currentPage + 1);
+                scrollToTop();
+              }}
+              disabled={currentPage === totalPages}
+            >
+              <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
+            </button>
+          </div>
         </div>
       </div>
     </>

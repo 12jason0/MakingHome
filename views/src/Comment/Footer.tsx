@@ -92,6 +92,7 @@ export default function Footer() {
                 <li onClick={li3}>📦교환/반품하고 싶어요!</li>
                 <li onClick={li4}>🙅🏻‍♂️샀는데 취소하고 싶어요</li>
                 <a
+                  className="popuplink"
                   href="https://www.youtube.com/c/%EC%9B%90%EB%A3%B8%EB%A7%8C%EB%93%A4%EA%B8%B0"
                   target="_blank"
                 >

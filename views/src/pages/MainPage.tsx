@@ -9,29 +9,34 @@ import './css/Main.scss';
 interface RMainPageProps {
   setShowHeader: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function MainPage({setShowHeader}:RMainPageProps) {
+function MainPage({ setShowHeader }: RMainPageProps) {
   setShowHeader(true);
   const Slide = () => {
     const slideImages = [
       {
         id: '0',
         img: 'https://m.oneroommaking.com/web/upload/appfiles/ZaReJam3QiELznoZeGGkMG/651b0ef01c3a8964e1b33285c0cdbcad.png',
+        url: '',
       },
       {
         id: '1',
         img: 'https://m.oneroommaking.com/web/product/extra/big/202312/a465bdb5a1fe7d4b3a585d4cf9bbfc5d.jpg',
+        url: '',
       },
       {
         id: '2',
         img: 'https://m.oneroommaking.com/web/product/big/202311/656b8a84bc76dc0a514c4845f547e9f3.jpg',
+        url: '',
       },
       {
         id: '3',
         img: 'https://m.oneroommaking.com/web/product/big/202206/edca24f5e9d8e1ca73a84d437f273c2c.gif',
+        url: '',
       },
       {
         id: '4',
         img: 'https://m.oneroommaking.com/web/product/medium/202402/2552f300917e6066714b5dbb7a8d0e43.jpg',
+        url: '',
       },
     ];
 
@@ -117,6 +122,12 @@ function MainPage({setShowHeader}:RMainPageProps) {
     };
     const setNextSlide = () => {
       setImgSet((preIdx) => (preIdx + 1) % MainsetImg.length);
+    };
+    const handleImageClick = () => {
+      const url = MainsetImg[imgset]?.url;
+      if (url) {
+        window.location.href = url;
+      }
     };
 
     //////////////////////////////////////집들이 선물/////////////////////////////////////////////
@@ -222,7 +233,7 @@ function MainPage({setShowHeader}:RMainPageProps) {
               </div>
               {MiddleCategory.slice(startCategoryIndex, endCategoryIndex).map(
                 (item, index) => (
-                  <a href="#" key={index}>
+                  <a href={item.url} key={index}>
                     <div className="CategoryImg">
                       <img
                         src={item.src}
@@ -255,11 +266,9 @@ function MainPage({setShowHeader}:RMainPageProps) {
                   alt="이전"
                 />
               </div>
-              <a href="">
-                <div className="setImgDiv">
-                  <img src={MainsetImg[imgset].img} alt={`Slide${imgset}`} />
-                </div>
-              </a>
+              <div className="setImgDiv" onClick={handleImageClick}>
+                <img src={MainsetImg[imgset].img} alt={`Slide${imgset}`} />
+              </div>
               <div className="rightButton" onClick={setNextSlide}>
                 <img
                   src={`${process.env.PUBLIC_URL}/image/setRightArrow.png`}
