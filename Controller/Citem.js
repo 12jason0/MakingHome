@@ -1,10 +1,15 @@
-const { Items, ItemChart } = require('../models');
+const { Items, ItemChart, ItemGift } = require('../models');
 const { Sequelize, Op, where } = require('sequelize');
 
 // all 모든 상품 페이지 데이터 조회
 const all = async (req, res) => {
   const all_item = await Items.findAll();
   res.json({ all_item });
+};
+// 집들이 모든 상품 페이지 데이터 조회
+const gift = async (req, res) => {
+  const gift_item = await ItemGift.findAll();
+  res.json({ gift_item });
 };
 // best 전체 50개 가구 뽑아오기
 const chart_All = async (req, res) => {
@@ -131,6 +136,7 @@ const search = async (req, res) => {
 
 module.exports = {
   all,
+  gift,
   chart_All,
   chart_Week,
   chart_Month,

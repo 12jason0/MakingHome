@@ -19,7 +19,6 @@ const itemTrees = [
   '거실장/레지대',
   '밥상/테이블/협탁',
 ];
-
 const homeAppliances = [
   '전체보기',
   '청소 가전',

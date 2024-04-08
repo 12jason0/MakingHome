@@ -16,6 +16,7 @@ console.log(sequelize);
 db.User = require('./user')(sequelize);
 db.UserProfile = require('./userProfile')(sequelize);
 db.Items = require('./items')(sequelize);
+db.ItemGift = require('./Gift')(sequelize);
 db.ItemChart = require('./itemChart')(sequelize);
 
 // 1:1 관계
