@@ -1,5 +1,5 @@
-const { Items, ItemChart, ItemGift } = require('../models');
-const { Sequelize, Op } = require('sequelize');
+const { Items, ItemChart } = require('../models');
+const { Sequelize, Op, where } = require('sequelize');
 
 // all 모든 상품 페이지 데이터 조회
 const all = async (req, res) => {
@@ -42,7 +42,6 @@ const chart_Honor = async (req, res) => {
   });
   res.json({ type: '명예의 전당', best_item });
 };
-
 const chart_ToolA = async (req, res) => {
   const best_item = await Items.findAll({
     where: { category1: '가구' },
@@ -100,6 +99,41 @@ const chart_ToolH = async (req, res) => {
   });
   res.json({ best_item });
 };
+// 검색 엔진
+const search = async (req, res) => {
+  const { input_item } = req.query;
+  // console.log('search 사용자 입력 item :', input_item);
+
+  // 키워드가 카테고리로 구분될 때
+  const search_category = await Items.findAll({
+    where: {
+      category1: {
+        [Sequelize.Op.like]: `${input_item}`,
+      },
+    },
+  });
+  // 키워드가 카테고리로 구분되지 않을 경우
+  const search_title = await Items.findAll({
+    where: {
+      title: {
+        // mysql Like & % 연산자 사용 : 문자열에 해당하는 데이터 전부 뽑아옴
+        [Sequelize.Op.like]: `%${input_item}%`,
+      },
+    },
+  });
+  if (search_category.length !== 0) {
+    res.json({ success: true, items: search_category, user_input: input_item });
+  } else if (search_title.length !== 0) {
+    res.json({ success: true, items: search_title, user_input: input_item });
+  } else {
+    // 전혀 해당하는 데이터가 없는 경우
+    res.json({
+      success: false,
+      message: '키워드에 해당하는 데이터가 없습니다.',
+    });
+  }
+};
+
 module.exports = {
   all,
   gift,
@@ -115,4 +149,5 @@ module.exports = {
   chart_ToolF,
   chart_ToolG,
   chart_ToolH,
+  search,
 };

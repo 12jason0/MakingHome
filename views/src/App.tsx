@@ -28,6 +28,7 @@ import SleepAlone from './pages/ItemType/SleepAlone';
 import Singing from './pages/ItemType/Singing';
 import PCroom from './pages/ItemType/PCroom';
 import PCmovie from './pages/ItemType/PCmovie';
+import Search from './pages/Search';
 
 function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -65,6 +66,7 @@ function App() {
         <Route path="/SleepAlone" element={<SleepAlone />} />
         <Route path="/PCroom" element={<PCroom />} />
         <Route path="/PCmovie" element={<PCmovie />} />
+        <Route path="/search/:item" element={<Search />} />
       </Routes>
       <Footer />
     </BrowserRouter>
