@@ -1,4 +1,4 @@
-const { Items, ItemChart } = require('../models');
+const { Items, ItemChart, ItemGift } = require('../models');
 const { Sequelize, Op, where } = require('sequelize');
 
 // all 모든 상품 페이지 데이터 조회
