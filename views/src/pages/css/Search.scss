@@ -1,0 +1,97 @@
+.Container {
+  width: 900px;
+  margin-top: 12.5%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3%;
+  .searchResultContainer {
+    display: flex;
+    justify-content: space-between;
+    .reverse {
+      position: relative;
+      .reverseImg {
+        width: 40px;
+        cursor: pointer;
+      }
+    }
+    .searchResult {
+      text-align: center;
+      div {
+        line-height: 44px;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.parentToolContainer {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  a {
+    text-decoration-line: none;
+  }
+  .childImgContainer {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    flex-wrap: wrap;
+    padding-bottom: 25px;
+    box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+    margin-bottom: 25px;
+    border-radius: 20px;
+    &:hover {
+      transform: scale(1.05);
+    }
+    h4 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+    }
+    img {
+      width: 250px;
+      height: 290px;
+      border-radius: 20px;
+    }
+  }
+  .childTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 20px;
+    h4 {
+      color: black;
+    }
+  }
+  .childPrice {
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 10px;
+    color: black;
+    .childSale {
+      padding-right: 5px;
+      color: red;
+    }
+  }
+  .childDelivery {
+    border-radius: 4px;
+    padding: 4px 5px;
+    margin: 0px 6px 0px 0px;
+    color: rgb(83, 91, 99);
+    background: rgb(241, 243, 246);
+    width: 70px;
+    text-align: center;
+  }
+  .childReview {
+    display: flex;
+    &:hover {
+      font-weight: bold;
+    }
+  }
+  .childBody {
+    color: gray;
+    padding: 10px 0;
+  }
+}
