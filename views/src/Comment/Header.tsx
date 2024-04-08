@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import './css/Header.scss';
 import { items } from './tool/MenuTool';
 
@@ -9,6 +9,7 @@ export default function Header() {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [searchPopup, setSearchPopup] = useState(false);
   const searchUseRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const OpenPopup = () => {
     setSearchPopup(true);
   };
@@ -74,13 +75,11 @@ export default function Header() {
       navigate(`/search/${searchQuery}`);
       closePopup();
     }
+  };
 
-    // // 검색된 내용을 URL에 추가하여 새로운 URL을 생성합니다.
-    // const searchQuery = encodeURIComponent(inputValue.trim());
-    // const newUrl = `/?q=${searchQuery}`;
-
-    // // 새로운 URL로 페이지를 이동합니다.
-    // window.location.href = newUrl;
+  // 새로운 창으로 이동할 때 팝업을 닫기
+  const handleLinkClick = () => {
+    setSearchPopup(false);
   };
   // 검색 클릭 > popup 창 > 하단 li 리스트 클릭 이벤트
   const searchClick = (e: any) => {
@@ -239,11 +238,41 @@ export default function Header() {
                     </ul>
                     <ul>
                       {' '}
-                      <li>화장품 정리함</li>
-                      <li>압축백</li>
-                      <li>디퓨저</li>
-                      <li>접이식 매트리스</li>
-                      <li>청소기</li>
+                      <li
+                        onClick={(e) => {
+                          searchClick(e);
+                        }}
+                      >
+                        화장품 정리함
+                      </li>
+                      <li
+                        onClick={(e) => {
+                          searchClick(e);
+                        }}
+                      >
+                        압축백
+                      </li>
+                      <li
+                        onClick={(e) => {
+                          searchClick(e);
+                        }}
+                      >
+                        디퓨저
+                      </li>
+                      <li
+                        onClick={(e) => {
+                          searchClick(e);
+                        }}
+                      >
+                        접이식 매트리스
+                      </li>
+                      <li
+                        onClick={(e) => {
+                          searchClick(e);
+                        }}
+                      >
+                        청소기
+                      </li>
                     </ul>
                   </div>
                 </div>
