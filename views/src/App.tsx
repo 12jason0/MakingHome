@@ -23,6 +23,11 @@ import Lighting from './pages/ItemType/Lighting';
 import Tool from './pages/ItemType/Tool';
 import CleanUp from './pages/ItemType/CleanUp';
 import Money from './pages/Money';
+import HouseGift from './pages/HouseGift';
+import SleepAlone from './pages/ItemType/SleepAlone';
+import Singing from './pages/ItemType/Singing';
+import PCroom from './pages/ItemType/PCroom';
+import PCmovie from './pages/ItemType/PCmovie';
 
 function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -48,13 +53,18 @@ function App() {
         <Route path="/Hobby" element={<Hobby />} />
         <Route path="/Lighting" element={<Lighting />} />
         <Route path="/Tool" element={<Tool />} />
-        <Route path="/CleanUp" element={<CleanUp />} />
         <Route path="/Money" element={<Money />} />
+        <Route path="/HouseGift" element={<HouseGift />} />
         <Route path="/DailySupplies" element={<DailySupplies />} />
         <Route path="/Announcement1" element={<Announcement1 />} />
         <Route path="/Announcement2" element={<Announcement2 />} />
         <Route path="/Announcement3" element={<Announcement3 />} />
         <Route path="/shopping" element={<Shopping />} />
+        <Route path="/CleanUp" element={<CleanUp />} />
+        <Route path="/Singing" element={<Singing />} />
+        <Route path="/SleepAlone" element={<SleepAlone />} />
+        <Route path="/PCroom" element={<PCroom />} />
+        <Route path="/PCmovie" element={<PCmovie />} />
       </Routes>
       <Footer />
     </BrowserRouter>

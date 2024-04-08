@@ -7,6 +7,9 @@ router.get('/all', controller.all);
 // http://localhost:5000/api/item
 // router.post('/register', controller.);
 
+// http://localhost:5000/api/item/gift
+router.get('/gift', controller.gift);
+
 // http://localhost:5000/api/item/chart
 router.get('/chart/all', controller.chart_All);
 router.get('/chart/week', controller.chart_Week);

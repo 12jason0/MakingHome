@@ -1,17 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './css/Header.scss';
-import {
-  items,
-  itemTrees,
-  homeAppliances,
-  Fabric,
-  clothes,
-  DailySupplies,
-  hobby,
-  Lighting,
-  Tool,
-} from './tool/MenuTool';
+import { items } from './tool/MenuTool';
 
 export default function Header() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -19,22 +9,27 @@ export default function Header() {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [searchPopup, setSearchPopup] = useState(false);
   const searchUseRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
   const OpenPopup = () => {
     setSearchPopup(true);
   };
+
   const closePopup = () => {
     setSearchPopup(false);
   };
+
   const handleOutsideClick = (e: MouseEvent) => {
     if (
       searchPopup &&
       searchUseRef.current &&
       !searchUseRef.current.contains(e.target as Node) &&
-      !(e.target as HTMLElement).classList.contains('serchdiv') // 팝업 외의 영역을 클릭하고 chatDiv가 아닌 경우에만 모든 팝업 닫기
+      !(e.target as HTMLElement).classList.contains('serchdiv')
     ) {
       closePopup();
     }
   };
+
   useEffect(() => {
     if (searchPopup) {
       document.addEventListener('mousedown', handleOutsideClick);
@@ -49,13 +44,16 @@ export default function Header() {
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 
-  const handleItemClick = (item: string) =>
+  const handleItemClick = (item: string) => {
     setSelectedItem((prev) => (prev === item ? null : item));
+    navigate(`/category/${item}`);
+  };
 
   const handleMouseLeave = () => {
     setShowPopup(false);
     setSelectedItem(null);
   };
+
   useEffect(() => {
     if (showPopup) {
       document.body.style.overflow = 'hidden';
@@ -64,28 +62,6 @@ export default function Header() {
     }
   }, [showPopup]);
 
-  const getPopupItems = () => {
-    switch (selectedItem) {
-      case '원룸 가전':
-        return homeAppliances;
-      case '가구':
-        return itemTrees;
-      case '패브릭':
-        return Fabric;
-      case '옷정리/보관':
-        return clothes;
-      case '생활용품':
-        return DailySupplies;
-      case '소품/취미':
-        return hobby;
-      case '조명':
-        return Lighting;
-      case '셀프인테리어':
-        return Tool;
-      default:
-        return [];
-    }
-  };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const inputValue = (event.target as HTMLFormElement).querySelector(
@@ -95,13 +71,11 @@ export default function Header() {
       alert('검색어를 입력하세요!');
       return;
     }
+  };
 
-    // // 검색된 내용을 URL에 추가하여 새로운 URL을 생성합니다.
-    // const searchQuery = encodeURIComponent(inputValue.trim());
-    // const newUrl = `/?q=${searchQuery}`;
-
-    // // 새로운 URL로 페이지를 이동합니다.
-    // window.location.href = newUrl;
+  // 새로운 창으로 이동할 때 팝업을 닫기
+  const handleLinkClick = () => {
+    setSearchPopup(false);
   };
 
   return (
@@ -139,25 +113,19 @@ export default function Header() {
                         </span>
                       ))}
                     </div>
-                    {selectedItem && (
-                      <div className="itemTrees">
-                        {getPopupItems().map((tree, index) => (
-                          <span key={index}>{tree}</span>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </div>
               </nav>
             )}
-            <a href="/">
+            <Link to="/" onClick={handleLinkClick}>
+              {' '}
               <span className="logoDiv">
                 <img
                   src={`${process.env.PUBLIC_URL}/image/logo.png`}
                   alt="logo"
                 />
               </span>
-            </a>
+            </Link>{' '}
             <span className="rightCon">
               <div className="serchdiv" onClick={OpenPopup}>
                 <img
@@ -194,7 +162,7 @@ export default function Header() {
             <Link to="/Money" className="menu-link">
               만원 이하
             </Link>
-            <Link to="/housewarming-gift" className="menu-link ">
+            <Link to="/HouseGift" className="menu-link ">
               집들이 선물
             </Link>
             <Link to="/all" className="menu-link">
@@ -218,7 +186,7 @@ export default function Header() {
                       src={`${process.env.PUBLIC_URL}/image/search.png`}
                       alt=""
                     />
-                  </button>{' '}
+                  </button>
                 </form>
                 <div>
                   <h3>자취 순위 키워드</h3>
@@ -231,7 +199,6 @@ export default function Header() {
                       <li>보풀제거기</li>
                     </ul>
                     <ul>
-                      {' '}
                       <li>화장품 정리함</li>
                       <li>압축백</li>
                       <li>디퓨저</li>
