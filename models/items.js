@@ -38,9 +38,9 @@ const ItemModel = (sequelize) => {
       review: {
         type: DataTypes.INTEGER,
       },
-      chartbar: {
-        type: DataTypes.STRING(255),
-      },
+      // chartbar: {
+      //   type: DataTypes.STRING(255),
+      // },
       chart: {
         type: DataTypes.INTEGER,
       },

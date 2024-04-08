@@ -23,6 +23,7 @@ import Lighting from './pages/ItemType/Lighting';
 import Tool from './pages/ItemType/Tool';
 import CleanUp from './pages/ItemType/CleanUp';
 import Money from './pages/Money';
+import Search from './pages/Search';
 
 function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -55,6 +56,7 @@ function App() {
         <Route path="/Announcement2" element={<Announcement2 />} />
         <Route path="/Announcement3" element={<Announcement3 />} />
         <Route path="/shopping" element={<Shopping />} />
+        <Route path="/search/:item" element={<Search />} />
       </Routes>
       <Footer />
     </BrowserRouter>
