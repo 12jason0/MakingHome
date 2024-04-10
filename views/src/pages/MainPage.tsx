@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { MiddleImages } from '../Comment/tool/MainTool';
 import { MiddleCategory } from '../Comment/tool/MainMiddleTool';
 import { MainsetImg } from '../Comment/tool/MainSetTool';
@@ -11,6 +12,7 @@ interface RMainPageProps {
 }
 function MainPage({ setShowHeader }: RMainPageProps) {
   setShowHeader(true);
+
   const Slide = () => {
     const slideImages = [
       {
@@ -122,12 +124,6 @@ function MainPage({ setShowHeader }: RMainPageProps) {
     };
     const setNextSlide = () => {
       setImgSet((preIdx) => (preIdx + 1) % MainsetImg.length);
-    };
-    const handleImageClick = () => {
-      const url = MainsetImg[imgset]?.url;
-      if (url) {
-        window.location.href = url;
-      }
     };
 
     //////////////////////////////////////집들이 선물/////////////////////////////////////////////
@@ -266,9 +262,12 @@ function MainPage({ setShowHeader }: RMainPageProps) {
                   alt="이전"
                 />
               </div>
-              <div className="setImgDiv" onClick={handleImageClick}>
-                <img src={MainsetImg[imgset].img} alt={`Slide${imgset}`} />
+              <div className="setImgDiv">
+                <Link to={`/set/${imgset}`}>
+                  <img src={MainsetImg[imgset].img} alt={`Slide${imgset}`} />
+                </Link>
               </div>
+
               <div className="rightButton" onClick={setNextSlide}>
                 <img
                   src={`${process.env.PUBLIC_URL}/image/setRightArrow.png`}

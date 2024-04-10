@@ -6,6 +6,14 @@ const all = async (req, res) => {
   const all_item = await Items.findAll();
   res.json({ all_item });
 };
+//세트 추천 메뉴 카테고리2 데이터 조회
+// const AllCategory2 = async (req, res) => {
+//   const all_item_categories = await Items.findAll({
+//     attributes: ['id', 'category2'],
+//   });
+//   console.log(all_item_categories);
+//   res.json({ all_item_categories });
+// };
 // 집들이 모든 상품 페이지 데이터 조회
 const gift = async (req, res) => {
   const gift_item = await ItemGift.findAll();
@@ -136,6 +144,7 @@ const search = async (req, res) => {
 
 module.exports = {
   all,
+  // AllCategory2,
   gift,
   chart_All,
   chart_Week,
