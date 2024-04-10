@@ -43,9 +43,9 @@ export default function Header() {
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 
-  const handleItemClick = (item: string) => {
-    setSelectedItem((prev) => (prev === item ? null : item));
-    navigate(`/category/${item}`);
+  const handleItemClick = (url: string) => {
+    // 수정된 부분: item.url을 직접 전달받음
+    navigate(url); // 수정된 부분: url로 바로 이동
   };
 
   const handleMouseLeave = () => {
@@ -109,9 +109,9 @@ export default function Header() {
                           key={index}
                           onMouseEnter={() => setHoveredItem(index)}
                           onMouseLeave={() => setHoveredItem(null)}
-                          onClick={() => handleItemClick(item)}
+                          onClick={() => handleItemClick(item.url)}
                         >
-                          {item}
+                          {item.title}{' '}
                           {hoveredItem === index && (
                             <img
                               src={`${process.env.PUBLIC_URL}/image/right-arrow.png`}
@@ -161,8 +161,8 @@ export default function Header() {
           </div>
           <div className="line"></div>
           <div className="headerConUnder">
-            <Link to="/sale" className="Sale">
-              단독 세일
+            <Link to="/AllSet" className="AllSet">
+              세트 메뉴
             </Link>
             <Link to="/Popular" className="menu-link">
               인기 차트
