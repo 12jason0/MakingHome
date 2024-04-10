@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import './css/Popular.scss';
-
+import { useDispatch, useSelector } from 'react-redux';
 interface Item {
   id: number;
   body: string;
@@ -13,6 +13,12 @@ interface Item {
   delivery: string;
   review: string;
   chart: number;
+  isHearted: boolean; // heart 상태 변경용 boolean 타입 추가
+}
+
+interface HeartState {
+  title: string;
+  heartState: boolean;
 }
 
 export default function Popular() {
@@ -23,9 +29,36 @@ export default function Popular() {
   const handlePageChange = (pageNumber: number): void => {
     setCurrentPage(pageNumber);
   };
+  // use hook 사용
   const [navigate1State, setNavigate1State] = useState<string>('activeAllBest');
   const [navigate2State, setNavigate2State] = useState<string>('viewAll');
   const [items, setItems] = useState<Item[]>([]);
+  // 하트 상태 변경(Store 사용)
+  const heart = useSelector((store: any) => store.heartState);
+  const dispatch = useDispatch();
+  // 하트 클릭 시, Store 상태 변경
+  const handleHeart = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    itemTitle: string
+  ) => {
+    e.preventDefault();
+    // 비활성화된 하트를 클릭할 경우
+    if (
+      !heart.find((product: HeartState) => product.title === itemTitle)
+        ?.heartStatus
+    ) {
+      dispatch({
+        type: 'active_heart',
+        title: itemTitle,
+      });
+      // 활성화된 하트를 클릭할 경우
+    } else {
+      dispatch({
+        type: 'deactive_heart',
+        title: itemTitle,
+      });
+    }
+  };
 
   // 페이지네이션을 위한 아이템 리스트 슬라이싱 함수
   const sliceItems = (items: Item[], currentPage: number): Item[] => {
@@ -365,7 +398,31 @@ export default function Popular() {
                     <div key={item.id} className="childImgContainer">
                       <a href="/">
                         <div>
-                          <img src={item.img} alt={item.title} />
+                          {/* 기존 코드: <img src={item.img} alt={item.title} /> */}
+                          <div className="imageBox">
+                            <img
+                              className="toolImg"
+                              src={item.img}
+                              alt={item.title}
+                            />
+                            <img
+                              className="heart"
+                              // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                              src={
+                                heart.find(
+                                  (product: HeartState) =>
+                                    product.title === item.title
+                                )?.heartStatus
+                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                              }
+                              alt="하트 이미지"
+                              onClick={(e) => {
+                                handleHeart(e, item.title);
+                                // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                              }}
+                            />
+                          </div>
                           <div className="childTitle">
                             <h4>{item.title}</h4>
                             <div className="childPrice">
@@ -403,7 +460,32 @@ export default function Popular() {
                     <div key={item.id} className="childImgContainer">
                       <a href="/">
                         <div>
-                          <img src={item.img} alt={item.title} />
+                          <div className="imageBox">
+                            <img
+                              className="toolImg"
+                              src={item.img}
+                              alt={item.title}
+                            />
+                            <img
+                              className="heart"
+                              // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트)
+                              src={
+                                heart.find(
+                                  (product: HeartState) =>
+                                    product.title === item.title
+                                )?.heartStatus
+                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                              }
+                              alt="하트 이미지"
+                              onClick={(e) => {
+                                handleHeart(e, item.title);
+
+                                // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                              }}
+                            />
+                          </div>
+
                           <div className="childTitle">
                             <h4>{item.title}</h4>
                             <div className="childPrice">

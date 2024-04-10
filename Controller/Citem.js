@@ -6,6 +6,7 @@ const all = async (req, res) => {
   const all_item = await Items.findAll();
   res.json({ all_item });
 };
+
 // best 전체 50개 가구 뽑아오기
 const chart_All = async (req, res) => {
   const best_item = await ItemChart.findAll({
