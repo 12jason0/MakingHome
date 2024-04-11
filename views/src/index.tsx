@@ -8,12 +8,15 @@ import rootReducer from './store';
 import reportWebVitals from './reportWebVitals';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import heartReducer from './store/heartReducer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 const store = configureStore({ reducer: rootReducer });
+const persistor = persistStore(store); // persist store 내보내기
 
 root.render(
   <React.StrictMode>

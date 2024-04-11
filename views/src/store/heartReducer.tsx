@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { productItem } from './types';
-interface Product {
+import { createSlice } from '@reduxjs/toolkit';
+export interface Product {
   title: string;
   heartStatus: boolean;
 }
@@ -9,20 +10,23 @@ interface Product {
 type ActionType = 'active_heart' | 'deactive_heart';
 
 // 액션 객체 타입 정의
-interface Action {
+export interface Action {
   type: ActionType;
   title: string;
   heartStatus: boolean;
 }
 
-// heart 상태 활성화 시, product에 활성화된 아이템(title로 구분) 추가하는 방식
+// heart(찜 목록) 상태 관리
 const initialState: Product[] = productItem;
 
-const heartReducer = (state = initialState, action: Action) => {
-  switch (action.type) {
-    case 'active_heart':
+// createSlice를 써서 redux-persist 패키지 사용 성공
+const heartSlice = createSlice({
+  name: 'heartState',
+  initialState: initialState,
+  reducers: {
+    activeHeart: (state, action) => {
       return state.map((product) => {
-        if (product.title === action.title) {
+        if (product.title === action.payload.title) {
           // 하트 활성화
           return {
             ...product,
@@ -31,10 +35,10 @@ const heartReducer = (state = initialState, action: Action) => {
         }
         return product;
       });
-
-    case 'deactive_heart':
+    },
+    deactiveHeart: (state, action) => {
       return state.map((product) => {
-        if (product.title === action.title) {
+        if (product.title === action.payload.title) {
           // 하트 비활성화
           return {
             ...product,
@@ -43,9 +47,43 @@ const heartReducer = (state = initialState, action: Action) => {
         }
         return product;
       });
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
 
-export default heartReducer;
+export const { activeHeart, deactiveHeart } = heartSlice.actions;
+
+export default heartSlice.reducer;
+
+// 실패한 코드
+// const heartReducer = (state = initialState, action: Action) => {
+//   switch (action.type) {
+//     case 'active_heart':
+//       return state.map((product) => {
+//         if (product.title === action.title) {
+//           // 하트 활성화
+//           return {
+//             ...product,
+//             heartStatus: true,
+//           };
+//         }
+//         return product;
+//       });
+
+//     case 'deactive_heart':
+//       return state.map((product) => {
+//         if (product.title === action.title) {
+//           // 하트 비활성화
+//           return {
+//             ...product,
+//             heartStatus: false,
+//           };
+//         }
+//         return product;
+//       });
+//     default:
+//       return state;
+//   }
+// };
+
+// export default heartReducer;

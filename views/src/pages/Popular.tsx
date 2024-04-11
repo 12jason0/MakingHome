@@ -3,6 +3,7 @@ import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import './css/Popular.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { activeHeart, deactiveHeart } from '../store/heartReducer';
 interface Item {
   id: number;
   body: string;
@@ -47,16 +48,18 @@ export default function Popular() {
       !heart.find((product: HeartState) => product.title === itemTitle)
         ?.heartStatus
     ) {
-      dispatch({
-        type: 'active_heart',
-        title: itemTitle,
-      });
+      dispatch(
+        activeHeart({
+          title: itemTitle,
+        })
+      );
       // 활성화된 하트를 클릭할 경우
     } else {
-      dispatch({
-        type: 'deactive_heart',
-        title: itemTitle,
-      });
+      dispatch(
+        deactiveHeart({
+          title: itemTitle,
+        })
+      );
     }
   };
 

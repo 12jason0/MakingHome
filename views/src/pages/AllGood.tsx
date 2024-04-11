@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/all.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { activeHeart, deactiveHeart } from '../store/heartReducer';
 
 interface Item {
   id: number;
@@ -14,6 +16,10 @@ interface Item {
   chart: number;
   category1: string;
   category2: string;
+}
+interface HeartState {
+  title: string;
+  heartState: boolean;
 }
 
 export default function AllGood() {
@@ -67,6 +73,34 @@ export default function AllGood() {
     });
   };
 
+  // 하트 상태 변경(Store 사용)
+  const heart = useSelector((store: any) => store.heartState);
+  const dispatch = useDispatch();
+  // 하트 클릭 시, Store 상태 변경
+  const handleHeart = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    itemTitle: string
+  ) => {
+    e.preventDefault();
+    // 비활성화된 하트를 클릭할 경우
+    if (
+      !heart.find((product: HeartState) => product.title === itemTitle)
+        ?.heartStatus
+    ) {
+      dispatch(
+        activeHeart({
+          title: itemTitle,
+        })
+      );
+      // 활성화된 하트를 클릭할 경우
+    } else {
+      dispatch(
+        deactiveHeart({
+          title: itemTitle,
+        })
+      );
+    }
+  };
   return (
     <>
       <div className="AllCon">
@@ -99,7 +133,31 @@ export default function AllGood() {
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
                       <div>
-                        <img src={item.img} alt={item.title} />
+                        {/* 기존 코드: <img src={item.img} alt={item.title} /> */}
+                        <div className="imageBox">
+                          <img
+                            className="toolImg"
+                            src={item.img}
+                            alt={item.title}
+                          />
+                          <img
+                            className="heart"
+                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                            src={
+                              heart.find(
+                                (product: HeartState) =>
+                                  product.title === item.title
+                              )?.heartStatus
+                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                            }
+                            alt="하트 이미지"
+                            onClick={(e) => {
+                              handleHeart(e, item.title);
+                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                            }}
+                          />
+                        </div>
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
@@ -138,7 +196,31 @@ export default function AllGood() {
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
                       <div>
-                        <img src={item.img} alt={item.title} />
+                        {/* 기존 코드: <img src={item.img} alt={item.title} /> */}
+                        <div className="imageBox">
+                          <img
+                            className="toolImg"
+                            src={item.img}
+                            alt={item.title}
+                          />
+                          <img
+                            className="heart"
+                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                            src={
+                              heart.find(
+                                (product: HeartState) =>
+                                  product.title === item.title
+                              )?.heartStatus
+                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                            }
+                            alt="하트 이미지"
+                            onClick={(e) => {
+                              handleHeart(e, item.title);
+                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                            }}
+                          />
+                        </div>
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
