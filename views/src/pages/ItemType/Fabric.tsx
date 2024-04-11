@@ -20,7 +20,7 @@ export default function Fabric() {
   const [items, setItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(1);
+  const totalPages = Math.ceil(2);
 
   useEffect(() => {
     const fetchItems = async () => {

@@ -1,4 +1,4 @@
-const { Items, ItemChart } = require('../models');
+const { Items, ItemChart, ItemGift } = require('../models');
 const { Sequelize, Op, where } = require('sequelize');
 
 // all 모든 상품 페이지 데이터 조회
@@ -7,6 +7,19 @@ const all = async (req, res) => {
   res.json({ all_item });
 };
 
+//세트 추천 메뉴 카테고리2 데이터 조회
+// const AllCategory2 = async (req, res) => {
+//   const all_item_categories = await Items.findAll({
+//     attributes: ['id', 'category2'],
+//   });
+//   console.log(all_item_categories);
+//   res.json({ all_item_categories });
+// };
+// 집들이 모든 상품 페이지 데이터 조회
+const gift = async (req, res) => {
+  const gift_item = await ItemGift.findAll();
+  res.json({ gift_item });
+};
 // best 전체 50개 가구 뽑아오기
 const chart_All = async (req, res) => {
   const best_item = await ItemChart.findAll({
@@ -132,6 +145,8 @@ const search = async (req, res) => {
 
 module.exports = {
   all,
+  // AllCategory2,
+  gift,
   chart_All,
   chart_Week,
   chart_Month,

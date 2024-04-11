@@ -4,8 +4,14 @@ const router = express();
 
 // http://localhost:5000/api/item/all
 router.get('/all', controller.all);
+//http://localhost:5000/api/item/AllCategory2
+// router.get('/AllCategory2', controller.AllCategory2);
 // http://localhost:5000/api/item
 
+// http://localhost:5000/api/item/gift
+router.get('/gift', controller.gift);
+
+// http://localhost:5000/api/item/chart
 // http://localhost:5000/api/item/chart , 차트 데이터
 router.get('/chart/all', controller.chart_All);
 router.get('/chart/week', controller.chart_Week);

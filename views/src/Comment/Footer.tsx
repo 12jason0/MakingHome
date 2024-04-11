@@ -232,13 +232,6 @@ export default function Footer() {
       <div className="footerMenu">
         <div className="footerMenuCon">
           <ul>
-            <a href=" /Search">
-              {''}
-              <li>
-                <img src="https://m.oneroommaking.com/web/mobile/220328_search01.png" />
-                상품검색
-              </li>
-            </a>
             <a href="">
               {' '}
               <li>

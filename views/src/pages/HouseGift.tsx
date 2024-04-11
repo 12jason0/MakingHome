@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../css/ItemPage.scss';
+import './css/HouseGift.scss';
 
-interface Item {
+interface item {
   id: number;
   body: string;
   img: string;
@@ -14,26 +14,50 @@ interface Item {
   chart: number;
   category1: string;
   category2: string;
+  gift: string;
 }
 
-export default function CleanUp() {
-  const [items, setItems] = useState<Item[]>([]);
+export default function HouseGift() {
+  const [items, setItems] = useState<item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(1);
+  const totalPages = Math.ceil(2);
+  const [navigate2State, setNavigate2State] = useState<string>('viewAll');
 
+  const all = () => {
+    setNavigate2State('viewAll');
+  };
+
+  const gift = () => {
+    setNavigate2State('gift');
+  };
+
+  const view20000 = () => {
+    setNavigate2State('view20000');
+  };
+
+  const view30000 = () => {
+    setNavigate2State('view30000');
+  };
+
+  const view50000 = () => {
+    setNavigate2State('view50000');
+  };
+  /////////////////////////////////////////데이터 가져오기///////////////////////////////////////////////
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchgifts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/item/all');
-        const { all_item } = response.data;
-        setItems(all_item);
+        const response = await axios.get('http://localhost:5000/api/item/gift');
+        const { gift_item } = response.data;
+
+        setItems(gift_item);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-    fetchItems();
-  }, []);
+    fetchgifts();
+  }, [navigate2State]);
+
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const option = e.target.value;
     const sortedItems = sortGoods(option);
@@ -43,7 +67,8 @@ export default function CleanUp() {
       scrollToTop();
     }
   };
-  const sortGoods = (option: string): Item[] => {
+  /////////////////////////////////////////option///////////////////////////////////////////////
+  const sortGoods = (option: string): item[] => {
     if (option === '리뷰 많은 수') {
       return items.slice().sort((a, b) => (b.review || 0) - (a.review || 0));
     } else if (option === '리뷰 적은 수') {
@@ -52,27 +77,72 @@ export default function CleanUp() {
       return items;
     }
   };
+  ////////////////////////////////////가격 별로 해당 데이터 불러오기///////////////////////////////////
+  const furnitureItems = items.filter((item) => {
+    switch (navigate2State) {
+      case 'viewAll':
+        return true;
+      case 'gift':
+        return item.gift === 'gift';
+      case 'view20000':
+        return item.price <= 29999;
+      case 'view30000':
+        return item.price >= 30000 && item.price <= 39999;
+      case 'view50000':
+        return item.price >= 50000;
+      default:
+        return true;
+    }
+  });
 
-  // category 필터링
-  const furnitureItems = items.filter(
-    (item) => item.category2 === '청소 가전' || item.category2 === '화장실'
-  );
-
-  // 페이지 변경 처리 함수, 필터링된 항목 개수에 따라 totalPages 갱신
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-
+  /////////////////////////////////option, 페이지 번호, 이동 할 시 페이지 맨 위로 이동//////////////////////////////////////
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   };
+
   return (
     <>
       <div className="AllCon">
         <div className="AllDiv">
+          <div className="navigate2">
+            <div
+              className={navigate2State === 'viewAll' ? navigate2State : ''}
+              onClick={all}
+            >
+              <p>전체보기</p>
+            </div>
+            <div
+              className={navigate2State === 'gift' ? navigate2State : ''}
+              onClick={gift}
+            >
+              <p>병맛 선물</p>
+            </div>
+            <div
+              className={navigate2State === 'view20000' ? navigate2State : ''}
+              onClick={view20000}
+            >
+              <p>1~2만원대</p>
+            </div>
+            <div
+              className={navigate2State === 'view30000' ? navigate2State : ''}
+              onClick={view30000}
+            >
+              <p>3~4만원대</p>
+            </div>
+            <div
+              className={navigate2State === 'view50000' ? navigate2State : ''}
+              onClick={view50000}
+            >
+              <p>5만원 이상</p>
+            </div>
+          </div>
+          <hr />
           <div className="AllKind">
             <select name="" id="" onChange={handleSortChange}>
               <option value="정렬방식" hidden>
@@ -82,6 +152,16 @@ export default function CleanUp() {
               <option value="리뷰 적은 수">리뷰 적은 수</option>
             </select>
           </div>
+          {/* ///////////////////////////////////////해당 데이터가 없을 때///////////////////////////////////////////////////////// */}
+          {furnitureItems.length === 0 && (
+            <div className="emptyMessage">
+              <div className="imageContainer">
+                <div className="spinner"></div>
+              </div>
+              더 열심히 하겠습니다.
+            </div>
+          )}
+          {/* //////////////////////////////////////결과 화면 시작//////////////////////////////////////// */}
           <div
             style={{
               display: 'flex',
@@ -106,18 +186,16 @@ export default function CleanUp() {
                           <h4>{item.title}</h4>
                           <div className="allPrice">
                             <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원{' '}
-                            {/* 원화 표시 추가 */}
+                            {item.price.toLocaleString()}원
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
                             {item.delivery && (
                               <div className="allDelivery">{item.delivery}</div>
-                            )}{' '}
+                            )}
                             {item.review && (
                               <a href="/">
                                 <div className="allReview">
-                                  {' '}
                                   리뷰 : {item.review}
                                 </div>
                               </a>
@@ -145,18 +223,16 @@ export default function CleanUp() {
                           <h4>{item.title}</h4>
                           <div className="allPrice">
                             <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원{' '}
-                            {/* 원화 표시 추가 */}
+                            {item.price.toLocaleString()}원
                           </div>
                           <div className="allBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
                             {item.delivery && (
                               <div className="allDelivery">{item.delivery}</div>
-                            )}{' '}
+                            )}
                             {item.review && (
                               <a href="/">
                                 <div className="allReview">
-                                  {' '}
                                   리뷰 : {item.review}
                                 </div>
                               </a>
@@ -169,44 +245,45 @@ export default function CleanUp() {
                 ))}
             </div>
           </div>
-        </div>
-        <div className="allButtonDiv">
-          <button
-            onClick={() => {
-              handlePageChange(currentPage - 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === 1}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <div
-              key={i}
+
+          <div className="allButtonDiv">
+            <button
               onClick={() => {
-                handlePageChange(i + 1);
+                handlePageChange(currentPage - 1);
                 scrollToTop();
               }}
-              className="pageNumber"
+              disabled={currentPage === 1}
             >
+              <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
               <div
-                className={`pageNumberCircle ${
-                  currentPage === i + 1 ? 'activePage' : ''
-                }`}
+                key={i}
+                onClick={() => {
+                  handlePageChange(i + 1);
+                  scrollToTop();
+                }}
+                className="pageNumber"
               >
-                {i + 1}
+                <div
+                  className={`pageNumberCircle ${
+                    currentPage === i + 1 ? 'activePage' : ''
+                  }`}
+                >
+                  {i + 1}
+                </div>
               </div>
-            </div>
-          ))}
-          <button
-            onClick={() => {
-              handlePageChange(currentPage + 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === totalPages}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
-          </button>
+            ))}
+            <button
+              onClick={() => {
+                handlePageChange(currentPage + 1);
+                scrollToTop();
+              }}
+              disabled={currentPage === totalPages}
+            >
+              <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
+            </button>
+          </div>
         </div>
       </div>
     </>

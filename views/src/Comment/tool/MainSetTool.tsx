@@ -7,7 +7,7 @@ const MainsetImg = [
   {
     id: '1',
     img: 'https://m.oneroommaking.com/web/upload/appfiles/ZaReJam3QiELznoZeGGkMG/2e48d81144acbfb3f38b65f1edd55711.jpg',
-    title: '첫 차취 세트 ',
+    title: '첫 차취 세트',
   },
   {
     id: '2',
@@ -17,18 +17,17 @@ const MainsetImg = [
   {
     id: '3',
     img: 'https://m.oneroommaking.com/web/upload/appfiles/ZaReJam3QiELznoZeGGkMG/036f00d9a0bf92a92d7c2502d79e5bd4.jpg',
-    title: '이자카야 세트   ',
+    title: '이자카야 세트',
   },
   {
     id: '4',
     img: 'https://m.oneroommaking.com/web/upload/appfiles/ZaReJam3QiELznoZeGGkMG/39a5fff965fcdc404b2d1ddaf6faf65e.jpg',
     title: '대청소 세트',
-    url: '/Cleanup',
   },
   {
     id: '5',
     img: 'https://m.oneroommaking.com/web/upload/appfiles/ZaReJam3QiELznoZeGGkMG/a22550a80edf7f9a2f89871432b9c31e.jpg',
-    title: '노래방 세트 ',
+    title: '노래방 세트',
   },
   {
     id: '6',
