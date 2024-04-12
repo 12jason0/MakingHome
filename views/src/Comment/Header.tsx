@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import './css/Header.scss';
-import { items } from './tool/MenuTool';
+import { Categoryitems } from './tool/MenuTool';
 
 export default function Header() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -104,14 +104,14 @@ export default function Header() {
                 <div className="popup_inner">
                   <div className="spanDiv">
                     <div className="menutoggle">
-                      {items.map((item, index) => (
+                      {Categoryitems.map((Categoryitems, index) => (
                         <span
                           key={index}
                           onMouseEnter={() => setHoveredItem(index)}
                           onMouseLeave={() => setHoveredItem(null)}
-                          onClick={() => handleItemClick(item.url)}
+                          onClick={() => handleItemClick(Categoryitems.url)}
                         >
-                          {item.title}{' '}
+                          {Categoryitems.title}{' '}
                           {hoveredItem === index && (
                             <img
                               src={`${process.env.PUBLIC_URL}/image/right-arrow.png`}

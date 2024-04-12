@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Categoryitems } from '../Comment/tool/MenuTool'; // Categoryitems를 import 합니다.
 import axios from 'axios';
 import './css/all.scss';
+
+interface AllProps {
+  Categoryitems: Array<{
+    id: string;
+    url: string;
+    title: string;
+    EnglishTitle: string;
+  }>;
+}
 
 interface Item {
   id: number;
@@ -18,12 +26,18 @@ interface Item {
   category2: string;
 }
 
-const AllGood: React.FC = () => {
-  const { type } = useParams<{ type?: string }>();
-  const [Set, setSet] = useState<{ id: string; url?: string; title: string }>({
+const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
+  const { type } = useParams<{ type: string }>();
+  const [Set, setSet] = useState<{
+    id: string;
+    url: string;
+    title: string;
+    EnglishTitle: string;
+  }>({
     id: '',
     url: '',
     title: '',
+    EnglishTitle: '',
   });
   const [items, setItems] = useState<Item[]>([]);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
@@ -31,6 +45,7 @@ const AllGood: React.FC = () => {
   const [itemsPerPage] = useState(10);
   const totalPages = Math.ceil(6);
   const Navigate = useNavigate();
+  const [navigate2State, setNavigate2State] = useState<string>('viewAll');
 
   /////////////////////////////////////////데이터 가져오기///////////////////////////////////////////////
   useEffect(() => {
@@ -47,10 +62,7 @@ const AllGood: React.FC = () => {
   }, []); // 페이지 로드 시에만 데이터를 가져오도록 변경
   ///////////////////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    const index = !isNaN(parseInt(type || '', 10))
-      ? parseInt(type || '', 10)
-      : 0;
-    setSet(Categoryitems[index] || { id: '', url: '', title: '' });
+    setSet({ id: '', url: '', title: '', EnglishTitle: '' });
   }, [type]);
 
   useEffect(() => {
@@ -62,7 +74,7 @@ const AllGood: React.FC = () => {
     } else if (type === '2') {
       filteredItems = items.filter((item) => item.category1 === '패브릭');
     } else if (type === '3') {
-      filteredItems = items.filter((item) => item.category1 === '옷정리/보관');
+      filteredItems = items.filter((item) => item.category1 === '옷정리');
     } else if (type === '4') {
       filteredItems = items.filter((item) => item.category1 === '생활 용품');
     } else if (type === '5') {
@@ -76,19 +88,10 @@ const AllGood: React.FC = () => {
     }
 
     setFilteredItems(filteredItems);
-  }, [type, items]);
 
-  useEffect(() => {
-    localStorage.clear();
+    // 로컬 스토리지 업데이트
     localStorage.setItem('items', JSON.stringify(filteredItems));
-  }, [filteredItems]);
-
-  useEffect(() => {
-    const storedItems = localStorage.getItem('items');
-    if (storedItems !== null) {
-      setItems(JSON.parse(storedItems));
-    }
-  }, []);
+  }, [type, items]);
 
   ////////////////////////////////정렬 방식/////////////////////////////////////////
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -137,13 +140,22 @@ const AllGood: React.FC = () => {
     index: number,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    setSet({ id: '', url: '', title: category }); // Set 상태 업데이트
     event.preventDefault(); // 기본 이벤트 동작 막기
+
+    // 클릭된 카테고리를 기준으로 필터링
+    let filteredItems: Item[] = []; // 타입 지정
+
     if (category === '전체보기') {
-      Navigate(`/all`);
+      setFilteredItems(items); // 모든 아이템 표시
     } else {
-      Navigate(`/Good/${index}`);
+      filteredItems = items.filter((item) => item.category1 === category);
+      setFilteredItems(filteredItems);
     }
+
+    // 로컬 스토리지 업데이트
+    localStorage.setItem('items', JSON.stringify(filteredItems));
+
+    Navigate(`/Good/${type}`);
   };
 
   return (
@@ -153,7 +165,9 @@ const AllGood: React.FC = () => {
           {Categoryitems.map((item, index) => (
             <div
               key={item.id}
-              className={type === item.id ? 'active' : ''}
+              className={`${item.EnglishTitle} ${
+                navigate2State === item.title ? 'activeCategory' : ''
+              }`}
               onClick={(e) => handleCategoryClick(item.title, index, e)}
             >
               <p>{item.title}</p>
@@ -297,4 +311,4 @@ const AllGood: React.FC = () => {
   );
 };
 
-export default AllGood;
+export default Good;
