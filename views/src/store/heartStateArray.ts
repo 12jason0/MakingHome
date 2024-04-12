@@ -1,8 +1,6 @@
-interface Product {
-  title: string;
-  heartStatus: boolean;
-}
-const productItem: Product[] = [
+import { HeartState } from '../component/interface';
+
+const productItem: HeartState[] = [
   {
     title: 'Q10 무선 청소기',
     heartStatus: false,

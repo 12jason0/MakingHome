@@ -4,23 +4,8 @@ import Pagination from 'react-js-pagination';
 import './css/Popular.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeHeart, deactiveHeart } from '../store/heartReducer';
-interface Item {
-  id: number;
-  body: string;
-  img: string;
-  title: string;
-  sale: string;
-  price: string;
-  delivery: string;
-  review: string;
-  chart: number;
-  isHearted: boolean; // heart 상태 변경용 boolean 타입 추가
-}
-
-interface HeartState {
-  title: string;
-  heartState: boolean;
-}
+import { HeartState, Item } from '../component/interface';
+import { useNavigate } from 'react-router';
 
 export default function Popular() {
   // 페이지네이션 패키지 사용
@@ -30,36 +15,43 @@ export default function Popular() {
   const handlePageChange = (pageNumber: number): void => {
     setCurrentPage(pageNumber);
   };
+
   // use hook 사용
   const [navigate1State, setNavigate1State] = useState<string>('activeAllBest');
   const [navigate2State, setNavigate2State] = useState<string>('viewAll');
   const [items, setItems] = useState<Item[]>([]);
   // 하트 상태 변경(Store 사용)
-  const heart = useSelector((store: any) => store.heartState);
+  const heart = useSelector((store: any) => store.heartStateA);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // 하트 클릭 시, Store 상태 변경
   const handleHeart = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>,
     itemTitle: string
   ) => {
     e.preventDefault();
-    // 비활성화된 하트를 클릭할 경우
-    if (
-      !heart.find((product: HeartState) => product.title === itemTitle)
-        ?.heartStatus
-    ) {
-      dispatch(
-        activeHeart({
-          title: itemTitle,
-        })
-      );
-      // 활성화된 하트를 클릭할 경우
+    if (localStorage.getItem('Token') || localStorage.getItem('oneroomToken')) {
+      if (
+        !heart.find((product: HeartState) => product.title === itemTitle)
+          ?.heartStatus
+      ) {
+        // 비활성화된 하트를 클릭할 경우
+        dispatch(
+          activeHeart({
+            title: itemTitle,
+          })
+        );
+        // 활성화된 하트를 클릭할 경우
+      } else {
+        dispatch(
+          deactiveHeart({
+            title: itemTitle,
+          })
+        );
+      }
     } else {
-      dispatch(
-        deactiveHeart({
-          title: itemTitle,
-        })
-      );
+      alert('로그인 후 이용가능 합니다.');
+      navigate('/login');
     }
   };
 
@@ -412,11 +404,13 @@ export default function Popular() {
                               className="heart"
                               // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
                               src={
-                                heart.find(
-                                  (product: HeartState) =>
-                                    product.title === item.title
-                                )?.heartStatus
-                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                localStorage.getItem('oneroomToken')
+                                  ? heart.find(
+                                      (product: HeartState) =>
+                                        product.title === item.title
+                                    )?.heartStatus
+                                    ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                    : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
                                   : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
                               }
                               alt="하트 이미지"
@@ -473,11 +467,13 @@ export default function Popular() {
                               className="heart"
                               // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트)
                               src={
-                                heart.find(
-                                  (product: HeartState) =>
-                                    product.title === item.title
-                                )?.heartStatus
-                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                localStorage.getItem('oneroomToken')
+                                  ? heart.find(
+                                      (product: HeartState) =>
+                                        product.title === item.title
+                                    )?.heartStatus
+                                    ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                    : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
                                   : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
                               }
                               alt="하트 이미지"

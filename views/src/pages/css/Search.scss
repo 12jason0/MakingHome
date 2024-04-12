@@ -49,10 +49,21 @@
       margin: 0 0 5px 0;
       font-size: 18px;
     }
-    img {
-      width: 250px;
-      height: 290px;
-      border-radius: 20px;
+    .imageBox {
+      position: relative;
+      display: inline-block;
+      .toolImg {
+        width: 250px;
+        height: 290px;
+        border-radius: 20px;
+      }
+      .heart {
+        position: absolute;
+        top: 230px;
+        left: 200px;
+        width: 38px;
+        height: auto;
+      }
     }
   }
   .childTitle {

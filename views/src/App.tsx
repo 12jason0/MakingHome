@@ -26,6 +26,7 @@ import AllSet from './pages/AllSet';
 import Set from './pages/Set';
 import Search from './pages/Search';
 import { MainsetImg } from './Comment/tool/MainSetTool';
+import LikePage from './pages/LikePage';
 
 function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -60,6 +61,7 @@ function App() {
         <Route path="/AllSet" element={<AllSet />} />
         <Route path="/Set/:type" element={<Set MainsetImg={MainsetImg} />} />
         <Route path="/search/:item" element={<Search />} />
+        <Route path="/LikePage" element={<LikePage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

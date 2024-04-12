@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './css/Footer.scss';
 import './css/popup.scss';
+import { useNavigate } from 'react-router';
 
 export default function Footer() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -8,7 +9,7 @@ export default function Footer() {
   const [isOpenLi2, setIsOpenLi2] = useState(false);
   const [isOpenLi3, setIsOpenLi3] = useState(false);
   const [isOpenLi4, setIsOpenLi4] = useState(false);
-
+  const navigate = useNavigate();
   const popupRef = useRef<HTMLDivElement>(null);
 
   const openPopup = () => {
@@ -242,7 +243,10 @@ export default function Footer() {
             <a href="">
               {' '}
               <li>
-                <img src="https://m.oneroommaking.com/web/mobile/220328_wish01.png" />
+                <img
+                  src="https://m.oneroommaking.com/web/mobile/220328_wish01.png"
+                  onClick={() => navigate('/Likepage')}
+                />
                 찜한 상품
               </li>
             </a>

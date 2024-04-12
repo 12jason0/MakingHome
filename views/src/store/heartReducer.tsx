@@ -1,11 +1,8 @@
 import axios from 'axios';
-import { productItem } from './types';
+import { productItem } from './heartStateArray';
 import { createSlice } from '@reduxjs/toolkit';
-export interface Product {
-  title: string;
-  heartStatus: boolean;
-}
-
+import { HeartState } from '../component/interface';
+import { heartAdd, heartDel } from './heartStateApi';
 // 액션 타입 정의
 type ActionType = 'active_heart' | 'deactive_heart';
 
@@ -17,17 +14,34 @@ export interface Action {
 }
 
 // heart(찜 목록) 상태 관리
-const initialState: Product[] = productItem;
+const initialState: HeartState[] = productItem;
 
-// createSlice를 써서 redux-persist 패키지 사용 성공
-const heartSlice = createSlice({
-  name: 'heartState',
+const heartSliceA = createSlice({
+  name: 'heartStateA',
   initialState: initialState,
   reducers: {
+    // 사용자 Heart(찜) 조회 : 각 사용자마다 다름
+    // 1. 로그인 시, userList db에 heart 누른 목록 배열 형태로 뽑아옴
+    // 2. React에 저장된 Store 와 userList 목록 비교하여 Store heart 상태 수정
+    // 3. 나머지 heart 들은 false 로 두기
+    userHeart: (state, action) => {
+      return state.map((product) => {
+        for (let i = 0; i < action.payload.titleArr.length; i++) {
+          if (product.title === action.payload.titleArr[i].title) {
+            return {
+              ...product,
+              heartStatus: true,
+            };
+          }
+        }
+        return { ...product, heartStatus: false };
+      });
+    },
     activeHeart: (state, action) => {
       return state.map((product) => {
         if (product.title === action.payload.title) {
           // 하트 활성화
+          heartAdd(action.payload.title);
           return {
             ...product,
             heartStatus: true,
@@ -40,6 +54,7 @@ const heartSlice = createSlice({
       return state.map((product) => {
         if (product.title === action.payload.title) {
           // 하트 비활성화
+          heartDel(action.payload.title);
           return {
             ...product,
             heartStatus: false,
@@ -51,39 +66,6 @@ const heartSlice = createSlice({
   },
 });
 
-export const { activeHeart, deactiveHeart } = heartSlice.actions;
+export const { userHeart, activeHeart, deactiveHeart } = heartSliceA.actions;
 
-export default heartSlice.reducer;
-
-// 실패한 코드
-// const heartReducer = (state = initialState, action: Action) => {
-//   switch (action.type) {
-//     case 'active_heart':
-//       return state.map((product) => {
-//         if (product.title === action.title) {
-//           // 하트 활성화
-//           return {
-//             ...product,
-//             heartStatus: true,
-//           };
-//         }
-//         return product;
-//       });
-
-//     case 'deactive_heart':
-//       return state.map((product) => {
-//         if (product.title === action.title) {
-//           // 하트 비활성화
-//           return {
-//             ...product,
-//             heartStatus: false,
-//           };
-//         }
-//         return product;
-//       });
-//     default:
-//       return state;
-//   }
-// };
-
-// export default heartReducer;
+export default heartSliceA.reducer;
