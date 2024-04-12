@@ -145,3 +145,70 @@
 .activePage {
   background-color: blue;
 }
+
+.viewAll {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.ItemTrees {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.homeAppliances {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.Fabric {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.clothes {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.DailySupplies {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.hobby {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.Lighting {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.Tool {
+  border-bottom: 4px solid blue;
+  p {
+    margin: 0.5vw;
+  }
+}
+.navigate2 {
+  width: 900px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3%;
+  font-size: 1.3vw;
+  flex-direction: row;
+  height: 50px;
+  p {
+    cursor: pointer;
+  }
+}
