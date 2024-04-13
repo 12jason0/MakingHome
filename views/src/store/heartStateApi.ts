@@ -26,16 +26,4 @@ const heartDel = async (title: string) => {
   );
 };
 
-const heartView = async () => {
-  const res = await axios.get('http://localhost:5000/user/itemView', {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-    },
-  });
-  const { viewItem } = res.data;
-  console.log('view', viewItem);
-  return viewItem;
-};
-
 export { heartAdd, heartDel };
-// heartView

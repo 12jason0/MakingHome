@@ -245,7 +245,11 @@ export default function Footer() {
               <li>
                 <img
                   src="https://m.oneroommaking.com/web/mobile/220328_wish01.png"
-                  onClick={() => navigate('/Likepage')}
+                  onClick={() =>
+                    localStorage.getItem('oneroomToken')
+                      ? navigate('/Likepage')
+                      : navigate('/login')
+                  }
                 />
                 찜한 상품
               </li>

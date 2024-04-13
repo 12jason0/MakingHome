@@ -8,6 +8,19 @@ import { activeHeart, deactiveHeart } from '../store/heartReducer';
 
 export default function LikePage() {
   const [items, setItems] = useState<Item[]>([]);
+  const [userName, setUserName] = useState<string>('');
+  useEffect(() => {
+    const getUserName = async () => {
+      const res = await axios.get('http://localhost:5000/user/name', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+        },
+      });
+      const { username } = res.data;
+      setUserName(username);
+    };
+    getUserName();
+  }, []);
   // useEffect 로 페이지 열릴 시, user가 heart를 누른 상태에 대한 녀석들만 가지고온다. 로그인해야함
   const heart = useSelector((store: any) => store.heartStateA);
   const dispatch = useDispatch();
@@ -30,18 +43,21 @@ export default function LikePage() {
         );
         // 활성화된 하트를 클릭할 경우
       } else {
+        if (!window.confirm('정말 삭제하시겠습니까?')) {
+          return;
+        }
         dispatch(
           deactiveHeart({
             title: itemTitle,
           })
         );
+        document.location.reload();
       }
     } else {
       alert('로그인 후 이용가능 합니다.');
       navigate('/login');
     }
   };
-
   useEffect(() => {
     const a = async () => {
       const res = await axios.get('http://localhost:5000/user/itemView', {
@@ -54,10 +70,52 @@ export default function LikePage() {
     };
     a();
   }, []);
+  const itemAdd = async (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    itemTitle: string
+  ) => {
+    e.preventDefault();
+    if (!window.confirm('장바구니에 추가하시겠습니까?')) {
+      return;
+    }
+    const res = await axios.post(
+      'http://localhost:5000/user/bucketAdd',
+      {
+        title: itemTitle,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+        },
+      }
+    );
+    if (res.data.success) {
+      alert('장바구니에 추가되었습니다.');
+    } else {
+      alert(`${res.data.message}`);
+      return;
+    }
+  };
+  const itemDel = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    itemTitle: string
+  ) => {
+    e.preventDefault();
+    if (!window.confirm('정말 삭제하시겠습니까?')) {
+      return;
+    }
+    dispatch(
+      deactiveHeart({
+        title: itemTitle,
+      })
+    );
+    document.location.reload();
+  };
+
   return (
     <div className="Container">
       <div className="user">
-        <h1>~~님의 찜한 상품</h1>
+        <h1>{userName}님의 찜한 상품</h1>
       </div>
       <hr />
       <br />
@@ -108,6 +166,7 @@ export default function LikePage() {
                             <div className="childSale">{item.sale}</div>
                             {item.price.toLocaleString()}원{' '}
                           </div>
+
                           <div style={{ display: 'flex' }}>
                             {item.delivery && (
                               <div className="childDelivery">
@@ -117,8 +176,22 @@ export default function LikePage() {
                           </div>
                         </div>
                         <div className="heartShop">
-                          <div className="itemAdd">장바구니</div>
-                          <div className="itemDel">삭제</div>
+                          <div
+                            className="itemAdd"
+                            onClick={(e) => {
+                              itemAdd(e, item.title);
+                            }}
+                          >
+                            장바구니
+                          </div>
+                          <div
+                            className="itemDel"
+                            onClick={(e) => {
+                              itemDel(e, item.title);
+                            }}
+                          >
+                            삭제
+                          </div>
                         </div>
                       </div>
                     </a>
@@ -176,8 +249,22 @@ export default function LikePage() {
                           </div>
                         </div>
                         <div className="heartShop">
-                          <div className="itemAdd">장바구니</div>
-                          <div className="itemDel">삭제</div>
+                          <div
+                            className="itemAdd"
+                            onClick={(e) => {
+                              itemAdd(e, item.title);
+                            }}
+                          >
+                            장바구니
+                          </div>
+                          <div
+                            className="itemDel"
+                            onClick={(e) => {
+                              itemDel(e, item.title);
+                            }}
+                          >
+                            삭제
+                          </div>
                         </div>
                       </div>
                     </a>

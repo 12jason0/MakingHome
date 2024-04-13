@@ -6,7 +6,6 @@ import './css/all.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeHeart, deactiveHeart } from '../store/heartReducer';
 import { Item, HeartState } from '../component/interface';
-import { useNavigate } from 'react-router';
 
 const AllGood: React.FC = () => {
   const { type } = useParams<{ type?: string }>();
