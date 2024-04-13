@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Categoryitems } from '../Comment/tool/MenuTool'; // Categoryitems를 import 합니다.
+import { Categoryitems } from '../Comment/tool/MenuTool';
+import Pagination from 'react-js-pagination';
 import axios from 'axios';
 import './css/all.scss';
 
@@ -20,77 +21,49 @@ interface Item {
 
 const AllGood: React.FC = () => {
   const { type } = useParams<{ type?: string }>();
-  const [Set, setSet] = useState<{ id: string; url?: string; title: string }>({
-    id: '',
-    url: '',
-    title: '',
-  });
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage] = useState<number>(20);
   const [items, setItems] = useState<Item[]>([]);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
-  const totalPages = Math.ceil(6);
+  const [totalItems, setTotalItems] = useState<number>(0);
   const Navigate = useNavigate();
 
-  /////////////////////////////////////////데이터 가져오기///////////////////////////////////////////////
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/item/all');
-        const { all_item } = response.data;
-        setItems(all_item);
-      } catch (error) {
-        console.error('데이터를 가져오는 중 오류 발생:', error);
-      }
-    };
-    fetchItems();
-  }, []); // 페이지 로드 시에만 데이터를 가져오도록 변경
-  ///////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    const index = !isNaN(parseInt(type || '', 10))
-      ? parseInt(type || '', 10)
-      : 0;
-    setSet(Categoryitems[index] || { id: '', url: '', title: '' });
-  }, [type]);
+  // 데이터 로드 및 필터링 함수
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/item/all');
+      const { all_item } = response.data;
+      setItems(all_item);
+      setFilteredItems(all_item);
+      setTotalItems(all_item.length);
 
-  useEffect(() => {
-    let filteredItems = [];
-    if (type === '0') {
-      filteredItems = items.filter((item) => item.category1 === '가구');
-    } else if (type === '1') {
-      filteredItems = items.filter((item) => item.category1 === '원룸 가전');
-    } else if (type === '2') {
-      filteredItems = items.filter((item) => item.category1 === '패브릭');
-    } else if (type === '3') {
-      filteredItems = items.filter((item) => item.category1 === '옷정리/보관');
-    } else if (type === '4') {
-      filteredItems = items.filter((item) => item.category1 === '생활 용품');
-    } else if (type === '5') {
-      filteredItems = items.filter((item) => item.category1 === '소품/취미');
-    } else if (type === '6') {
-      filteredItems = items.filter((item) => item.category1 === '조명');
-    } else if (type === '7') {
-      filteredItems = items.filter((item) => item.category1 === '셀프인테리어');
-    } else {
+      localStorage.setItem('items', JSON.stringify(all_item));
+    } catch (error) {
+      console.error('데이터를 가져오는 중 오류 발생:', error);
+    }
+  };
+
+  // 필터링된 데이터 업데이트 함수
+  const updateFilteredItems = () => {
+    let filteredItems: Item[] = [];
+    if (type === undefined) {
       filteredItems = items;
+    } else {
+      filteredItems = items.filter(
+        (item) => item.category1 === Categoryitems[parseInt(type)].title
+      );
     }
-
     setFilteredItems(filteredItems);
-  }, [type, items]);
-
-  useEffect(() => {
-    localStorage.clear();
     localStorage.setItem('items', JSON.stringify(filteredItems));
-  }, [filteredItems]);
+  };
 
-  useEffect(() => {
-    const storedItems = localStorage.getItem('items');
-    if (storedItems !== null) {
-      setItems(JSON.parse(storedItems));
-    }
-  }, []);
+  // 페이지 변경 처리 함수
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    scrollToTop();
+  };
 
-  ////////////////////////////////정렬 방식/////////////////////////////////////////
+  // 정렬 방식 변경 처리 함수
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const option = e.target.value;
     const sortedItems = sortGoods(option);
@@ -111,39 +84,52 @@ const AllGood: React.FC = () => {
     }
   };
 
-  ////////////////////////페이지 버튼 및 숫자//////////////////////////
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    updateFilteredItems();
+  }, [type, items]);
+
+  const getDisplayedItems = (): Item[] => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredItems.slice(startIndex, endIndex);
   };
 
-  ////////////////////////////////////////////////////////////////////
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-  const getDisplayedItems = () => {
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    return filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-  };
-
-  /////////////////////////////////////////////
-  // 카테고리 버튼 클릭 이벤트 처리 함수들
-  /////////////////////////////////////////////
   const handleCategoryClick = (
     category: string,
     index: number,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    setSet({ id: '', url: '', title: category }); // Set 상태 업데이트
     event.preventDefault(); // 기본 이벤트 동작 막기
+
+    // 클릭된 카테고리를 기준으로 필터링
+    let filteredItems: Item[] = [];
+
     if (category === '전체보기') {
-      Navigate(`/all`);
+      setFilteredItems(items); // 모든 아이템 표시
     } else {
-      Navigate(`/Good/${index}`);
+      filteredItems = items.filter((item) => item.category1 === category);
+      setFilteredItems(filteredItems);
     }
+
+    // 로컬 스토리지 업데이트
+    localStorage.setItem('items', JSON.stringify(filteredItems));
+
+    // 올바른 URL 구성
+    const url = category === '전체보기' ? '/all' : `/Good/${index - 1}`;
+
+    // 페이지 이동
+    Navigate(url);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -181,10 +167,6 @@ const AllGood: React.FC = () => {
             <div className="allToolCon">
               {getDisplayedItems()
                 .filter((_, index) => index % 2 !== 1)
-                .slice(
-                  (currentPage - 1) * itemsPerPage,
-                  currentPage * itemsPerPage
-                )
                 .map((item) => (
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
@@ -218,10 +200,6 @@ const AllGood: React.FC = () => {
             <div className="allToolCon">
               {getDisplayedItems()
                 .filter((_, index) => index % 2 !== 0)
-                .slice(
-                  (currentPage - 1) * itemsPerPage,
-                  currentPage * itemsPerPage
-                )
                 .map((item) => (
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
@@ -254,44 +232,14 @@ const AllGood: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="allButtonDiv">
-          <button
-            onClick={() => {
-              handlePageChange(currentPage - 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === 1}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <div
-              key={i}
-              onClick={() => {
-                handlePageChange(i + 1);
-                scrollToTop();
-              }}
-              className="pageNumber"
-            >
-              <div
-                className={`pageNumberCircle ${
-                  currentPage === i + 1 ? 'activePage' : ''
-                }`}
-              >
-                {i + 1}
-              </div>
-            </div>
-          ))}
-          <button
-            onClick={() => {
-              handlePageChange(currentPage + 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === totalPages}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
-          </button>
-        </div>
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={itemsPerPage}
+          totalItemsCount={totalItems}
+          prevPageText={'‹'}
+          nextPageText={'›'}
+          onChange={handlePageChange}
+        />
       </div>
     </>
   );
