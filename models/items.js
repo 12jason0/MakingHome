@@ -24,7 +24,7 @@ const ItemModel = (sequelize) => {
         // NULL 추가
       },
       sale: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       price: {

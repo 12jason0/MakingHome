@@ -60,10 +60,15 @@ const login = async (req, res) => {
   if (findUser) {
     const userPw = await bcrypt.compare(password, findUser.userPw);
     if (userPw) {
-      const token = jwt.sign({ id: findUser.id }, process.env.SECRET, {
+      const token = jwt.sign({ id: findUser.userId }, process.env.SECRET, {
         expiresIn: '1h',
       });
-      res.json({ success: true, message: '로그인 성공!', token , userId : findUser.userId});
+      res.json({
+        success: true,
+        message: '로그인 성공!',
+        token,
+        userId: findUser.userId,
+      });
     } else {
       res.json({
         success: false,

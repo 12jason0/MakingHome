@@ -18,8 +18,10 @@ import AllSet from './pages/AllSet';
 import Set from './pages/Set';
 import Search from './pages/Search';
 import { MainsetImg } from './Comment/tool/MainSetTool';
+import LikePage from './pages/LikePage';
 import { Categoryitems } from './Comment/tool/MenuTool';
 import Good from './pages/Good';
+import Shopping from './pages/Shopping';
 
 function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -42,14 +44,6 @@ function App() {
           element={<Good Categoryitems={Categoryitems} />}
         />
         <Route path="/Popular" element={<Popular />} />
-        {/* <Route path="/ItemTrees" element={<ItemTrees />} />
-        <Route path="/homeAppliances" element={<HomeAppliances />} />
-        <Route path="/Fabric" element={<Fabric />} />
-        <Route path="/Clothes" element={<Clothes />} />
-        <Route path="/Hobby" element={<Hobby />} />
-        <Route path="/Lighting" element={<Lighting />} />
-        <Route path="/Tool" element={<Tool />} />
-        <Route path="/DailySupplies" element={<DailySupplies />} /> */}
         <Route path="/Money" element={<Money />} />
         <Route path="/HouseGift" element={<HouseGift />} />
         <Route path="/Announcement1" element={<Announcement1 />} />
@@ -58,6 +52,8 @@ function App() {
         <Route path="/AllSet" element={<AllSet />} />
         <Route path="/Set/:type" element={<Set MainsetImg={MainsetImg} />} />
         <Route path="/search/:item" element={<Search />} />
+        <Route path="/LikePage" element={<LikePage />} />
+        <Route path="/shop" element={<Shopping />} />
       </Routes>
       <Footer />
     </BrowserRouter>

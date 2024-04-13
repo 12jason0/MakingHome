@@ -18,6 +18,20 @@ db.UserProfile = require('./userProfile')(sequelize);
 db.Items = require('./items')(sequelize);
 db.ItemGift = require('./Gift')(sequelize);
 db.ItemChart = require('./itemChart')(sequelize);
+db.UserLike = require('./userLike')(sequelize);
+db.Bucket = require('./bucket')(sequelize);
+
+// 유저 찜목록 관계 db
+db.User.hasOne(db.UserLike, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.UserLike.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.Items.hasOne(db.UserLike, { foreignKey: 'itemId', onDelete: 'CASCADE' });
+db.UserLike.belongsTo(db.Items, { foreignKey: 'itemId', onDelete: 'CASCADE' });
+
+// 유저 장바구니 리스트 관계 db
+db.User.hasOne(db.Bucket, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.Bucket.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.Items.hasOne(db.Bucket, { foreignKey: 'itemId', onDelete: 'CASCADE' });
+db.Bucket.belongsTo(db.Items, { foreignKey: 'itemId', onDelete: 'CASCADE' });
 
 // 1:1 관계
 // db.Member.hasOne(db.Profile, { foreignKey: 'id', onDelete: 'CASCADE' });

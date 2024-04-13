@@ -3,20 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Categoryitems } from '../Comment/tool/MenuTool'; // Categoryitems를 import 합니다.
 import axios from 'axios';
 import './css/all.scss';
-
-interface Item {
-  id: number;
-  body: string;
-  img: string;
-  title: string;
-  sale: string;
-  price: number;
-  delivery: string;
-  review: number;
-  chart: number;
-  category1: string;
-  category2: string;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { activeHeart, deactiveHeart } from '../store/heartReducer';
+import { Item, HeartState } from '../component/interface';
 
 const AllGood: React.FC = () => {
   const { type } = useParams<{ type?: string }>();
@@ -146,6 +135,40 @@ const AllGood: React.FC = () => {
     }
   };
 
+  const heart = useSelector((store: any) => store.heartStateA);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // 하트 상태 변경(Store 사용)
+  const handleHeart = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    itemTitle: string
+  ) => {
+    e.preventDefault();
+    if (localStorage.getItem('Token') || localStorage.getItem('oneroomToken')) {
+      if (
+        !heart.find((product: HeartState) => product.title === itemTitle)
+          ?.heartStatus
+      ) {
+        // 비활성화된 하트를 클릭할 경우
+        dispatch(
+          activeHeart({
+            title: itemTitle,
+          })
+        );
+        // 활성화된 하트를 클릭할 경우
+      } else {
+        dispatch(
+          deactiveHeart({
+            title: itemTitle,
+          })
+        );
+      }
+    } else {
+      alert('로그인 후 이용가능 합니다.');
+      navigate('/login');
+    }
+  };
+
   return (
     <>
       <div className="AllCon">
@@ -189,7 +212,33 @@ const AllGood: React.FC = () => {
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
                       <div>
-                        <img src={item.img} alt={item.title} />
+                        {/* 기존 코드: <img src={item.img} alt={item.title} /> */}
+                        <div className="imageBox">
+                          <img
+                            className="toolImg"
+                            src={item.img}
+                            alt={item.title}
+                          />
+                          <img
+                            className="heart"
+                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                            src={
+                              localStorage.getItem('oneroomToken')
+                                ? heart.find(
+                                    (product: HeartState) =>
+                                      product.title === item.title
+                                  )?.heartStatus
+                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                            }
+                            alt="하트 이미지"
+                            onClick={(e) => {
+                              handleHeart(e, item.title);
+                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                            }}
+                          />
+                        </div>
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
@@ -226,7 +275,33 @@ const AllGood: React.FC = () => {
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
                       <div>
-                        <img src={item.img} alt={item.title} />
+                        {/* 기존 코드: <img src={item.img} alt={item.title} /> */}
+                        <div className="imageBox">
+                          <img
+                            className="toolImg"
+                            src={item.img}
+                            alt={item.title}
+                          />
+                          <img
+                            className="heart"
+                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                            src={
+                              localStorage.getItem('oneroomToken')
+                                ? heart.find(
+                                    (product: HeartState) =>
+                                      product.title === item.title
+                                  )?.heartStatus
+                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                            }
+                            alt="하트 이미지"
+                            onClick={(e) => {
+                              handleHeart(e, item.title);
+                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                            }}
+                          />
+                        </div>
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
