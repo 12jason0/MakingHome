@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/HouseGift.scss';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { activeHeart, deactiveHeart } from '../store/heartReducer';
+import { HeartState } from '../component/interface';
 interface item {
   id: number;
   body: string;
@@ -105,6 +108,39 @@ export default function HouseGift() {
       behavior: 'smooth',
     });
   };
+  /////////////////////////////////HeartButton, 클릭 시, 찜 목록 등록 혹은 삭제//////////////////////////////////////
+  const heart = useSelector((store: any) => store.heartStateA);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleHeart = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    itemTitle: string
+  ) => {
+    e.preventDefault();
+    if (localStorage.getItem('Token') || localStorage.getItem('oneroomToken')) {
+      if (
+        !heart.find((product: HeartState) => product.title === itemTitle)
+          ?.heartStatus
+      ) {
+        // 비활성화된 하트를 클릭할 경우
+        dispatch(
+          activeHeart({
+            title: itemTitle,
+          })
+        );
+        // 활성화된 하트를 클릭할 경우
+      } else {
+        dispatch(
+          deactiveHeart({
+            title: itemTitle,
+          })
+        );
+      }
+    } else {
+      alert('로그인 후 이용가능 합니다.');
+      navigate('/login');
+    }
+  };
 
   return (
     <>
@@ -181,7 +217,32 @@ export default function HouseGift() {
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
                       <div>
-                        <img src={item.img} alt={item.title} />
+                        <div className="imageBox">
+                          <img
+                            className="toolImg"
+                            src={item.img}
+                            alt={item.title}
+                          />
+                          <img
+                            className="heart"
+                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                            src={
+                              localStorage.getItem('oneroomToken')
+                                ? heart.find(
+                                    (product: HeartState) =>
+                                      product.title === item.title
+                                  )?.heartStatus
+                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                            }
+                            alt="하트 이미지"
+                            onClick={(e) => {
+                              handleHeart(e, item.title);
+                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                            }}
+                          />
+                        </div>
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">
@@ -218,7 +279,32 @@ export default function HouseGift() {
                   <div key={item.id} className="AllImgDiv">
                     <a href="/">
                       <div>
-                        <img src={item.img} alt={item.title} />
+                        <div className="imageBox">
+                          <img
+                            className="toolImg"
+                            src={item.img}
+                            alt={item.title}
+                          />
+                          <img
+                            className="heart"
+                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                            src={
+                              localStorage.getItem('oneroomToken')
+                                ? heart.find(
+                                    (product: HeartState) =>
+                                      product.title === item.title
+                                  )?.heartStatus
+                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                            }
+                            alt="하트 이미지"
+                            onClick={(e) => {
+                              handleHeart(e, item.title);
+                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                            }}
+                          />
+                        </div>
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
                           <div className="allPrice">

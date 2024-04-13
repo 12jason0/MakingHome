@@ -107,7 +107,6 @@ const chart_ToolH = async (req, res) => {
 // 검색 엔진
 const search = async (req, res) => {
   const { input_item } = req.query;
-  // console.log('search 사용자 입력 item :', input_item);
 
   // 키워드가 카테고리로 구분될 때
   const search_category = await Items.findAll({

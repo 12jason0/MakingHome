@@ -1,26 +1,12 @@
 .Container {
   width: 900px;
-  margin-top: 12.5%;
+  margin-top: 10.5%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 3%;
-  .searchResultContainer {
+  .user {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    .reverse {
-      position: relative;
-      .reverseImg {
-        width: 40px;
-        cursor: pointer;
-      }
-    }
-    .searchResult {
-      text-align: center;
-      div {
-        line-height: 44px;
-        font-size: 20px;
-      }
-    }
+    justify-content: center;
   }
 }
 
@@ -104,5 +90,36 @@
   .childBody {
     color: gray;
     padding: 10px 0;
+  }
+}
+.heartShop {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  .itemAdd {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 204, 102, 1) 0%,
+      rgba(255, 153, 153, 1) 35%,
+      rgba(255, 204, 255, 1) 100%
+    );
+    color: brown;
+    font-weight: bolder;
+    padding: 5px;
+    // border: 3px solid blue;
+    border-radius: 10%;
+  }
+  .itemDel {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 204, 102, 1) 0%,
+      rgba(255, 153, 153, 1) 35%,
+      rgba(255, 204, 255, 1) 100%
+    );
+    color: Brown;
+    font-weight: bolder;
+    padding: 5px;
+    // border: 3px solid blue;
+    border-radius: 10%;
   }
 }

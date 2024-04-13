@@ -149,7 +149,7 @@ export default function Header() {
                   alt="search"
                 />
               </div>
-              <Link to="/shopping">
+              <Link to="/shop">
                 <div>
                   <img
                     src={`${process.env.PUBLIC_URL}/image/shopping-cart.png`}

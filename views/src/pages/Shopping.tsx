@@ -1,58 +1,121 @@
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import './css/Shopping.scss';
 
 // 각 항목의 형태를 나타내는 인터페이스 정의
 interface Item {
-  id: string;
-  selected: boolean;
+  id: number;
   body: string;
   img: string;
   title: string;
+  sale: string;
+  price: number;
+  delivery: string;
+  review: number;
+  chart: number;
+  category1: string;
+  category2: string;
+  selected: boolean;
+}
+interface Pay {
+  price: number;
+  delivery_fee: number;
+  total_payment: number;
 }
 
 export default function Shopping() {
   // items 상태를 명시적으로 정의
   const [items, setItems] = useState<Item[]>([]);
-
+  const [pay, setPay] = useState<Pay>({
+    price: 0,
+    delivery_fee: 0,
+    total_payment: 0,
+  });
   // 데이터 불러오기
   useEffect(() => {
-    // 여기에 실제 데이터를 불러오는 코드를 작성하세요.
-    // 예를 들어, 서버에서 데이터를 가져올 때 사용하는 fetch 등의 코드가 들어갑니다.
-    // 가상의 초기 데이터를 사용하는 예시 코드를 작성하겠습니다.
-    const initialItems: Item[] = [
-      {
-        id: '1',
-        img: 'https://m.oneroommaking.com/web/product/medium/202403/a3c5aeadaa39e93e04f82ac9ac68f025.png',
-        title: '플러피 매트 토퍼 12cm',
-        body: '37,900원',
+    const getUserBucket = async () => {
+      const res = await axios.get('http://localhost:5000/user/bucketView', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+        },
+      });
+      const { viewItem } = res.data;
+      const itemSelected = viewItem.map((item: Item) => ({
+        ...item,
         selected: false,
-      },
-      {
-        id: '2',
-        img: 'https://m.oneroommaking.com/web/product/medium/202401/0a17aed4294ffebf34f6499728cca598.webp',
-        title: '자국없는 벨크로 암막커튼',
-        body: '16,800원',
-        selected: false,
-      },
-      // 필요한 만큼 더 추가하세요.
-    ];
-    setItems(initialItems);
+      }));
+      setItems(itemSelected);
+    };
+    getUserBucket();
   }, []);
 
   // 전체 선택 기능
   const handleSelectAll = () => {
-    const allSelected = items.every((item) => item.selected); // 모든 항목이 선택된 상태인지 확인
+    console.log('items : before', items);
     const updatedItems = items.map((item) => ({
       ...item,
-      selected: !allSelected, // 모든 항목이 선택된 상태면 선택 취소, 아니면 모두 선택
+      selected: !item.selected, // 모든 항목이 선택된 상태면 선택 취소, 아니면 모두 선택
     }));
     setItems(updatedItems);
+    const selectedItems = updatedItems.filter((item) => item.selected);
+    selectedItems.map((item) => {
+      itemSelectedEvent(item.selected, item.price, item.delivery);
+    });
+    console.log('items', items);
   };
 
   // 전체 삭제 기능
   const handleDeleteAll = () => {
     const remainingItems = items.filter((item) => !item.selected);
     setItems(remainingItems);
+  };
+  // 체크박스 클릭 이벤트
+  const itemSelectedEvent = (
+    selected: boolean,
+    price: number,
+    delivery: string
+  ) => {
+    console.log(selected);
+    // 구매 선택
+    if (selected) {
+      if (delivery === '무료배송')
+        setPay((prevPays: Pay) => {
+          return {
+            price: prevPays.price + price,
+            delivery_fee: prevPays.delivery_fee + 0,
+            total_payment: prevPays.total_payment + price,
+          };
+        });
+      else {
+        setPay((prevPays: Pay) => {
+          return {
+            price: prevPays.price + price,
+            delivery_fee: prevPays.delivery_fee + 1000,
+            total_payment: prevPays.total_payment + 1000 + price,
+          };
+        });
+      }
+      // 구매 취소
+    } else {
+      if (delivery === '무료배송')
+        setPay((prevPays: Pay) => {
+          return {
+            price: prevPays.price - price,
+            delivery_fee: prevPays.delivery_fee - 0,
+            total_payment: prevPays.total_payment - price,
+          };
+        });
+      else {
+        setPay((prevPays: Pay) => {
+          return {
+            price: prevPays.price - price,
+            delivery_fee: prevPays.delivery_fee - 1000,
+            total_payment: prevPays.total_payment - 1000 - price,
+          };
+        });
+      }
+    }
   };
 
   return (
@@ -76,9 +139,10 @@ export default function Shopping() {
             <div style={{ height: '20px' }}></div>
             {/* 각 항목을 form 요소 안에 표시 */}
             {items.map((item) => (
-              <form key={item.id}>
+              <form>
                 {/* 체크박스로 선택 여부 표시 */}
                 <input
+                  key={item.id}
                   type="checkbox"
                   checked={item.selected}
                   onChange={() => {
@@ -86,6 +150,11 @@ export default function Shopping() {
                       i.id === item.id ? { ...i, selected: !i.selected } : i
                     );
                     setItems(updatedItems);
+                    itemSelectedEvent(
+                      !item.selected,
+                      item.price,
+                      item.delivery
+                    );
                   }}
                 />
                 <div className="shoppingImg">
@@ -100,11 +169,25 @@ export default function Shopping() {
             <div></div>
             <form>
               {' '}
-              <label>총 상품 금액 : 원</label>
-              <label>배송비 : 원</label>
-              <label>결제 예정 금액 : 원</label>
+              <label>총 상품 금액 : {pay.price}원</label>
+              <label>배송비 : {pay.delivery_fee}원</label>
+              <label>결제 예정 금액 : {pay.total_payment}원</label>
               <button>
-                <div className="paymentDiv">선택 상품 주문하기</div>
+                <div
+                  className="paymentDiv"
+                  onClick={() => {
+                    if (pay.total_payment > 0) {
+                      if (!window.confirm('구매하시겠습니까?')) {
+                        return;
+                      }
+                      alert('정상적으로 구매되었습니다.');
+                    } else {
+                      alert('선택된 상품이 없습니다.');
+                    }
+                  }}
+                >
+                  선택 상품 주문하기
+                </div>
               </button>
             </form>
           </div>
@@ -113,3 +196,9 @@ export default function Shopping() {
     </>
   );
 }
+
+/* 
+더 처리해야 될 것
+1. 구매 시, 구매한 상품 어떻게 처리할건지
+3. 삭제 버튼 기능 추가(api도 넣어야함)
+*/

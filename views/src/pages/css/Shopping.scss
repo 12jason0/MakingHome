@@ -1,4 +1,5 @@
 .shoppingCon {
+  margin-top: 15.5%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -10,13 +11,15 @@
 .shoppingMenu {
   background: rgb(207, 207, 207);
   width: 50%;
-  height: auto;
+  height: 700px;
+  overflow-y: scroll;
 }
 .shoppingMoney {
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  // justify-content: space-around;
+  justify-content: center;
   form {
     display: flex;
     align-items: center;
