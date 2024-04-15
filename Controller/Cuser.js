@@ -99,6 +99,7 @@ const bucketDel = async (req, res) => {
   const user = await User.findOne({ where: { userId: id } });
   console.log('user : ', user);
   await Bucket.destroy({ where: { userId: user.id, itemId: findId.id } });
+  res.json({ success: true, message: '삭제되었습니다.' });
 };
 
 const bucketView = async (req, res) => {

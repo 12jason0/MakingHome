@@ -216,7 +216,7 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
         ></img>
       )}
       <br />
-      <hr />
+
       <form onSubmit={handleSubmit(onValid, onInValid)} className="loginForm">
         {localStorage.getItem('oneroomToken') ||
         localStorage.getItem('Token') ? (

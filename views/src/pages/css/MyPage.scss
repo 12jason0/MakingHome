@@ -1,8 +1,39 @@
-.Container {
+.Container1 {
   display: flex;
   justify-content: center;
-  .MyPageUser {
+}
+.Container2 {
+  width: 400px;
+  height: 150px;
+  line-height: 70px;
+  margin-top: 1.5%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #d9d9d9;
+  .childContainer2 {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    .box {
+      font-size: 23px;
+      .childDiv2 {
+        align-content: center;
+      }
+    }
+  }
+}
+.Container3 {
+  display: flex;
+  justify-content: space-around;
+  .orderDetail {
+    width: 50%;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .likeItem {
+    width: 50%;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
   }
 }
