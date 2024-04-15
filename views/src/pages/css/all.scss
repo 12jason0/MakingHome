@@ -35,6 +35,7 @@
   box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
   margin-bottom: 25px;
   border-radius: 20px;
+  cursor: pointer;
   &:hover {
     transform: scale(1.05);
   }
@@ -146,55 +147,7 @@
   background-color: blue;
 }
 
-.viewAll {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.ItemTrees {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.homeAppliances {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.Fabric {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.clothes {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.DailySupplies {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.hobby {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.Lighting {
-  border-bottom: 4px solid blue;
-  p {
-    margin: 0.5vw;
-  }
-}
-.Tool {
+.selectedCategory {
   border-bottom: 4px solid blue;
   p {
     margin: 0.5vw;

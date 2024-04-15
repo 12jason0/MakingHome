@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Pagination from 'react-js-pagination';
 import axios from 'axios';
 import './css/all.scss';
 
@@ -28,42 +29,36 @@ interface Item {
 
 const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
   const { type } = useParams<{ type: string }>();
-  const [Set, setSet] = useState<{
-    id: string;
-    url: string;
-    title: string;
-    EnglishTitle: string;
-  }>({
-    id: '',
-    url: '',
-    title: '',
-    EnglishTitle: '',
-  });
   const [items, setItems] = useState<Item[]>([]);
+  const navigate = useNavigate();
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-  const totalPages = Math.ceil(6);
-  const Navigate = useNavigate();
-  const [navigate2State, setNavigate2State] = useState<string>('viewAll');
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>(''); // 선택된 카테고리 상태를 정의합니다.
 
-  /////////////////////////////////////////데이터 가져오기///////////////////////////////////////////////
+  useEffect(() => {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    setTotalPages(totalPages);
+  }, [totalItems, itemsPerPage]);
+
+  const Navigate = useNavigate();
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/item/all');
         const { all_item } = response.data;
         setItems(all_item);
+        setFilteredItems(all_item);
+        setTotalItems(all_item.length);
       } catch (error) {
         console.error('데이터를 가져오는 중 오류 발생:', error);
       }
     };
     fetchItems();
-  }, []); // 페이지 로드 시에만 데이터를 가져오도록 변경
-  ///////////////////////////////////////////////////////////////////////////////////
-  useEffect(() => {
-    setSet({ id: '', url: '', title: '', EnglishTitle: '' });
-  }, [type]);
+  }, []);
 
   useEffect(() => {
     let filteredItems = [];
@@ -74,7 +69,7 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
     } else if (type === '2') {
       filteredItems = items.filter((item) => item.category1 === '패브릭');
     } else if (type === '3') {
-      filteredItems = items.filter((item) => item.category1 === '옷정리');
+      filteredItems = items.filter((item) => item.category1 === '옷정리/보관');
     } else if (type === '4') {
       filteredItems = items.filter((item) => item.category1 === '생활 용품');
     } else if (type === '5') {
@@ -88,19 +83,16 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
     }
 
     setFilteredItems(filteredItems);
-
-    // 로컬 스토리지 업데이트
     localStorage.setItem('items', JSON.stringify(filteredItems));
+    setCurrentPage(1); // 페이지를 첫 페이지로 설정
   }, [type, items]);
 
-  ////////////////////////////////정렬 방식/////////////////////////////////////////
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const option = e.target.value;
     const sortedItems = sortGoods(option);
     if (sortedItems !== undefined) {
       setItems(sortedItems);
-      setCurrentPage(1);
-      scrollToTop();
+      setCurrentPage(1); // 페이지를 첫 페이지로 설정
     }
   };
 
@@ -114,22 +106,16 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
     }
   };
 
-  ////////////////////////페이지 버튼 및 숫자//////////////////////////
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+    scrollToTop();
   };
 
-  ////////////////////////////////////////////////////////////////////
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-  };
-  const getDisplayedItems = () => {
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    return filteredItems.slice(indexOfFirstItem, indexOfLastItem);
   };
 
   /////////////////////////////////////////////
@@ -143,7 +129,7 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
     event.preventDefault(); // 기본 이벤트 동작 막기
 
     // 클릭된 카테고리를 기준으로 필터링
-    let filteredItems: Item[] = []; // 타입 지정
+    let filteredItems: Item[] = [];
 
     if (category === '전체보기') {
       setFilteredItems(items); // 모든 아이템 표시
@@ -155,7 +141,18 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
     // 로컬 스토리지 업데이트
     localStorage.setItem('items', JSON.stringify(filteredItems));
 
-    Navigate(`/Good/${type}`);
+    // 올바른 URL 구성
+    const url = category === '전체보기' ? '/Good/10' : `/Good/${index - 1}`;
+
+    // 페이지 이동
+    Navigate(url);
+    // 현재 선택된 카테고리 표시
+    setSelectedCategory(category);
+  };
+
+  // Good 컴포넌트에서 아이템 클릭 시 해당 아이템의 상세 페이지로 이동하는 함수 추가
+  const handleItemClick = (itemId: number) => {
+    navigate(`/GoodIssue/${itemId}`); // 해당 아이템의 ID를 이용하여 상세 페이지로 이동
   };
 
   return (
@@ -165,10 +162,10 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
           {Categoryitems.map((item, index) => (
             <div
               key={item.id}
-              className={`${item.EnglishTitle} ${
-                navigate2State === item.title ? 'activeCategory' : ''
-              }`}
               onClick={(e) => handleCategoryClick(item.title, index, e)}
+              className={
+                selectedCategory === item.title ? 'selectedCategory' : ''
+              }
             >
               <p>{item.title}</p>
             </div>
@@ -193,119 +190,89 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
             }}
           >
             <div className="allToolCon">
-              {getDisplayedItems()
+              {filteredItems
                 .filter((_, index) => index % 2 !== 1)
                 .slice(
                   (currentPage - 1) * itemsPerPage,
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <img src={item.img} alt={item.title} />
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    <div>
+                      <img src={item.img} alt={item.title} />
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
+                        </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>
             <div className="allToolCon">
-              {getDisplayedItems()
+              {filteredItems
                 .filter((_, index) => index % 2 !== 0)
                 .slice(
                   (currentPage - 1) * itemsPerPage,
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <img src={item.img} alt={item.title} />
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    <div>
+                      <img src={item.img} alt={item.title} />
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
+                        </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>
           </div>
         </div>
-        <div className="allButtonDiv">
-          <button
-            onClick={() => {
-              handlePageChange(currentPage - 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === 1}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/backs.png`} alt="" />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <div
-              key={i}
-              onClick={() => {
-                handlePageChange(i + 1);
-                scrollToTop();
-              }}
-              className="pageNumber"
-            >
-              <div
-                className={`pageNumberCircle ${
-                  currentPage === i + 1 ? 'activePage' : ''
-                }`}
-              >
-                {i + 1}
-              </div>
-            </div>
-          ))}
-          <button
-            onClick={() => {
-              handlePageChange(currentPage + 1);
-              scrollToTop();
-            }}
-            disabled={currentPage === totalPages}
-          >
-            <img src={`${process.env.PUBLIC_URL}/image/fronts.png`} alt="" />
-          </button>
-        </div>
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={itemsPerPage}
+          totalItemsCount={totalItems}
+          prevPageText={'‹'}
+          nextPageText={'›'}
+          onChange={handlePageChange}
+        />
       </div>
     </>
   );

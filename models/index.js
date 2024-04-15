@@ -17,6 +17,7 @@ db.User = require('./user')(sequelize);
 db.UserProfile = require('./userProfile')(sequelize);
 db.Items = require('./items')(sequelize);
 db.ItemGift = require('./Gift')(sequelize);
+db.Issue = require('./Issues')(sequelize);
 db.ItemChart = require('./itemChart')(sequelize);
 db.UserLike = require('./userLike')(sequelize);
 db.Bucket = require('./bucket')(sequelize);

@@ -86,6 +86,14 @@ export default function Header() {
     navigate(`/search/${e.target.textContent}`);
     closePopup();
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
       <div className="headerDiv">
@@ -161,19 +169,19 @@ export default function Header() {
           </div>
           <div className="line"></div>
           <div className="headerConUnder">
-            <Link to="/AllSet" className="AllSet">
+            <Link to="/AllSet" className="AllSet" onClick={scrollToTop}>
               세트 메뉴
             </Link>
-            <Link to="/Popular" className="menu-link">
+            <Link to="/Popular" className="menu-link" onClick={scrollToTop}>
               인기 차트
             </Link>
-            <Link to="/Money" className="menu-link">
+            <Link to="/Money" className="menu-link" onClick={scrollToTop}>
               만원 이하
             </Link>
-            <Link to="/HouseGift" className="menu-link ">
+            <Link to="/HouseGift" className="menu-link " onClick={scrollToTop}>
               집들이 선물
             </Link>
-            <Link to="/all" className="menu-link">
+            <Link to="/Good/10" className="menu-link" onClick={scrollToTop}>
               모든 상품
             </Link>
           </div>
