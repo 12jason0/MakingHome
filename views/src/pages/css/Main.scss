@@ -1,0 +1,452 @@
+.BannerSlide {
+  width: 100%;
+  min-width: 1440px;
+  height: 500px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  position: relative;
+  justify-content: center;
+
+  .swiperNumber {
+    height: 100%;
+    width: 900px;
+    transition-timing-function: linear;
+    .slideImgContainer {
+      width: 900px;
+      height: 100%;
+      img {
+        height: 100%;
+        width: 900px;
+        cursor: pointer;
+      }
+    }
+    .buttonCon {
+      cursor: pointer;
+      height: 90%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      width: 900px;
+      .buttonDiv {
+        display: flex;
+        position: absolute;
+        height: 30px;
+        right: calc(50% - 430px);
+        bottom: 40px;
+        border-radius: 8px;
+        background: rgba(24, 29, 31, 0.5);
+        color: rgb(255, 255, 255);
+        font-size: 22px;
+        font-weight: bold;
+        .leftButton {
+          width: 40px;
+          height: 30px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .rightButton {
+          width: 40px;
+          height: 30px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+//////////////////////////////인기템//////////////////////////////////////////////////
+.MainMiddle {
+  display: flex;
+  justify-content: center;
+  height: 500px;
+  background-color: rgb(247, 248, 249);
+  align-items: center;
+  flex-direction: column;
+  .PopolarTitle {
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    font-size: 22px;
+    font-weight: bold;
+    button {
+      position: static;
+      display: inline-flex;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      width: 102px;
+      height: 40px;
+      padding: 0px;
+      border-radius: 20px;
+      border: 1px solid rgb(179, 186, 193);
+      margin: 0px;
+      background: transparent;
+      font-weight: normal;
+      font-size: 1rem;
+      color: black;
+      box-sizing: border-box;
+      cursor: pointer;
+      outline: none;
+      span {
+        font-size: 15px;
+        font-weight: normal;
+      }
+    }
+  }
+  .PopolarMiddle {
+    font-size: 19px;
+    padding: 10px 0 0 20px;
+    width: 880px;
+    span {
+      color: red;
+    }
+  }
+  .PopularMain {
+    display: flex;
+    height: auto;
+    padding: 30px 0px 30px;
+    background: rgb(247, 248, 249);
+    width: 1050px;
+    padding: 20px 75px;
+    align-items: center;
+    .MiddleSlide {
+      border-radius: 20px 20px 0 0;
+      width: 210px;
+      height: 235px;
+      .ImgBox {
+        width: 200px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px 20px 0 0;
+      }
+    }
+  }
+}
+.MiddleButton {
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  border-radius: 50px;
+  margin: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.ImgBox {
+  margin-left: 15px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+  img {
+    object-fit: cover;
+    transition: all 0.2s ease-in-out 0s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .ImgText {
+    height: 100px;
+    color: black;
+  }
+  a {
+    text-decoration: none;
+  }
+  h3,
+  p {
+    margin-left: 5px;
+  }
+}
+
+//////////////////////카테고리 메뉴/////////////////////////
+.MainCategoryCon {
+  width: 100%;
+  height: 300px;
+  padding: 50px 0;
+  display: flex;
+  justify-content: center;
+  .MainCategoryDiv {
+    width: 900px;
+    .CategoryCon {
+      display: flex;
+      padding: 50px 0;
+      width: 900px;
+      align-items: center;
+      justify-content: center;
+      .leftButton,
+      .rightButton {
+        position: static;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-right: 20px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      a {
+        padding-right: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        object-fit: cover;
+        transition: all 0.2s ease-in-out 0s;
+        &:hover {
+          transform: scale(1.2);
+        }
+        div {
+          font-weight: bold;
+          font-size: 15px;
+          color: black;
+        }
+      }
+      .CategoryImg {
+        width: calc(840px / 8);
+        height: 150px;
+        border-radius: 50%;
+        background-color: #dff5ff;
+        margin-bottom: 25px;
+        img {
+          width: 100%;
+          height: 80%;
+          padding-top: 18px;
+        }
+        div {
+          text-align: center;
+        }
+      }
+    }
+  }
+  span {
+    font-size: 22px;
+    font-weight: bold;
+  }
+}
+
+//자취 로망 세트 메뉴
+
+.MainSetCon {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(247, 248, 249);
+  padding-bottom: 10px;
+  .MainSetDiv {
+    padding: 30px 0;
+    width: 900px;
+    height: auto;
+    span {
+      font-size: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}
+
+.MainSetMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 400px;
+  padding-top: 50px;
+  .setImgDiv {
+    width: 780px;
+    height: 400px;
+    border-radius: 20px;
+    box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+    img {
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 20px;
+    }
+  }
+  .leftButton,
+  .rightButton {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+//////////////////// 집들이 선물//////////////////////////////////////
+.giftCon {
+  display: flex;
+  padding: 30px 0;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  .giftTitle {
+    width: 900px;
+    border-bottom: rgb(233, 235, 238) 2px solid;
+    height: 500px;
+    padding-bottom: 30px;
+    span {
+      font-size: 25px;
+      font-weight: bold;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+.giftDiv {
+  display: flex;
+  height: auto;
+  padding-top: 15px;
+  justify-content: center;
+  position: relative;
+  a {
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+    padding-right: 20px;
+    .giftImgdiv {
+      position: relative;
+      width: 205px;
+      height: 400px;
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px 0;
+      }
+      .sale {
+        color: red;
+        span {
+          color: black;
+        }
+      }
+      .delivery {
+        border-radius: 4px;
+        padding: 4px 5px;
+        margin: 0px 6px 0px 0px;
+        color: rgb(83, 91, 99);
+        background: rgb(241, 243, 246);
+        width: 70px;
+        text-align: center;
+      }
+      .heartDiv {
+        position: absolute;
+        bottom: 115px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        z-index: 100;
+        .heart {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+  img {
+    border-radius: 8px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: all 0.2s ease-in-out 0s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+//////////////////// 만원 이하//////////////////////////////////////
+.giftUnder {
+  display: flex;
+  padding-bottom: 30px;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  .giftUnderTitle {
+    width: 900px;
+    height: 500px;
+    span {
+      font-size: 25px;
+      font-weight: bold;
+    }
+  }
+}
+.giftUnder {
+  display: flex;
+  height: auto;
+  padding-top: 15px;
+  justify-content: center;
+  a {
+    font-size: 15px;
+    text-decoration: none;
+    color: black;
+    padding-right: 20px;
+    position: relative;
+    .giftImgUnderdiv {
+      position: relative;
+      width: 205px;
+      height: 400px;
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px 0;
+      }
+      .sale {
+        color: red;
+        span {
+          color: black;
+        }
+      }
+      .delivery {
+        border-radius: 4px;
+        padding: 4px 5px;
+        margin: 0px 6px 0px 0px;
+        color: rgb(83, 91, 99);
+        background: rgb(241, 243, 246);
+        width: 70px;
+        text-align: center;
+      }
+      .heartDiv {
+        position: absolute;
+        bottom: 115px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        z-index: 100;
+        .heart {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+  .giftImg {
+    border-radius: 8px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: all 0.2s ease-in-out 0s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

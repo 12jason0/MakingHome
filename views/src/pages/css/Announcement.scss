@@ -1,0 +1,72 @@
+.AnnCon {
+  width: 100%;
+  height: auto;
+  padding: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: black;
+
+  .AnnDiv {
+    width: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+    background-color: rgb(236 237 239);
+  }
+}
+.AnnContent {
+  width: 980px;
+  height: auto;
+  margin: 100px 0;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  ul {
+    span {
+      font-weight: bold;
+    }
+    padding: 0;
+    list-style-type: none;
+    li {
+      padding-left: 50px;
+      padding-top: 20px;
+    }
+  }
+  p {
+    font-size: 20px;
+    color: black;
+    span {
+      font-weight: bold;
+    }
+  }
+
+  .day {
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 780px;
+    flex-direction: column;
+    p {
+      padding: 20px 50px;
+      flex-direction: column;
+      margin: 0;
+    }
+  }
+}
+.div1,
+.div2,
+.div3 {
+  padding: 0 100px 50px 100px;
+}
+.div3 {
+  width: 780px;
+}

@@ -1,0 +1,125 @@
+.Container {
+  width: 900px;
+  margin-top: 10.5%;
+  margin-left: auto;
+  margin-right: auto;
+  .user {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.parentToolContainer {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  a {
+    text-decoration-line: none;
+  }
+  .childImgContainer {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    flex-wrap: wrap;
+    padding-bottom: 25px;
+    box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+    margin-bottom: 25px;
+    border-radius: 20px;
+    &:hover {
+      transform: scale(1.05);
+    }
+    h4 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+    }
+    .imageBox {
+      position: relative;
+      display: inline-block;
+      .toolImg {
+        width: 250px;
+        height: 290px;
+        border-radius: 20px;
+      }
+      .heart {
+        position: absolute;
+        top: 230px;
+        left: 200px;
+        width: 38px;
+        height: auto;
+      }
+    }
+  }
+  .childTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 20px;
+    h4 {
+      color: black;
+    }
+  }
+  .childPrice {
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 10px;
+    color: black;
+    .childSale {
+      padding-right: 5px;
+      color: red;
+    }
+  }
+  .childDelivery {
+    border-radius: 4px;
+    padding: 4px 5px;
+    margin: 0px 6px 0px 0px;
+    color: rgb(83, 91, 99);
+    background: rgb(241, 243, 246);
+    width: 70px;
+    text-align: center;
+  }
+  .childReview {
+    display: flex;
+    &:hover {
+      font-weight: bold;
+    }
+  }
+  .childBody {
+    color: gray;
+    padding: 10px 0;
+  }
+}
+.heartShop {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  .itemAdd {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 204, 102, 1) 0%,
+      rgba(255, 153, 153, 1) 35%,
+      rgba(255, 204, 255, 1) 100%
+    );
+    color: brown;
+    font-weight: bolder;
+    padding: 5px;
+    // border: 3px solid blue;
+    border-radius: 10%;
+  }
+  .itemDel {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 204, 102, 1) 0%,
+      rgba(255, 153, 153, 1) 35%,
+      rgba(255, 204, 255, 1) 100%
+    );
+    color: Brown;
+    font-weight: bolder;
+    padding: 5px;
+    // border: 3px solid blue;
+    border-radius: 10%;
+  }
+}

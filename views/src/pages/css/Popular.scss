@@ -1,0 +1,256 @@
+.top {
+  width: 900px;
+  margin-top: 10.5%;
+  margin-left: auto;
+  margin-right: auto;
+  .navigate1 {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5vw;
+    text-align: center;
+    line-height: 50px;
+    .allBest {
+      width: 100%;
+      background: rgb(247, 248, 249);
+      color: gray;
+      cursor: pointer;
+    }
+    .categoryBest {
+      width: 100%;
+      background: rgb(247, 248, 249);
+      color: gray;
+      cursor: pointer;
+    }
+  }
+  .navigate2 {
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 3%;
+    font-size: 1.3vw;
+    div {
+      p {
+        cursor: pointer;
+      }
+    }
+  }
+  hr {
+    margin-top: 1vw;
+  }
+
+  .activeAllBest {
+    background: blue;
+    width: 100%;
+    color: white;
+  }
+
+  .activeCategoryBest {
+    background: blue;
+    width: 100%;
+    color: white;
+  }
+  .viewAll {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewWeekChart {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewMonthChart {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewHonor {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+
+  .viewToolA {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewToolB {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewToolC {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewToolD {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewToolE {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewToolF {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewToolG {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+  .viewToolH {
+    border-bottom: 4px solid blue;
+    p {
+      margin: 0.5vw;
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////
+  /// 가구 배치 CSS
+
+  .parentToolContainer {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    a {
+      text-decoration-line: none;
+    }
+    .childImgContainer {
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      align-content: space-around;
+      flex-wrap: wrap;
+      padding-bottom: 25px;
+      box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+      margin-bottom: 25px;
+      border-radius: 20px;
+      &:hover {
+        transform: scale(1.05);
+      }
+      h4 {
+        margin: 0 0 5px 0;
+        font-size: 18px;
+      }
+      .imageBox {
+        position: relative;
+        display: inline-block;
+        .toolImg {
+          width: 250px;
+          height: 290px;
+          border-radius: 20px;
+        }
+        .heart {
+          position: absolute;
+          top: 230px;
+          left: 200px;
+          width: 38px;
+          height: auto;
+        }
+      }
+    }
+    .childTitle {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-right: 20px;
+      h4 {
+        color: black;
+      }
+    }
+    .childPrice {
+      display: flex;
+      font-size: 20px;
+      font-weight: bold;
+      padding-top: 10px;
+      color: black;
+      .childSale {
+        padding-right: 5px;
+        color: red;
+      }
+    }
+    .childDelivery {
+      border-radius: 4px;
+      padding: 4px 5px;
+      margin: 0px 6px 0px 0px;
+      color: rgb(83, 91, 99);
+      background: rgb(241, 243, 246);
+      width: 70px;
+      text-align: center;
+    }
+    .childReview {
+      display: flex;
+      &:hover {
+        font-weight: bold;
+      }
+    }
+    .childBody {
+      color: gray;
+      padding: 10px 0;
+    }
+  }
+}
+
+// 페이지네이션 패키지에서 받아온 태그 디자인
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 30px auto;
+
+  li {
+    list-style-type: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+    transition: all 0.3s;
+
+    &:hover,
+    &:active,
+    &.active {
+      // 색 변경할 예정
+      background-color: #007bff;
+      color: white;
+    }
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-last-child(1),
+    &:nth-last-child(2) {
+      a {
+        align-items: baseline;
+        font-size: 20px;
+      }
+    }
+    a {
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      font-size: 12px;
+    }
+  }
+}
