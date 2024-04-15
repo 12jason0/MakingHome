@@ -55,7 +55,7 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
   // 로그인 시 페이지 강제 넘기기
   useEffect(() => {
     if (localStorage.getItem('oneroomToken') || localStorage.getItem('Token')) {
-      navigate('-1');
+      navigate('/');
     }
   }, []);
 
@@ -124,8 +124,17 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
   const onValid = (data: FormValues): void => {
     console.log(data);
     // 로그인
+    // 로컬용 api 호출
+    // const result = async () => {
+    //   const res = await axios.post('http://localhost:5000/api/login', {
+    //     userInput: {
+    //       userId: data.userId,
+    //       password: data.userPw,
+    //     },
+    //   });
+    // 배포용 api 호출
     const result = async () => {
-      const res = await axios.post('http://localhost:5000/api/login', {
+      const res = await axios.post('http://54.180.183.108/api/login', {
         userInput: {
           userId: data.userId,
           password: data.userPw,
@@ -141,7 +150,14 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
         localStorage.setItem('oneroomToken', token);
         Cookie.set('oneroomUsername', userId, { expires: 1 });
         // 로그인 시 사용자 찜 목록 리스트로 Store 초기화
-        const res = await axios.get('http://localhost:5000/user/itemView', {
+        // 로컬용 api
+        // const res = await axios.get('http://localhost:5000/user/itemView', {
+        //   headers: {
+        //     Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+        //   },
+        // });
+        // 배포용 api
+        const res = await axios.get('http://54.180.183.108/user/itemView', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
           },
