@@ -100,20 +100,15 @@ const GoodIssue: React.FC = () => {
           </form>
 
           <div className="IssueLine"></div>
-          {issueImages.map((imageUrl, index) => (
-            <div
-              className={`immg ${
-                index === 0
-                  ? 'first-immg'
-                  : index >= 8 && index <= 10
-                  ? 'visible'
-                  : ''
-              }`}
-              key={index}
-            >
-              <img src={imageUrl} alt={`Issue ${index + 1}`} />
-            </div>
-          ))}
+          {issueImages &&
+            issueImages.map(
+              (imageUrl, index) =>
+                imageUrl && ( // 이미지 URL이 null이 아닌 경우에만 렌더링
+                  <div className="immg" key={index}>
+                    <img src={imageUrl} alt={`Issue ${index + 1}`} />
+                  </div>
+                )
+            )}
 
           <div style={{ height: '50px' }}></div>
         </div>
