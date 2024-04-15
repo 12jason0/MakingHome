@@ -35,11 +35,14 @@ export default function Shopping() {
   // 데이터 불러오기
   useEffect(() => {
     const getUserBucket = async () => {
-      const res = await axios.get('http://localhost:5000/user/bucketView', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_DB_HOST}/user/bucketAdd`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        }
+      );
       const { viewItem } = res.data;
       const itemSelected = viewItem.map((item: Item) => ({
         ...item,

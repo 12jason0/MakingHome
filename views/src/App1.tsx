@@ -7,8 +7,8 @@ function App() {
   // useEffect callback 함수는 Promise를 지원하지 않는다.
   useEffect(() => {
     const resFunc = async () => {
-      const res = await axios.get('http://localhost:5000/api');
-      console.log(res.data.message);
+      // const res = await axios.get('http://localhost:5000/api');
+      // console.log(res.data.message);
     };
     resFunc();
 
@@ -20,10 +20,8 @@ function App() {
     //     return console.log(data);
     //   })
     //   .catch((error) => console.error('Error fetching data:', error)); // 추가: 에러 처리
-  }, []); 
-  return (
-    <div className="App">Test</div>
-  );
+  }, []);
+  return <div className="App">Test</div>;
 }
 
 export default App;

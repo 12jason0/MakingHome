@@ -30,7 +30,7 @@ export default function Search() {
   // console.log(item);
   useEffect(() => {
     const search_items = async () => {
-      const res = await axios.get('http://localhost:5000/api/item/search', {
+      const res = await axios.get('http://13.125.129.209/api/item/search', {
         params: {
           input_item,
         },

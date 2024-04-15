@@ -18,7 +18,8 @@ const GoodIssue: React.FC = () => {
 
         // 아이템 목록을 가져오는 요청
         const allItemResponse = await axios.get(
-          'http://localhost:5000/api/item/all'
+          `${process.env.REACT_APP_DB_HOST}/api/item/all`
+          // 'http://localhost:5000/api/item/all'
         );
         const allItems = allItemResponse.data.all_item;
 
@@ -27,7 +28,8 @@ const GoodIssue: React.FC = () => {
         if (item) {
           // 해당 아이템의 이슈를 가져오는 요청
           const issueResponse = await axios.get(
-            `http://localhost:5000/api/item/issue/${id}`
+            `${process.env.REACT_APP_DB_HOST}/api/item/all/issue/${id}`
+            // `http://localhost:5000/api/item/issue/${id}`
           );
           const issueData = issueResponse.data;
 

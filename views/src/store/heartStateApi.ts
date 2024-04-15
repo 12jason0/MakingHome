@@ -1,7 +1,7 @@
 import axios from 'axios';
 const heartAdd = async (title: string) => {
   const res = await axios.post(
-    'http://localhost:5000/user/itemAdd',
+    `${process.env.REACT_APP_DB_HOST}/user/itemAdd`,
     {
       title,
     },
@@ -14,7 +14,7 @@ const heartAdd = async (title: string) => {
 };
 const heartDel = async (title: string) => {
   const res = await axios.post(
-    'http://localhost:5000/user/itemDel',
+    `${process.env.REACT_APP_DB_HOST}/user/itemDel`,
     {
       title,
     },

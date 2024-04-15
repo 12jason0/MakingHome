@@ -11,11 +11,14 @@ export default function LikePage() {
   const [userName, setUserName] = useState<string>('');
   useEffect(() => {
     const getUserName = async () => {
-      const res = await axios.get('http://localhost:5000/user/name', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_DB_HOST}/user/name`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        }
+      );
       const { username } = res.data;
       setUserName(username);
     };
@@ -60,11 +63,14 @@ export default function LikePage() {
   };
   useEffect(() => {
     const a = async () => {
-      const res = await axios.get('http://localhost:5000/user/itemView', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_DB_HOST}/user/itemView`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        }
+      );
       const { viewItem } = res.data;
       setItems(viewItem);
     };
@@ -79,7 +85,7 @@ export default function LikePage() {
       return;
     }
     const res = await axios.post(
-      'http://localhost:5000/user/bucketAdd',
+      `${process.env.REACT_APP_DB_HOST}/user/bucketAdd`,
       {
         title: itemTitle,
       },

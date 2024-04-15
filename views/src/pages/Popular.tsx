@@ -129,7 +129,7 @@ export default function Popular() {
     // 함수 시작
     const chart_ALL = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/all'
+        'http://13.125.129.209/api/item/chart/all'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -137,7 +137,7 @@ export default function Popular() {
     };
     const chart_Week = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/week'
+        'http://13.125.129.209/api/item/chart/week'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -145,7 +145,7 @@ export default function Popular() {
     };
     const chart_Month = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/month'
+        'http://13.125.129.209/api/item/chart/month'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -153,7 +153,7 @@ export default function Popular() {
     };
     const chart_honor = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/honor'
+        'http://13.125.129.209/api/item/chart/honor'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -161,7 +161,7 @@ export default function Popular() {
     };
     const chart_ToolA = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolA'
+        'http://13.125.129.209/api/item/chart/toolA'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -169,7 +169,7 @@ export default function Popular() {
     };
     const chart_ToolB = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolB'
+        'http://13.125.129.209/api/item/chart/toolB'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -177,7 +177,7 @@ export default function Popular() {
     };
     const chart_ToolC = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolC'
+        'http://13.125.129.209/api/item/chart/toolC'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -185,7 +185,7 @@ export default function Popular() {
     };
     const chart_ToolD = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolD'
+        'http://13.125.129.209/api/item/chart/toolD'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -193,7 +193,7 @@ export default function Popular() {
     };
     const chart_ToolE = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolE'
+        'http://13.125.129.209/api/item/chart/toolE'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -201,7 +201,7 @@ export default function Popular() {
     };
     const chart_ToolF = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolF'
+        'http://13.125.129.209/api/item/chart/toolF'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -209,7 +209,7 @@ export default function Popular() {
     };
     const chart_ToolG = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolG'
+        'http://13.125.129.209/api/item/chart/toolG'
       );
       const { best_item, type } = best_items.data;
       setTotalItems(best_item.length);
@@ -217,7 +217,7 @@ export default function Popular() {
     };
     const chart_ToolH = async () => {
       const best_items = await axios.get(
-        'http://localhost:5000/api/item/chart/toolH'
+        'http://13.125.129.209/api/item/chart/toolH'
       );
       const { best_item, type } = best_items.data;
       console.log('best_item', best_item.length);

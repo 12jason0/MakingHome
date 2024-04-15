@@ -50,7 +50,9 @@ export default function HouseGift() {
   useEffect(() => {
     const fetchgifts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/item/gift');
+        const response = await axios.get(
+          `${process.env.REACT_APP_DB_HOST}/api/item/all/gift`
+        );
         const { gift_item } = response.data;
 
         setItems(gift_item);

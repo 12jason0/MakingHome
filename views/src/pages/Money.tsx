@@ -75,7 +75,9 @@ export default function Money() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/item/all');
+        const response = await axios.get(
+          `${process.env.REACT_APP_DB_HOST}/api/item/all`
+        );
         const { all_item } = response.data;
         setItems(all_item);
       } catch (error) {

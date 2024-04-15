@@ -28,16 +28,19 @@ export default function RegisterPage({ setShowHeader }: RegisterPageProps) {
   } = useForm<FormValues>();
   const onValid = (data: FormValues): void => {
     const result = async () => {
-      const res = await axios.post('http://localhost:5000/api/register', {
-        userInfo: {
-          name: data.name,
-          age: data.age,
-          email: data.email,
-          phone: data.phone,
-          userId: data.userId,
-          password: data.userPw,
-        },
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_DB_HOST}/api/register`,
+        {
+          userInfo: {
+            name: data.name,
+            age: data.age,
+            email: data.email,
+            phone: data.phone,
+            userId: data.userId,
+            password: data.userPw,
+          },
+        }
+      );
       const { success, message } = res.data;
       if (success) {
         alert(`${message}`);
