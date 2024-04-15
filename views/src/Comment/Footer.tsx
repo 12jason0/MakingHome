@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import './css/Footer.scss';
 import './css/popup.scss';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -254,7 +255,7 @@ export default function Footer() {
                 찜한 상품
               </li>
             </a>
-            <a href="/user">
+            <a href="/MyPage">
               {' '}
               <li>
                 <img src="https://m.oneroommaking.com/web/mobile/220328_mypage01.png" />

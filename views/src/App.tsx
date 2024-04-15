@@ -22,6 +22,7 @@ import LikePage from './pages/LikePage';
 import { Categoryitems } from './Comment/tool/MenuTool';
 import Good from './pages/Good';
 import Shopping from './pages/Shopping';
+import MyPage from './pages/MyPage';
 
 function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -54,6 +55,7 @@ function App() {
         <Route path="/search/:item" element={<Search />} />
         <Route path="/LikePage" element={<LikePage />} />
         <Route path="/shop" element={<Shopping />} />
+        <Route path="/MyPage" element={<MyPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
