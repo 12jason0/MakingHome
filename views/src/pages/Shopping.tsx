@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import './css/Shopping.scss';
+import { useNavigate } from 'react-router';
 
 // 각 항목의 형태를 나타내는 인터페이스 정의
 interface Item {
@@ -27,6 +28,7 @@ interface Pay {
 export default function Shopping() {
   // items 상태를 명시적으로 정의
   const [items, setItems] = useState<Item[]>([]);
+  const navigate = useNavigate();
   const [pay, setPay] = useState<Pay>({
     price: 0,
     delivery_fee: 0,
@@ -34,20 +36,24 @@ export default function Shopping() {
   });
   // 데이터 불러오기
   useEffect(() => {
-    const getUserBucket = async () => {
-      const res = await axios.get('http://localhost:5000/user/bucketView', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-        },
-      });
-      const { viewItem } = res.data;
-      const itemSelected = viewItem.map((item: Item) => ({
-        ...item,
-        selected: false,
-      }));
-      setItems(itemSelected);
-    };
-    getUserBucket();
+    if (localStorage.getItem('oneroomToken')) {
+      const getUserBucket = async () => {
+        const res = await axios.get('http://localhost:5000/user/bucketView', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        });
+        const { viewItem } = res.data;
+        const itemSelected = viewItem.map((item: Item) => ({
+          ...item,
+          selected: false,
+        }));
+        setItems(itemSelected);
+      };
+      getUserBucket();
+    } else {
+      navigate('/login');
+    }
   }, []);
 
   // 전체 선택 기능
