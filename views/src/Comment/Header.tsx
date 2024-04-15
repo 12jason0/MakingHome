@@ -181,7 +181,7 @@ export default function Header() {
             <Link to="/HouseGift" className="menu-link " onClick={scrollToTop}>
               집들이 선물
             </Link>
-            <Link to="/all" className="menu-link" onClick={scrollToTop}>
+            <Link to="/Good/10" className="menu-link" onClick={scrollToTop}>
               모든 상품
             </Link>
           </div>

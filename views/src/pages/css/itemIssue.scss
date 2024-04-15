@@ -1,0 +1,120 @@
+.IssueCon {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .IssueDiv {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .reverse {
+      width: 40px;
+      height: 40px;
+      .reverseImg {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.IssueHeader {
+  width: 900px;
+  display: flex;
+  .IssueHeader2 {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    justify-content: center;
+    .IssueTitle {
+      font-size: x-large;
+      font-weight: bold;
+    }
+    .IssueBody {
+      color: gray;
+      display: flex;
+      justify-content: flex-end;
+      font-size: 20px;
+      padding-top: 5px;
+    }
+    .IssuePrice {
+      .IssueSale {
+        color: red;
+        padding-right: 10px;
+      }
+      font-size: 30px;
+      display: flex;
+      font-weight: bold;
+      justify-content: flex-end;
+      padding: 10px 0;
+    }
+  }
+}
+.IssueDeliveryReview {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 30px;
+}
+.IssueLine {
+  width: 900px;
+  height: 3px;
+  background: rgb(233, 235, 238);
+}
+.IssueImg {
+  width: 50%;
+  height: 450px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.immg {
+  width: 500px;
+  height: 800px;
+}
+
+.immg img {
+  width: 100%;
+  height: 100%;
+}
+.first-immg {
+  height: 2500px;
+  width: 500px;
+}
+
+.immg:nth-of-type(n + 9):nth-of-type(-n + 11) {
+  height: 1500px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  button {
+    border-style: none;
+    background: none;
+    .IssuepaymentDiv {
+      width: 300px;
+      height: 50px;
+      border-radius: 20px;
+      border: solid black;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      cursor: pointer;
+      font-size: 20px;
+      color: white;
+      background-color: antiquewhite;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+.allReview {
+  cursor: pointer;
+}

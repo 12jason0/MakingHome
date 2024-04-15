@@ -11,7 +11,6 @@ import Footer from './Comment/Footer';
 import Announcement1 from './pages/Announcement1';
 import Announcement2 from './pages/Announcement2';
 import Announcement3 from './pages/Announcement3';
-import AllGood from './pages/AllGood';
 import Money from './pages/Money';
 import HouseGift from './pages/HouseGift';
 import AllSet from './pages/AllSet';
@@ -22,6 +21,7 @@ import LikePage from './pages/LikePage';
 import { Categoryitems } from './Comment/tool/MenuTool';
 import Good from './pages/Good';
 import Shopping from './pages/Shopping';
+import GoodIssue from './pages/GoodIssue';
 
 function App() {
   const [showHeader, setShowHeader] = useState<boolean>(true);
@@ -38,11 +38,11 @@ function App() {
           element={<RegisterPage setShowHeader={setShowHeader} />}
         />
         <Route path="/" element={<MainPage setShowHeader={setShowHeader} />} />
-        <Route path="/all" element={<AllGood />} />
         <Route
           path="/Good/:type"
           element={<Good Categoryitems={Categoryitems} />}
         />
+        <Route path="/GoodIssue/:id" element={<GoodIssue />} />
         <Route path="/Popular" element={<Popular />} />
         <Route path="/Money" element={<Money />} />
         <Route path="/HouseGift" element={<HouseGift />} />

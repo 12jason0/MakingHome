@@ -30,11 +30,13 @@ interface Item {
 const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
   const { type } = useParams<{ type: string }>();
   const [items, setItems] = useState<Item[]>([]);
+  const navigate = useNavigate();
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>(''); // 선택된 카테고리 상태를 정의합니다.
 
   useEffect(() => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -140,10 +142,17 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
     localStorage.setItem('items', JSON.stringify(filteredItems));
 
     // 올바른 URL 구성
-    const url = category === '전체보기' ? '/all' : `/Good/${index - 1}`;
+    const url = category === '전체보기' ? '/Good/10' : `/Good/${index - 1}`;
 
     // 페이지 이동
     Navigate(url);
+    // 현재 선택된 카테고리 표시
+    setSelectedCategory(category);
+  };
+
+  // Good 컴포넌트에서 아이템 클릭 시 해당 아이템의 상세 페이지로 이동하는 함수 추가
+  const handleItemClick = (itemId: number) => {
+    navigate(`/GoodIssue/${itemId}`); // 해당 아이템의 ID를 이용하여 상세 페이지로 이동
   };
 
   return (
@@ -154,6 +163,9 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
             <div
               key={item.id}
               onClick={(e) => handleCategoryClick(item.title, index, e)}
+              className={
+                selectedCategory === item.title ? 'selectedCategory' : ''
+              }
             >
               <p>{item.title}</p>
             </div>
@@ -185,32 +197,32 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <img src={item.img} alt={item.title} />
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    <div>
+                      <img src={item.img} alt={item.title} />
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
+                        </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>
@@ -222,32 +234,32 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <img src={item.img} alt={item.title} />
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    <div>
+                      <img src={item.img} alt={item.title} />
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
+                        </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>

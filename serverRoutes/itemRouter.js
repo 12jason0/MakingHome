@@ -4,8 +4,8 @@ const router = express();
 
 // http://localhost:5000/api/item/all
 router.get('/all', controller.all);
-// http://localhost:5000/api/item/issue
-router.get('/issue', controller.issue);
+// http://localhost:5000/api/item/issue/:id
+router.get('/issue/:id', controller.issue);
 // http://localhost:5000/api/item
 
 // http://localhost:5000/api/item/gift

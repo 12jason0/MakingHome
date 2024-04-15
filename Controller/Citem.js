@@ -1,4 +1,4 @@
-const { Items, ItemChart, ItemGift, Issues } = require('../models');
+const { Items, ItemChart, ItemGift, Issue } = require('../models');
 const { Sequelize, Op, where } = require('sequelize');
 
 // all 모든 상품 페이지 데이터 조회
@@ -8,7 +8,7 @@ const all = async (req, res) => {
 };
 // 아이템 상세페이지
 const issue = async (req, res) => {
-  const item_issue = await Issues.findAll();
+  const item_issue = await Issue.findAll();
   res.json({ item_issue });
 };
 // 집들이 모든 상품 페이지 데이터 조회

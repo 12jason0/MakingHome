@@ -1,8 +1,8 @@
 const Categoryitems = [
   {
-    id: 'all',
+    id: '10',
     title: '전체보기',
-    url: '/all',
+    url: '/Good/10',
     EnglishTitle: 'viewAll',
   },
   {

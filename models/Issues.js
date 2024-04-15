@@ -22,21 +22,25 @@ const IssueModel = (sequelize) => {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      body1: {
+      img4: {
         type: DataTypes.STRING(255),
-        // NULL 추가
+        allowNull: false,
       },
-      body2: {
+      img5: {
         type: DataTypes.STRING(255),
-        // NULL 추가
+        allowNull: false,
       },
-      body3: {
+      img6: {
         type: DataTypes.STRING(255),
-        // NULL 추가
+        allowNull: false,
       },
-      body4: {
+      img7: {
         type: DataTypes.STRING(255),
-        // NULL 추가
+        allowNull: false,
+      },
+      img8: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
       },
     },
     { timestamps: false }
