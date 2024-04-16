@@ -108,6 +108,8 @@
     padding: 5px;
     // border: 3px solid blue;
     border-radius: 10%;
+    font-size: 15px;
+    cursor: pointer;
   }
   .itemDel {
     background: linear-gradient(
@@ -116,10 +118,47 @@
       rgba(255, 153, 153, 1) 35%,
       rgba(255, 204, 255, 1) 100%
     );
+    cursor: pointer;
     color: Brown;
     font-weight: bolder;
     padding: 5px;
-    // border: 3px solid blue;
+    font-size: 15px;
     border-radius: 10%;
+  }
+}
+.LikeStart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+@media (min-width: 510px) and (max-width: 650px) {
+  .LikeStart {
+    align-items: center;
+    flex-direction: column;
+  }
+}
+@media (max-width: 510px) {
+  h1 {
+    font-size: 25px;
+  }
+  .LikeStart {
+    align-items: center;
+    flex-direction: column;
+    .parentToolContainer {
+      .childImgContainer {
+        .imageBox {
+          height: 200px;
+          .toolImg {
+            height: 200px;
+          }
+          .heart {
+            top: 160px;
+            left: 200px;
+          }
+        }
+      }
+    }
   }
 }

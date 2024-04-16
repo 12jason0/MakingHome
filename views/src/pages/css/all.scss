@@ -165,3 +165,112 @@
     cursor: pointer;
   }
 }
+.AllStart {
+  padding-top: 50px;
+  justify-content: center;
+  flex-direction: row;
+  display: flex;
+}
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .AllCon {
+    .navigate2 {
+      width: 800px;
+    }
+    .AllDiv {
+      width: 800px;
+      .AllKind {
+        width: 800px;
+      }
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .AllCon {
+    .navigate2 {
+      width: 600px;
+    }
+    .AllDiv {
+      width: 600px;
+
+      .AllKind {
+        width: 600px;
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .AllCon {
+    .navigate2 {
+      width: 500px;
+      div {
+        p {
+          font-size: 15px;
+        }
+      }
+    }
+    .AllDiv {
+      width: 500px;
+      .AllStart {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .AllKind {
+        width: 500px;
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .AllCon {
+    .navigate2 {
+      width: 300px;
+      div {
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+    .AllDiv {
+      width: 300px;
+      .AllStart {
+        padding-top: 50px;
+        justify-content: center;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .AllKind {
+      width: 300px;
+    }
+    .AllImgDiv {
+      width: 200px;
+      height: 350px;
+      .imageBox {
+        .toolImg {
+          width: 200px;
+          height: 250px;
+        }
+        .heart {
+          top: 200px;
+          left: 160px;
+        }
+      }
+      .titleDiv {
+        h4 {
+          font-size: 15px;
+        }
+        .allBody {
+          font-size: 13px;
+        }
+        .allPrice {
+          padding: 0;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}

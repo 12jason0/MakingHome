@@ -1,3 +1,151 @@
+.MoneyCon {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  .MoneyKind {
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    width: 900px;
+    select {
+      margin-right: 20px;
+    }
+  }
+  .MoneyDiv {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+.MoneyImgDiv {
+  width: 250px;
+  height: 430px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  flex-wrap: wrap;
+  padding-bottom: 25px;
+  box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+  margin-bottom: 25px;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+  }
+  h4 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+  }
+  .imageBox {
+    position: relative;
+    display: inline-block;
+    .toolImg {
+      width: 250px;
+      height: 290px;
+      border-radius: 20px;
+    }
+    .heart {
+      position: absolute;
+      top: 230px;
+      left: 200px;
+      width: 38px;
+      height: auto;
+    }
+  }
+}
+.titleDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 20px;
+}
+.ImgCon {
+  width: 425px;
+}
+.MoneyPrice {
+  display: flex;
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 10px;
+  .MoneySale {
+    padding-right: 5px;
+    color: red;
+  }
+}
+.MoneyBody {
+  color: gray;
+  padding: 10px 0;
+}
+.MoneyReview {
+  display: flex;
+  &:hover {
+    font-weight: bold;
+  }
+}
+.MoneyDelivery {
+  border-radius: 4px;
+  padding: 4px 5px;
+  margin: 0px 6px 0px 0px;
+  color: rgb(83, 91, 99);
+  background: rgb(241, 243, 246);
+  width: 70px;
+  text-align: center;
+}
+.MoneyButtonDiv {
+  width: 900px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    width: 30px;
+    height: 30px;
+    margin: 0 20px;
+    border: 0;
+    background-color: white;
+    margin-right: 0;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  div {
+    cursor: pointer;
+  }
+}
+.MoneyToolCon {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pageNumber {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.pageNumberCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: gray;
+  text-align: center;
+  line-height: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+.activePage {
+  background-color: blue;
+}
 .navigate2 {
   width: 900px;
   display: flex;
@@ -56,6 +204,12 @@ hr {
     margin: 0.5vw;
   }
 }
+.MoneyStart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 50px;
+}
 
 ///////////////////////////////////해당 데이터가 없을 때////////////////////////////////////
 .emptyMessage {
@@ -83,5 +237,140 @@ hr {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .MoneyCon {
+    .MoneyDiv {
+      width: 800px;
+      .emptyMessage {
+        width: 800px;
+      }
+      .navigate2 {
+        width: 800px;
+      }
+      hr {
+        width: 800px;
+      }
+      .MoneyKind {
+        width: 800px;
+      }
+      .MoneyButtonDiv {
+        width: 800px;
+      }
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .MoneyCon {
+    .MoneyDiv {
+      width: 600px;
+      .emptyMessage {
+        width: 600px;
+      }
+      .navigate2 {
+        width: 600px;
+      }
+      hr {
+        width: 600px;
+      }
+      .MoneyKind {
+        width: 600px;
+      }
+      .MoneyButtonDiv {
+        width: 600px;
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .MoneyCon {
+    .MoneyDiv {
+      width: 500px;
+      .emptyMessage {
+        width: 500px;
+      }
+      .MoneyStart {
+        flex-direction: column;
+        align-items: center;
+      }
+      .navigate2 {
+        width: 500px;
+        div {
+          p {
+            font-size: 15px;
+          }
+        }
+      }
+      hr {
+        width: 500px;
+      }
+      .MoneyKind {
+        width: 500px;
+      }
+      .MoneyButtonDiv {
+        width: 500px;
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .MoneyCon {
+    .MoneyDiv {
+      width: 300px;
+      .emptyMessage {
+        width: 300px;
+      }
+      .MoneyStart {
+        flex-direction: column;
+        align-items: center;
+      }
+      .navigate2 {
+        width: 300px;
+        div {
+          p {
+            font-size: 15px;
+          }
+        }
+      }
+      hr {
+        width: 300px;
+      }
+      .MoneyKind {
+        width: 300px;
+      }
+      .MoneyButtonDiv {
+        width: 300px;
+      }
+      .MoneyImgDiv {
+        width: 200px;
+        height: 350px;
+        .imageBox {
+          .toolImg {
+            width: 200px;
+            height: 250px;
+          }
+          .heart {
+            top: 200px;
+            left: 160px;
+          }
+        }
+        .titleDiv {
+          h4 {
+            font-size: 15px;
+          }
+          .MoneyBody {
+            font-size: 13px;
+          }
+          .MoneyPrice {
+            padding: 0;
+            font-size: 15px;
+          }
+        }
+      }
+    }
   }
 }

@@ -8,6 +8,7 @@ import { activeHeart, deactiveHeart } from '../store/heartReducer';
 
 export default function LikePage() {
   const [items, setItems] = useState<Item[]>([]);
+  const navigator = useNavigate();
   const [userName, setUserName] = useState<string>('');
   useEffect(() => {
     if (localStorage.getItem('oneroomToken')) {
@@ -116,6 +117,22 @@ export default function LikePage() {
     document.location.reload();
   };
 
+  ///////////////////////////////////////title 비교 해서 /all의 id 가져오기///////////////////////////////////////
+  const navigateToDetail = async (title: string) => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/item/all');
+      const { all_item } = response.data;
+      const foundItem = all_item.find((item: Item) => item.title === title);
+      if (foundItem) {
+        navigator(`/GoodIssue/${foundItem.id}`);
+      } else {
+        console.error('Item not found');
+      }
+    } catch (error) {
+      console.error('Error fetching all items:', error);
+    }
+  };
+
   return (
     <div className="Container">
       <div className="user">
@@ -123,82 +140,76 @@ export default function LikePage() {
       </div>
       <hr />
       <br />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-      >
+      <div className="LikeStart">
         <div className="parentToolContainer">
           {items.length > 0 &&
             items
               .filter((_, item) => item % 2 !== 1)
               .map((item) => {
                 return (
-                  <div key={item.id} className="childImgContainer">
-                    <a href="/">
-                      <div>
-                        {/* 기존 코드: <img src={item.img} alt={item.title} /> */}
-                        <div className="imageBox">
-                          <img
-                            className="toolImg"
-                            src={item.img}
-                            alt={item.title}
-                          />
-                          <img
-                            className="heart"
-                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
-                            src={
-                              heart.find(
-                                (product: HeartState) =>
-                                  product.title === item.title
-                              )?.heartStatus
-                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
-                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
-                            }
-                            alt="하트 이미지"
-                            onClick={(e) => {
-                              handleHeart(e, item.title);
-                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
-                            }}
-                          />
+                  <div
+                    key={item.id}
+                    className="childImgContainer"
+                    onClick={() => navigateToDetail(item.title)}
+                  >
+                    <div>
+                      {/* 기존 코드: <img src={item.img} alt={item.title} /> */}
+                      <div className="imageBox">
+                        <img
+                          className="toolImg"
+                          src={item.img}
+                          alt={item.title}
+                        />
+                        <img
+                          className="heart"
+                          // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                          src={
+                            heart.find(
+                              (product: HeartState) =>
+                                product.title === item.title
+                            )?.heartStatus
+                              ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                              : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                          }
+                          alt="하트 이미지"
+                          onClick={(e) => {
+                            handleHeart(e, item.title);
+                            // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                          }}
+                        />
+                      </div>
+                      <div className="childTitle">
+                        <h4>{item.title}</h4>
+                        <div className="childPrice">
+                          <div className="childSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원{' '}
                         </div>
-                        <div className="childTitle">
-                          <h4>{item.title}</h4>
-                          <div className="childPrice">
-                            <div className="childSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원{' '}
-                          </div>
 
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="childDelivery">
-                                {item.delivery}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="heartShop">
-                          <div
-                            className="itemAdd"
-                            onClick={(e) => {
-                              itemAdd(e, item.title);
-                            }}
-                          >
-                            장바구니
-                          </div>
-                          <div
-                            className="itemDel"
-                            onClick={(e) => {
-                              itemDel(e, item.title);
-                            }}
-                          >
-                            삭제
-                          </div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="childDelivery">{item.delivery}</div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                      <div className="heartShop">
+                        <div
+                          className="itemAdd"
+                          onClick={(e) => {
+                            itemAdd(e, item.title);
+                          }}
+                        >
+                          장바구니
+                        </div>
+                        <div
+                          className="itemDel"
+                          onClick={(e) => {
+                            itemDel(e, item.title);
+                          }}
+                        >
+                          삭제
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 );
               })}
@@ -209,69 +220,69 @@ export default function LikePage() {
               .filter((_, item) => item % 2 !== 0)
               .map((item) => {
                 return (
-                  <div key={item.id} className="childImgContainer">
-                    <a href="/">
-                      <div>
-                        <div className="imageBox">
-                          <img
-                            className="toolImg"
-                            src={item.img}
-                            alt={item.title}
-                          />
-                          <img
-                            className="heart"
-                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트)
-                            src={
-                              heart.find(
-                                (product: HeartState) =>
-                                  product.title === item.title
-                              )?.heartStatus
-                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
-                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
-                            }
-                            alt="하트 이미지"
-                            onClick={(e) => {
-                              handleHeart(e, item.title);
+                  <div
+                    key={item.id}
+                    className="childImgContainer"
+                    onClick={() => navigateToDetail(item.title)}
+                  >
+                    <div>
+                      <div className="imageBox">
+                        <img
+                          className="toolImg"
+                          src={item.img}
+                          alt={item.title}
+                        />
+                        <img
+                          className="heart"
+                          // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트)
+                          src={
+                            heart.find(
+                              (product: HeartState) =>
+                                product.title === item.title
+                            )?.heartStatus
+                              ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                              : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                          }
+                          alt="하트 이미지"
+                          onClick={(e) => {
+                            handleHeart(e, item.title);
 
-                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
-                            }}
-                          />
-                        </div>
+                            // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                          }}
+                        />
+                      </div>
 
-                        <div className="childTitle">
-                          <h4>{item.title}</h4>
-                          <div className="childPrice">
-                            <div className="childSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원{' '}
-                          </div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="childDelivery">
-                                {item.delivery}
-                              </div>
-                            )}
-                          </div>
+                      <div className="childTitle">
+                        <h4>{item.title}</h4>
+                        <div className="childPrice">
+                          <div className="childSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원{' '}
                         </div>
-                        <div className="heartShop">
-                          <div
-                            className="itemAdd"
-                            onClick={(e) => {
-                              itemAdd(e, item.title);
-                            }}
-                          >
-                            장바구니
-                          </div>
-                          <div
-                            className="itemDel"
-                            onClick={(e) => {
-                              itemDel(e, item.title);
-                            }}
-                          >
-                            삭제
-                          </div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="childDelivery">{item.delivery}</div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                      <div className="heartShop">
+                        <div
+                          className="itemAdd"
+                          onClick={(e) => {
+                            itemAdd(e, item.title);
+                          }}
+                        >
+                          장바구니
+                        </div>
+                        <div
+                          className="itemDel"
+                          onClick={(e) => {
+                            itemDel(e, item.title);
+                          }}
+                        >
+                          삭제
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 );
               })}

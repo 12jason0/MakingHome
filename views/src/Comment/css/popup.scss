@@ -84,3 +84,26 @@ p {
   color: rgb(128, 128, 128);
   padding-bottom: 20px;
 }
+
+@media (min-width: 650px) and (max-width: 1000px) {
+  .chatDiv {
+    right: 100px;
+    width: 80px;
+    height: 80px;
+  }
+  .popup-overlay {
+    bottom: 150px;
+    right: 130px;
+    width: 320px;
+    height: 390px;
+    .popup-content {
+      width: 80%;
+      height: 88%;
+      padding: 0 20px 20px 20px;
+      .popup {
+        height: 240px;
+        width: 225px;
+      }
+    }
+  }
+}

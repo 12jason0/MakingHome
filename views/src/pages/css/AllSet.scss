@@ -8,13 +8,13 @@
   height: 500px;
 }
 
-.MainSetCon {
+.AllSetCon {
   width: 100%;
   height: auto;
   display: flex;
   justify-content: center;
   padding-bottom: 10px;
-  .MainSetDiv {
+  .AllSetDiv {
     padding: 30px 0;
     width: 900px;
     height: auto;
@@ -108,4 +108,123 @@
 .SettitleDiv {
   text-align: center;
   padding-top: 10px;
+}
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .AllSetCon {
+    .ALlSetDiv {
+      width: 800px;
+      .setImgDiv {
+        width: 600px;
+        height: 350px;
+      }
+    }
+    .AllSetConDivCon {
+      width: 800px;
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .AllSetCon {
+    .ALlSetDiv {
+      width: 600px;
+      .AllSetMenu {
+        border-radius: 30px;
+      }
+      .setImgDiv {
+        width: 500px;
+        height: 300px;
+      }
+    }
+    .AllSetConDivCon {
+      width: 600px;
+      .AllSetConDiv {
+        width: 300px;
+        justify-content: center;
+        .allToolCon {
+          width: 200px;
+          .SetAllImgDiv {
+            width: 200px;
+            height: 300px;
+            img {
+              width: 100%;
+              height: 80%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .AllSetCon {
+    .ALlSetDiv {
+      width: 500px;
+      .AllSetMenu {
+        border-radius: 30px;
+      }
+      .setImgDiv {
+        width: 400px;
+        height: 300px;
+      }
+    }
+    .AllSetConDivCon {
+      width: 500px;
+      .AllSetConDiv {
+        width: 300px;
+        justify-content: center;
+        .allToolCon {
+          width: 200px;
+          .SetAllImgDiv {
+            width: 200px;
+            height: 300px;
+            img {
+              width: 100%;
+              height: 80%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .AllSetCon {
+    .ALlSetDiv {
+      width: 300px;
+      .AllSetMenu {
+        border-radius: 30px;
+        height: 200px;
+      }
+      .leftButton,
+      .rightButton {
+        width: 30px;
+        height: 30px;
+      }
+      .setImgDiv {
+        width: 250px;
+        height: 180px;
+      }
+    }
+    .AllSetConDivCon {
+      width: 300px;
+      flex-direction: column;
+      .AllSetConDiv {
+        width: 300px;
+        justify-content: center;
+        .allToolCon {
+          width: 200px;
+          .SetAllImgDiv {
+            width: 200px;
+            height: 300px;
+            img {
+              width: 100%;
+              height: 80%;
+            }
+          }
+        }
+      }
+    }
+  }
 }

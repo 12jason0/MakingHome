@@ -145,6 +145,7 @@
       box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
       margin-bottom: 25px;
       border-radius: 20px;
+      cursor: pointer;
       &:hover {
         transform: scale(1.05);
       }
@@ -251,6 +252,137 @@
       width: 100%;
       height: 100%;
       font-size: 12px;
+    }
+  }
+}
+.PopularStart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .top {
+    width: 800px;
+    .navigate2 {
+      width: 800px;
+    }
+    hr {
+      width: 800px;
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .top {
+    width: 600px;
+    .navigate2 {
+      width: 600px;
+    }
+    hr {
+      width: 600px;
+    }
+    .PopularStart {
+      width: 600px;
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .top {
+    width: 500px;
+    .navigate2 {
+      width: 500px;
+    }
+    hr {
+      width: 500px;
+    }
+    .PopularStart {
+      width: 500px;
+      justify-content: space-between;
+      .parentToolContainer {
+        width: 250px;
+        .childImgContainer {
+          width: 200px;
+          height: 400px;
+          h4 {
+            font-size: 15px;
+          }
+          .childBody {
+            font-size: 15px;
+            text-align: end;
+          }
+          .childPrice {
+            font-size: 15px;
+          }
+          .imageBox {
+            width: 200px;
+            .toolImg {
+              width: 200px;
+              height: 250px;
+            }
+            .heart {
+              left: 150px;
+              top: 200px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .top {
+    width: 300px;
+    .navigate1 {
+      font-size: 15px;
+    }
+    .navigate2 {
+      width: 300px;
+      div {
+        p {
+          font-size: 10px;
+        }
+      }
+    }
+    hr {
+      width: 300px;
+    }
+    .PopularStart {
+      width: 300px;
+      flex-direction: column;
+      align-items: center;
+      .parentToolContainer {
+        width: 250px;
+        .childImgContainer {
+          width: 200px;
+          height: 350px;
+          h4 {
+            font-size: 15px;
+          }
+          .childBody {
+            font-size: 15px;
+            text-align: end;
+            padding: 0;
+          }
+          .childPrice {
+            font-size: 15px;
+          }
+          .childTitle {
+            font-size: 10px;
+          }
+          .imageBox {
+            width: 200px;
+            .toolImg {
+              width: 200px;
+              height: 250px;
+            }
+            .heart {
+              left: 150px;
+              top: 210px;
+            }
+          }
+        }
+      }
     }
   }
 }

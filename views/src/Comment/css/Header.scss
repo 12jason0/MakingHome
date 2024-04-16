@@ -231,3 +231,134 @@
   align-items: center;
   justify-content: space-around;
 }
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .headerCon {
+    width: 800px;
+  }
+  .line {
+    width: 800px;
+  }
+  .headerConUnder {
+    width: 800px;
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .headerCon {
+    width: 600px;
+  }
+  .line {
+    width: 600px;
+  }
+  .headerConUnder {
+    width: 600px;
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .headerCon {
+    width: 500px;
+    .menuDiv {
+      width: 10px;
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    a {
+      .logoDiv {
+        width: 100px;
+        height: 100px;
+        img {
+          width: 150px;
+          height: 100px;
+        }
+      }
+    }
+    .rightCon {
+      div {
+        width: 40px;
+        height: 40px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+  .line {
+    width: 500px;
+  }
+  .headerConUnder {
+    width: 500px;
+  }
+}
+
+@media (max-width: 510px) {
+  .headerCon {
+    width: 300px;
+    .popup {
+      top: 100px;
+      width: 80px;
+      .popup_inner {
+        width: 80px;
+        .spanDiv {
+          .menutoggle2 {
+            padding: 10px 0 0 10px;
+            font-size: 10px;
+            height: 450px;
+            span {
+              height: 50px;
+            }
+          }
+        }
+      }
+    }
+    .menuDiv {
+      width: 10px;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    a {
+      .logoDiv {
+        width: 50px;
+        height: 100px;
+        img {
+          width: 200%;
+          height: 50%;
+          padding-top: 50%;
+        }
+      }
+    }
+    .rightCon {
+      width: 120px;
+      div {
+        width: 30px;
+        height: 30px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+  .line {
+    width: 300px;
+  }
+  .headerConUnder {
+    width: 300px;
+    font-size: 15px;
+    a {
+      padding-right: 10px;
+    }
+  }
+  .toggleMenu {
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+}

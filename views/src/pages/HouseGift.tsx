@@ -160,8 +160,8 @@ export default function HouseGift() {
 
   return (
     <>
-      <div className="AllCon">
-        <div className="AllDiv">
+      <div className="HouseCon">
+        <div className="HouseDiv">
           <div className="navigate2">
             <div
               className={navigate2State === 'viewAll' ? navigate2State : ''}
@@ -195,7 +195,7 @@ export default function HouseGift() {
             </div>
           </div>
           <hr />
-          <div className="AllKind">
+          <div className="HouseKind">
             <select name="" id="" onChange={handleSortChange}>
               <option value="정렬방식" hidden>
                 정렬방식
@@ -214,15 +214,8 @@ export default function HouseGift() {
             </div>
           )}
           {/* //////////////////////////////////////결과 화면 시작//////////////////////////////////////// */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              paddingTop: '50px',
-            }}
-          >
-            <div className="allToolCon">
+          <div className="HouseStart">
+            <div className="HouseToolCon">
               {furnitureItems
                 .filter((_, index) => index % 2 !== 1)
                 .slice(
@@ -232,7 +225,7 @@ export default function HouseGift() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="AllImgDiv"
+                    className="HouseImgDiv"
                     onClick={() => navigateToDetail(item.title)}
                   >
                     <div>
@@ -264,17 +257,17 @@ export default function HouseGift() {
                       </div>
                       <div className="titleDiv">
                         <h4>{item.title}</h4>
-                        <div className="allPrice">
-                          <div className="allSale">{item.sale}</div>
+                        <div className="HousePrice">
+                          <div className="HouseSale">{item.sale}</div>
                           {item.price.toLocaleString()}원
                         </div>
-                        <div className="allBody">{item.body}</div>
+                        <div className="HouseBody">{item.body}</div>
                         <div style={{ display: 'flex' }}>
                           {item.delivery && (
-                            <div className="allDelivery">{item.delivery}</div>
+                            <div className="HouseDelivery">{item.delivery}</div>
                           )}
                           {item.review && (
-                            <div className="allReview">
+                            <div className="HouseReview">
                               리뷰 : {item.review}
                             </div>
                           )}
@@ -284,7 +277,7 @@ export default function HouseGift() {
                   </div>
                 ))}
             </div>
-            <div className="allToolCon">
+            <div className="HouseToolCon">
               {furnitureItems
                 .filter((_, index) => index % 2 !== 0)
                 .slice(
@@ -294,7 +287,7 @@ export default function HouseGift() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="AllImgDiv"
+                    className="HouseImgDiv"
                     onClick={() => navigateToDetail(item.title)}
                   >
                     <div>
@@ -326,17 +319,17 @@ export default function HouseGift() {
                       </div>
                       <div className="titleDiv">
                         <h4>{item.title}</h4>
-                        <div className="allPrice">
-                          <div className="allSale">{item.sale}</div>
+                        <div className="HousePrice">
+                          <div className="HouseSale">{item.sale}</div>
                           {item.price.toLocaleString()}원
                         </div>
-                        <div className="allBody">{item.body}</div>
+                        <div className="HouseBody">{item.body}</div>
                         <div style={{ display: 'flex' }}>
                           {item.delivery && (
-                            <div className="allDelivery">{item.delivery}</div>
+                            <div className="HouseDelivery">{item.delivery}</div>
                           )}
                           {item.review && (
-                            <div className="allReview">
+                            <div className="HouseReview">
                               리뷰 : {item.review}
                             </div>
                           )}
@@ -348,7 +341,7 @@ export default function HouseGift() {
             </div>
           </div>
 
-          <div className="allButtonDiv">
+          <div className="HouseButtonDiv">
             <button
               onClick={() => {
                 handlePageChange(currentPage - 1);

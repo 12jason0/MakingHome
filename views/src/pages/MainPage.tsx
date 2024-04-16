@@ -89,6 +89,10 @@ function MainPage({ setShowHeader }: RMainPageProps) {
 
     /////////////////////////////////카테고리///////////////////////////////////////////////////
     const [slideCategoryIdx, setSlideCategoryIdx] = useState(0);
+    const [isSmallScreen, setIsSmallScreen] = useState(
+      window.innerWidth <= 510
+    );
+
     const leftCategory = () => {
       const nextIndex = slideCategoryIdx - 1;
       if (nextIndex >= 0) {
@@ -111,6 +115,17 @@ function MainPage({ setShowHeader }: RMainPageProps) {
       startCategoryIndex + 6,
       MiddleCategory.length
     );
+    useEffect(() => {
+      const handleResize = () => {
+        setIsSmallScreen(window.innerWidth < 510);
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
 
     ////////////////////////////////////세트 추천/////////////////////////////////////////////
     const [imgset, setImgSet] = useState(0);
@@ -199,7 +214,11 @@ function MainPage({ setShowHeader }: RMainPageProps) {
           <div className="PopularMain">
             <div className="MiddleButton" onClick={leftSlide}>
               <img
-                src={`${process.env.PUBLIC_URL}/image/setLeftArrow.png`}
+                src={
+                  isSmallScreen
+                    ? `${process.env.PUBLIC_URL}/image/UpArrow.png`
+                    : `${process.env.PUBLIC_URL}/image/setLeftArrow.png`
+                }
                 alt="이전"
               />
             </div>
@@ -220,7 +239,11 @@ function MainPage({ setShowHeader }: RMainPageProps) {
             ))}
             <div className="MiddleButton" onClick={rightSlide}>
               <img
-                src={`${process.env.PUBLIC_URL}/image/setRightArrow.png`}
+                src={
+                  isSmallScreen
+                    ? `${process.env.PUBLIC_URL}/image/underArrow.png`
+                    : `${process.env.PUBLIC_URL}/image/setRightArrow.png`
+                }
                 alt="다음"
               />
             </div>

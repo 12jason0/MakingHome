@@ -42,3 +42,14 @@
 .registerBtn {
   width: 56%;
 }
+.loginFormDiv {
+  width: 500px;
+  margin: 0 auto;
+}
+
+////////////////////////////미디어 쿼리//////////////////////////////////
+@media (max-width: 510px) {
+  .loginFormDiv {
+    width: 300px;
+  }
+}

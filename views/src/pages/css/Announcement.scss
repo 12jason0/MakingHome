@@ -67,6 +67,85 @@
 .div3 {
   padding: 0 100px 50px 100px;
 }
-.div3 {
-  width: 780px;
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .AnnCon {
+    .AnnDiv {
+      width: 800px;
+      .AnnContent {
+        width: 800px;
+        .day {
+          width: 600px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .AnnCon {
+    .AnnDiv {
+      width: 600px;
+      .AnnContent {
+        width: 600px;
+        .day {
+          width: 450px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .AnnCon {
+    .AnnDiv {
+      width: 500px;
+      .AnnContent {
+        width: 500px;
+        .day {
+          width: 350px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .AnnCon {
+    padding: 0 0 50px 0;
+    .AnnDiv {
+      width: 300px;
+      .AnnContent {
+        width: 300px;
+        margin: 50px 0;
+        h1 {
+          font-size: 25px;
+        }
+        .div1 {
+          padding: 10px;
+          font-size: 10px;
+          li {
+            padding-left: 30px;
+            padding-top: 20px;
+          }
+          p {
+            font-size: 10px;
+          }
+        }
+        .div2,
+        .div3 {
+          padding: 10px;
+          p {
+            font-size: 10px;
+          }
+        }
+        .day {
+          width: 200px;
+          p {
+            font-size: 10px;
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
 }

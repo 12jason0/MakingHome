@@ -1,6 +1,13 @@
 .Container1 {
   display: flex;
   justify-content: center;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    padding-left: 10px;
+    cursor: pointer;
+  }
 }
 .Container2 {
   width: 400px;
@@ -23,17 +30,189 @@
 }
 .Container3 {
   display: flex;
+  width: 900px;
   justify-content: space-around;
+  flex-direction: column;
   .orderDetail {
-    width: 50%;
+    width: 200px;
     font-size: 22px;
     font-weight: bold;
     text-align: center;
+    height: 500px;
   }
   .likeItem {
-    width: 50%;
+    width: 900px;
     font-size: 22px;
     font-weight: bold;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    padding-top: 15px;
+  }
+}
+
+.LikeItemContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 500px;
+  width: 700px;
+  .childImgContainer {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    flex-wrap: wrap;
+    padding-bottom: 25px;
+    box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+    margin: 0 20px;
+    border-radius: 20px;
+    &:hover {
+      transform: scale(1.05);
+    }
+    h6 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+    }
+
+    .imageBox {
+      position: relative;
+      display: inline-block;
+
+      .toolImg {
+        width: 200px;
+        height: 250px;
+        border-radius: 20px;
+      }
+      .heart {
+        position: absolute;
+        top: 200px;
+        left: 160px;
+        width: 30px;
+        height: auto;
+        cursor: pointer;
+      }
+    }
+    .childTitle {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .childPrice {
+      display: flex;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 0;
+      color: black;
+      .childSale {
+        padding-right: 5px;
+        color: red;
+      }
+    }
+    .childDelivery {
+      border-radius: 4px;
+      padding: 4px 5px;
+      margin: 0px 6px 0px 0px;
+      color: rgb(83, 91, 99);
+      background: rgb(241, 243, 246);
+      width: 70px;
+      text-align: center;
+      font-size: 15px;
+    }
+    .childReview {
+      display: flex;
+      &:hover {
+        font-weight: bold;
+      }
+    }
+    .childBody {
+      color: gray;
+      padding: 10px 0;
+    }
+  }
+}
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .Container {
+    width: 800px;
+    hr {
+      width: 800px;
+    }
+    .Container3 {
+      width: 800px;
+      .likeItem {
+        width: 800px;
+      }
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .Container {
+    width: 600px;
+    hr {
+      width: 600px;
+    }
+    .Container3 {
+      width: 600px;
+      .likeItem {
+        width: 600px;
+        flex-direction: column;
+        .LikeItemDiv {
+          width: 600px;
+          .LikeItemContainer {
+            width: 600px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .Container {
+    width: 500px;
+    hr {
+      width: 500px;
+    }
+    .Container3 {
+      width: 500px;
+      .likeItem {
+        width: 500px;
+        flex-direction: column;
+        .LikeItemDiv {
+          width: 500px;
+          .LikeItemContainer {
+            width: 500px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .Container {
+    width: 300px;
+    hr {
+      width: 300px;
+    }
+    .Container2 {
+      width: auto;
+    }
+    .Container3 {
+      width: 300px;
+      .likeItem {
+        width: 300px;
+        flex-direction: column;
+        .LikeItemDiv {
+          width: 300px;
+          .LikeItemContainer {
+            width: 300px;
+          }
+        }
+      }
+    }
   }
 }

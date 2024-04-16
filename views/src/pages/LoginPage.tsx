@@ -187,7 +187,7 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
   };
   // HTML
   return (
-    <div style={{ width: '500px', margin: '0 auto' }}>
+    <div className="loginFormDiv">
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <h2>{isLoggedIn ? `${userInfo}님 환영합니다` : ''}</h2>
       </div>

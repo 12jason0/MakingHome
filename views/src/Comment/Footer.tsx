@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import './css/Footer.scss';
 import './css/popup.scss';
 import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -255,10 +255,17 @@ export default function Footer() {
                 찜한 상품
               </li>
             </a>
-            <a href="/MyPage">
+            <a href="">
               {' '}
               <li>
-                <img src="https://m.oneroommaking.com/web/mobile/220328_mypage01.png" />
+                <img
+                  src="https://m.oneroommaking.com/web/mobile/220328_mypage01.png"
+                  onClick={() =>
+                    localStorage.getItem('oneroomToken')
+                      ? navigate('/mypage')
+                      : navigate('/login')
+                  }
+                />
                 마이원룸
               </li>
             </a>
@@ -312,7 +319,7 @@ export default function Footer() {
           </div>
           <div className="footerUnderCon">
             <div>교환, 반품주소 : 각 상품 상세페이지 참고</div>
-            <div>서울 마포구 숭문 4길 6 지한 1층</div>
+            <div>서울 마포구 숭문 4길 6 지하 1층</div>
           </div>
         </div>
       </div>

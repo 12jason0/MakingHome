@@ -105,7 +105,6 @@ form {
       display: flex;
       cursor: pointer;
       font-size: 20px;
-      color: white;
       background-color: antiquewhite;
       &:hover {
         transform: scale(1.1);
@@ -115,4 +114,127 @@ form {
 }
 .allReview {
   cursor: pointer;
+}
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .IssueCon {
+    .IssueDiv {
+      width: 800px;
+      .IssueHeader {
+        width: 800px;
+      }
+      .IssueLine {
+        width: 800px;
+      }
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .IssueCon {
+    .IssueDiv {
+      width: 600px;
+      .IssueHeader {
+        width: 600px;
+        height: 400px;
+        .IssueImg {
+          height: 400px;
+          width: 350px;
+        }
+      }
+      .IssueHeader2 {
+        width: 250px;
+        height: 400px;
+        padding-left: 0;
+      }
+      .IssueLine {
+        width: 600px;
+      }
+      .IssuepaymentDiv {
+        width: 250px;
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .IssueCon {
+    .IssueDiv {
+      width: 500px;
+      .IssueHeader {
+        width: 500px;
+        height: 400px;
+        .IssueImg {
+          height: 400px;
+          width: 350px;
+        }
+      }
+      .IssueHeader2 {
+        width: 250px;
+        height: 400px;
+        padding-left: 0;
+      }
+      .IssueLine {
+        width: 500px;
+      }
+      .IssuepaymentDiv {
+        width: 250px;
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .IssueCon {
+    .IssueDiv {
+      width: 300px;
+      .reverse {
+        width: 30px;
+        height: 30px;
+      }
+      .IssueHeader {
+        flex-direction: column;
+        width: 300px;
+        height: 550px;
+        .IssueImg {
+          height: 400px;
+          width: 300px;
+          border-radius: 30px;
+          img {
+            border-radius: 30px;
+          }
+        }
+      }
+      .IssueHeader2 {
+        width: 300px;
+        height: 400px;
+        padding-left: 0;
+        align-items: flex-end;
+        .IssueTitle {
+          font-size: 20px;
+        }
+        .IssueBody {
+          font-size: 15px;
+        }
+        .IssuePrice {
+          font-size: 15px;
+        }
+        .IssueDeliveryReview {
+          font-size: 15px;
+        }
+        .IssuepaymentDiv {
+          font-size: 15px;
+          height: 30px;
+          width: 100px;
+        }
+      }
+      .IssueLine {
+        width: 300px;
+      }
+      .IssuepaymentDiv {
+        width: 100px;
+      }
+      .immg {
+        width: 300px;
+      }
+    }
+  }
 }

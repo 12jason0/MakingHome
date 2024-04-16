@@ -21,7 +21,7 @@
   position: relative;
   form {
     position: absolute;
-    top: 10vw;
+    bottom: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,6 +38,7 @@
       border-style: none;
       background: none;
       .paymentDiv {
+        margin-top: 50px;
         width: 300px;
         height: 50px;
         border-radius: 20px;
@@ -47,7 +48,6 @@
         display: flex;
         cursor: pointer;
         font-size: 20px;
-        color: white;
         background-color: antiquewhite;
         &:hover {
           transform: scale(1.1);
@@ -156,6 +156,114 @@
       padding: 5px;
       // border: 3px solid blue;
       border-radius: 10%;
+    }
+  }
+}
+
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .shoppingCon {
+    .shoppingDiv {
+      width: 800px;
+      .shoppingMenu {
+        width: 450px;
+        .shoopingElement {
+          width: 450px;
+          .Attributes {
+            width: 200px;
+            .shoppingTitle {
+              font-size: 15px;
+            }
+            .shoppingBody {
+              font-size: 15px;
+            }
+            .shoppingSale,
+            .shoppingPrice {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+      .shoppingMoney {
+        width: 350px;
+      }
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .shoppingCon {
+    .shoppingDiv {
+      width: 600px;
+      .shoppingMenu {
+        width: 350px;
+        padding-bottom: 50px;
+        .shoopingElement {
+          flex-direction: column;
+          padding-bottom: 10px;
+        }
+      }
+      .shoppingMoney {
+        width: 250px;
+        .paymentDiv {
+          width: 200px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .shoppingCon {
+    .shoppingDiv {
+      width: 500px;
+      .shoppingMenu {
+        width: 300px;
+        padding-bottom: 50px;
+        .shoopingElement {
+          flex-direction: column;
+          padding-bottom: 10px;
+        }
+      }
+      .shoppingMoney {
+        width: 200px;
+        .paymentDiv {
+          width: 150px;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .shoppingCon {
+    .shoppingDiv {
+      width: 300px;
+      flex-direction: column;
+      .shoppingMenu {
+        display: flex;
+        height: 500px;
+        flex-direction: column;
+        width: 300px;
+        .shoopingElement {
+          flex-direction: column;
+          padding-bottom: 10px;
+          align-items: center;
+          .Attributes {
+            align-items: center;
+            .shoppingPrice {
+              width: 100px;
+            }
+          }
+        }
+      }
+      .shoppingMoney {
+        height: 300px;
+        width: 300px;
+        .paymentDiv {
+          width: 150px;
+          font-size: 15px;
+        }
+      }
     }
   }
 }

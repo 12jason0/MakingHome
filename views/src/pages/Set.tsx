@@ -141,10 +141,10 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
 
   return (
     <>
-      <div className="AllCon">
-        <div className="AllDiv">
+      <div className="SetCon">
+        <div className="SetDiv">
           <img src={Set.img} alt={Set.title} />
-          <div className="AllKind">
+          <div className="SetKind">
             <select name="" id="" onChange={handleSortChange}>
               <option value="정렬방식" hidden>
                 정렬방식
@@ -154,21 +154,15 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
             </select>
           </div>
           <h2>{Set.title} 카테고리 아이템</h2>
-          <div
-            style={{
-              display: 'flex',
-              paddingTop: '50px',
-              justifyContent: 'center',
-            }}
-          >
+          <div className="SetConDiv">
             {/* 왼쪽에 홀수 번째 아이템 출력 */}
-            <div className="allToolCon">
+            <div className="SetToolCon">
               {getDisplayedItems().map((item, index) => {
                 if (index % 2 === 0) {
                   return (
                     <div
                       key={item.id}
-                      className="AllImgDiv"
+                      className="SetImgDiv"
                       onClick={() => {
                         navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
                       }}
@@ -177,17 +171,17 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
                         <img src={item.img} alt={item.title} />
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
+                          <div className="SetPrice">
+                            <div className="SetSale">{item.sale}</div>
                             {item.price.toLocaleString()}원{' '}
                           </div>
-                          <div className="allBody">{item.body}</div>
+                          <div className="SetBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
                             {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
+                              <div className="SetDelivery">{item.delivery}</div>
                             )}
                             {item.review && (
-                              <div className="allReview">
+                              <div className="SetReview">
                                 리뷰 : {item.review}
                               </div>
                             )}
@@ -201,13 +195,13 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
               })}
             </div>
             {/* 오른쪽에 짝수 번째 아이템 출력 */}
-            <div className="allToolCon">
+            <div className="SetToolCon">
               {getDisplayedItems().map((item, index) => {
                 if (index % 2 !== 0) {
                   return (
                     <div
                       key={item.id}
-                      className="AllImgDiv"
+                      className="SetImgDiv"
                       onClick={() => {
                         navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
                       }}
@@ -216,18 +210,18 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
                         <img src={item.img} alt={item.title} />
                         <div className="titleDiv">
                           <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
+                          <div className="SetPrice">
+                            <div className="SetSale">{item.sale}</div>
                             {item.price.toLocaleString()}원{' '}
                             {/* 원화 표시 추가 */}
                           </div>
-                          <div className="allBody">{item.body}</div>
+                          <div className="SetBody">{item.body}</div>
                           <div style={{ display: 'flex' }}>
                             {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
+                              <div className="SetDelivery">{item.delivery}</div>
                             )}
                             {item.review && (
-                              <div className="allReview">
+                              <div className="SetReview">
                                 리뷰 : {item.review}
                               </div>
                             )}
@@ -241,7 +235,7 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
               })}
             </div>
           </div>
-          <div className="allButtonDiv">
+          <div className="SetButtonDiv">
             <button
               onClick={() => {
                 handlePageChange(currentPage - 1);

@@ -1,4 +1,4 @@
-.AllCon {
+.SetCon {
   width: 100%;
   height: auto;
   display: flex;
@@ -8,7 +8,7 @@
     text-decoration: none;
     color: black;
   }
-  .AllKind {
+  .SetKind {
     height: auto;
     display: flex;
     justify-content: flex-end;
@@ -18,13 +18,13 @@
       margin-right: 20px;
     }
   }
-  .AllDiv {
+  .SetDiv {
     width: 900px;
     display: flex;
     flex-direction: column;
   }
 }
-.AllImgDiv {
+.SetImgDiv {
   width: 250px;
   height: 430px;
   display: flex;
@@ -57,24 +57,24 @@
 .ImgCon {
   width: 425px;
 }
-.allPrice {
+.SetPrice {
   display: flex;
   font-size: 20px;
   font-weight: bold;
   padding-top: 10px;
-  .allSale {
+  .SetSale {
     padding-right: 5px;
     color: red;
   }
 }
-.allBody {
+.SetBody {
   color: gray;
   padding: 10px 0;
 }
-.allReview {
+.SetReview {
   display: flex;
 }
-.allDelivery {
+.SetDelivery {
   border-radius: 4px;
   padding: 4px 5px;
   margin: 0px 6px 0px 0px;
@@ -83,7 +83,7 @@
   width: 70px;
   text-align: center;
 }
-.allButtonDiv {
+.SetButtonDiv {
   width: 900px;
   height: 100px;
   display: flex;
@@ -106,7 +106,7 @@
     cursor: pointer;
   }
 }
-.allToolCon {
+.SetToolCon {
   width: 400px;
   display: flex;
   flex-direction: column;
@@ -130,4 +130,132 @@
 
 .activePage {
   background-color: blue;
+}
+.SetConDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 900px;
+}
+//////////////////////////////////////미디어 쿼리////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .SetCon {
+    .SetDiv {
+      width: 800px;
+      .SetKind {
+        width: 800px;
+      }
+      .SetConDiv {
+        width: 800px;
+      }
+      .SetButtonDiv {
+        width: 800px;
+      }
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .SetCon {
+    .SetDiv {
+      width: 600px;
+      .SetKind {
+        width: 600px;
+      }
+      .SetConDiv {
+        width: 600px;
+      }
+      .SetButtonDiv {
+        width: 600px;
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .SetCon {
+    .SetDiv {
+      width: 500px;
+      .SetKind {
+        width: 500px;
+      }
+      .SetConDiv {
+        width: 500px;
+        .SetImgDiv {
+          width: 200px;
+          height: 350px;
+          img {
+            width: 200px;
+            height: 70%;
+          }
+          h4 {
+            font-size: 15px;
+          }
+          .SetPrice {
+            font-size: 15px;
+            padding-top: 0;
+          }
+          .SetBody {
+            padding: 5px 0;
+          }
+          .SetReview {
+            font-size: 13px;
+          }
+          .SetDelivery {
+            font-size: 13px;
+            width: 70px;
+            height: 15px;
+          }
+        }
+      }
+      .SetButtonDiv {
+        width: 500px;
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .SetCon {
+    .SetDiv {
+      width: 300px;
+      h2 {
+        font-size: 15px;
+      }
+      .SetKind {
+        width: 300px;
+      }
+      .SetConDiv {
+        width: 300px;
+        flex-direction: column;
+        align-items: center;
+        .SetImgDiv {
+          width: 200px;
+          height: 350px;
+          img {
+            width: 200px;
+            height: 70%;
+          }
+          h4 {
+            font-size: 15px;
+          }
+          .SetPrice {
+            font-size: 15px;
+            padding-top: 0;
+          }
+          .SetBody {
+            padding: 5px 0;
+          }
+          .SetReview {
+            font-size: 13px;
+          }
+          .SetDelivery {
+            font-size: 13px;
+            width: 70px;
+            height: 15px;
+          }
+        }
+      }
+      .SetButtonDiv {
+        width: 300px;
+      }
+    }
+  }
 }

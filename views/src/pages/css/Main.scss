@@ -1,6 +1,5 @@
 .BannerSlide {
   width: 100%;
-  min-width: 1440px;
   height: 500px;
   overflow: hidden;
   margin: 0;
@@ -18,7 +17,7 @@
       height: 100%;
       img {
         height: 100%;
-        width: 900px;
+        width: 100%;
         cursor: pointer;
       }
     }
@@ -65,7 +64,8 @@
 .MainMiddle {
   display: flex;
   justify-content: center;
-  height: 500px;
+  // height: 500px;
+  padding: 50px 0;
   background-color: rgb(247, 248, 249);
   align-items: center;
   flex-direction: column;
@@ -185,7 +185,7 @@
       display: flex;
       padding: 50px 0;
       width: 900px;
-      align-items: center;
+      align-items: baseline;
       justify-content: center;
       .leftButton,
       .rightButton {
@@ -433,6 +433,500 @@
     transition: all 0.2s ease-in-out 0s;
     &:hover {
       transform: scale(1.1);
+    }
+  }
+}
+
+//////////////////////////////////미디어 쿼리/////////////////////////////////////////////
+
+@media (min-width: 1000px) and (max-width: 1430px) {
+  .BannerSlide {
+    .swiperNumber {
+      width: 800px;
+      .buttonCon {
+        width: 800px;
+        .buttonDiv {
+          right: calc(50% - 370px);
+        }
+      }
+      .slideImgContainer {
+        width: 800px;
+      }
+    }
+  }
+  .MainMiddle {
+    .PopolarTitle {
+      width: 800px;
+    }
+    .PopolarMiddle {
+      width: 800px;
+    }
+    .PopularMain {
+      padding: 10px 0 0 0;
+      width: 800px;
+      .MiddleButton {
+        background-color: transparent;
+        padding: 0 0 0 10px;
+      }
+      .ImgBox {
+        width: 200px;
+        height: 300px;
+        .MiddleSlide {
+          width: 100%;
+          height: 50%;
+        }
+      }
+    }
+  }
+
+  .MainCategoryCon {
+    .MainCategoryDiv {
+      width: 800px;
+      .CategoryCon {
+        width: 100%;
+        .CategoryImg {
+          width: 90px;
+        }
+      }
+    }
+  }
+  .MainSetCon {
+    .MainSetDiv {
+      .MainSetMenu {
+        width: 800px;
+      }
+    }
+  }
+  .giftCon {
+    .giftTitle {
+      width: 800px;
+    }
+  }
+  .giftUnder {
+    .giftUnderTitle {
+      width: 800px;
+    }
+  }
+}
+@media (min-width: 650px) and (max-width: 1000px) {
+  .BannerSlide {
+    height: 350px;
+    .swiperNumber {
+      width: 600px;
+      .buttonCon {
+        width: 600px;
+        .buttonDiv {
+          height: 25px;
+          right: calc(50% - 280px);
+          font-size: 18px;
+          .leftButton,
+          .rightButton {
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+      .slideImgContainer {
+        width: 600px;
+      }
+    }
+  }
+  .MainMiddle {
+    .PopolarTitle {
+      width: 600px;
+      button {
+        width: 80px;
+        height: 30px;
+      }
+    }
+    .PopolarMiddle {
+      width: 600px;
+    }
+    .PopularMain {
+      padding: 10px 0 0 0;
+      width: 600px;
+      .MiddleButton {
+        background-color: transparent;
+        padding: 0 0 0 0;
+        margin: 0 0 0 10px;
+      }
+      .ImgBox {
+        width: 250px;
+        height: 300px;
+        .MiddleSlide {
+          width: 100%;
+          height: 50%;
+        }
+      }
+    }
+  }
+  .MainCategoryCon {
+    align-items: baseline;
+    justify-content: center;
+    .MainCategoryDiv {
+      width: 600px;
+      .CategoryCon {
+        width: 100%;
+        .leftButton,
+        .rightButton {
+          width: 50px;
+          height: 50px;
+        }
+        a {
+          padding-right: 10px;
+        }
+        .CategoryImg {
+          width: 60px;
+          height: 100px;
+        }
+      }
+    }
+  }
+  .MainSetCon {
+    .MainSetDiv {
+      width: 600px;
+      .MainSetMenu {
+        width: 600px;
+        .setImgDiv {
+          height: 350px;
+        }
+      }
+    }
+  }
+  .giftCon {
+    .giftTitle {
+      width: 600px;
+      .giftDiv {
+        .giftImgdiv {
+          height: 300px;
+          img {
+            height: 80%;
+          }
+          .title {
+            font-size: 15px;
+          }
+          .body {
+            font-size: 13px;
+          }
+          span {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+  .giftUnder {
+    .giftUnderTitle {
+      width: 600px;
+      .giftUnder {
+        .giftImgUnderdiv {
+          height: 300px;
+          img {
+            height: 80%;
+          }
+          .title {
+            font-size: 15px;
+          }
+          .body {
+            font-size: 13px;
+          }
+          span {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 510px) and (max-width: 650px) {
+  .BannerSlide {
+    height: 300px;
+    .swiperNumber {
+      width: 500px;
+      .buttonCon {
+        width: 500px;
+        .buttonDiv {
+          height: 25px;
+          right: calc(50% - 230px);
+          font-size: 15px;
+          .leftButton,
+          .rightButton {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+      .slideImgContainer {
+        width: 500px;
+      }
+    }
+  }
+  .MainMiddle {
+    .PopolarTitle {
+      width: 500px;
+    }
+    .PopolarMiddle {
+      width: 500px;
+    }
+    .PopularMain {
+      padding: 0;
+      width: 500px;
+      .MiddleButton {
+        background-color: transparent;
+        padding: 0 0 0 0;
+        margin: 0 0 0 10px;
+        width: 50px;
+        height: 50px;
+      }
+      .ImgBox {
+        width: 200px;
+        height: 250px;
+        .ImgText {
+          font-size: 12px;
+          h5 {
+            padding: 10px 0;
+            margin: 0;
+          }
+          p {
+            padding: 0;
+            margin: 0;
+            text-align: end;
+            font-size: 15px;
+          }
+        }
+        .MiddleSlide {
+          width: 100%;
+          height: 50%;
+        }
+      }
+    }
+  }
+  .MainCategoryCon {
+    align-items: baseline;
+    justify-content: center;
+    .MainCategoryDiv {
+      width: 500px;
+      .CategoryCon {
+        width: 100%;
+        .leftButton,
+        .rightButton {
+          width: 50px;
+          height: 50px;
+          margin-right: 0;
+        }
+        a {
+          padding-right: 10px;
+        }
+        .CategoryImg {
+          width: 60px;
+          height: 100px;
+        }
+      }
+    }
+  }
+  .MainSetCon {
+    .MainSetDiv {
+      width: 500px;
+      .MainSetMenu {
+        width: 500px;
+        .setImgDiv {
+          height: 350px;
+        }
+      }
+    }
+  }
+  .giftCon {
+    .giftTitle {
+      width: 500px;
+      .giftDiv {
+        .giftImgdiv {
+          height: 300px;
+          img {
+            height: 80%;
+          }
+          .title {
+            font-size: 15px;
+          }
+          .body {
+            font-size: 13px;
+          }
+          span {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+  .giftUnder {
+    .giftUnderTitle {
+      width: 500px;
+      .giftUnder {
+        .giftImgUnderdiv {
+          height: 300px;
+          img {
+            height: 80%;
+          }
+          .title {
+            font-size: 15px;
+          }
+          .body {
+            font-size: 13px;
+          }
+          span {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 510px) {
+  .BannerSlide {
+    height: 200px;
+    .swiperNumber {
+      width: 300px;
+      .buttonCon {
+        width: 300px;
+        .buttonDiv {
+          height: 16px;
+          right: calc(50% - 140px);
+          font-size: 10px;
+          .leftButton,
+          .rightButton {
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+      .slideImgContainer {
+        width: 300px;
+      }
+    }
+  }
+  .MainMiddle {
+    padding: 25px 0 50px 0;
+    .PopolarTitle {
+      width: 300px;
+      font-size: 15px;
+      button {
+        height: 30px;
+        width: 70px;
+        span {
+          font-size: 10px;
+        }
+      }
+    }
+    .PopolarMiddle {
+      width: 350px;
+      font-size: 13px;
+      padding-bottom: 15px;
+    }
+    .PopularMain {
+      padding: 0;
+      width: 300px;
+      flex-direction: column;
+      .MiddleButton {
+        background-color: transparent;
+        padding: 10px 0;
+        margin: 0 0 0 10px;
+        width: 25px;
+        height: 50px;
+      }
+      .ImgBox {
+        width: 200px;
+        height: 150px;
+        margin-bottom: 20px;
+        .ImgText {
+          font-size: 12px;
+          h5 {
+            padding: 10px 0;
+            margin: 0;
+          }
+          p {
+            padding: 0;
+            margin: 0;
+            text-align: end;
+            font-size: 15px;
+          }
+        }
+        .MiddleSlide {
+          width: 100%;
+          height: 50%;
+        }
+      }
+    }
+  }
+  .MainCategoryCon {
+    display: none;
+  }
+  .MainSetCon {
+    .MainSetDiv {
+      width: 300px;
+      .MainSetMenu {
+        width: 300px;
+        height: auto;
+        .setImgDiv {
+          height: 200px;
+        }
+      }
+    }
+  }
+  .giftCon {
+    .giftTitle {
+      width: 300px;
+      height: 350px;
+      span {
+        font-size: 20px;
+      }
+      .giftDiv {
+        .giftImgdiv {
+          height: 200px;
+          img {
+            height: 80%;
+          }
+          .title {
+            font-size: 10px;
+          }
+          .body {
+            font-size: 10px;
+          }
+          span {
+            font-size: 10px;
+          }
+          .delivery {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+  .giftUnder {
+    .giftUnderTitle {
+      width: 300px;
+      height: 350px;
+      span {
+        font-size: 20px;
+      }
+      .giftUnder {
+        .giftImgUnderdiv {
+          height: 200px;
+          img {
+            height: 80%;
+          }
+          .title {
+            font-size: 10px;
+          }
+          .body {
+            font-size: 10px;
+          }
+          span {
+            font-size: 10px;
+          }
+          .delivery {
+            font-size: 10px;
+          }
+        }
+      }
     }
   }
 }

@@ -23,7 +23,7 @@ export default function AllSet() {
   return (
     <>
       <div className="AllSetCon">
-        <div className="MainSetDiv">
+        <div className="ALlSetDiv">
           <div className="AllSetMenu">
             <div className="leftButton" onClick={setPreSlide}>
               <img

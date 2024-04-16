@@ -10,6 +10,7 @@ export default function Header() {
   const [searchPopup, setSearchPopup] = useState(false);
   const searchUseRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
   const OpenPopup = () => {
     setSearchPopup(true);
   };
@@ -20,17 +21,20 @@ export default function Header() {
 
   const handleOutsideClick = (e: MouseEvent) => {
     if (
-      searchPopup &&
-      searchUseRef.current &&
-      !searchUseRef.current.contains(e.target as Node) &&
-      !(e.target as HTMLElement).classList.contains('serchdiv')
+      (searchPopup &&
+        searchUseRef.current &&
+        !searchUseRef.current.contains(e.target as Node)) ||
+      (!searchPopup &&
+        showPopup &&
+        !(e.target as HTMLElement).classList.contains('menuDiv'))
     ) {
       closePopup();
+      setShowPopup(false);
     }
   };
 
   useEffect(() => {
-    if (searchPopup) {
+    if (searchPopup || showPopup) {
       document.addEventListener('mousedown', handleOutsideClick);
     } else {
       document.removeEventListener('mousedown', handleOutsideClick);
@@ -39,13 +43,12 @@ export default function Header() {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [searchPopup]);
+  }, [searchPopup, showPopup]);
 
   const togglePopup = () => setShowPopup((prev) => !prev);
 
   const handleItemClick = (url: string) => {
-    // 수정된 부분: item.url을 직접 전달받음
-    navigate(url); // 수정된 부분: url로 바로 이동
+    navigate(url); // URL로 이동
   };
 
   const handleMouseLeave = () => {
@@ -70,18 +73,17 @@ export default function Header() {
       alert('검색어를 입력하세요!');
       return;
     } else {
-      // 사용자 입력값을 가지고 Search 페이지로 이동합니다.
       const searchQuery = encodeURIComponent(inputValue.trim());
       navigate(`/search/${searchQuery}`);
       closePopup();
     }
   };
 
-  // 새로운 창으로 이동할 때 팝업을 닫기
   const handleLinkClick = () => {
-    setSearchPopup(false);
+    setShowPopup(false); // 다른 페이지로 이동할 때 팝업 닫기
+    setSearchPopup(false); // 다른 페이지로 이동할 때 검색 팝업 닫기
   };
-  // 검색 클릭 > popup 창 > 하단 li 리스트 클릭 이벤트
+
   const searchClick = (e: any) => {
     navigate(`/search/${e.target.textContent}`);
     closePopup();
@@ -93,13 +95,27 @@ export default function Header() {
       behavior: 'smooth',
     });
   };
-  const loginState = () => {
-    if (!window.confirm('로그아웃 하시겠습니까?')) {
-      return;
-    } else {
-      localStorage.clear();
-      alert('로그아웃 되었습니다.');
-    }
+
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 510);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 510);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+  const [isOpen, setIsOpen] = useState(false);
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -125,15 +141,12 @@ export default function Header() {
                           key={index}
                           onMouseEnter={() => setHoveredItem(index)}
                           onMouseLeave={() => setHoveredItem(null)}
-                          onClick={() => handleItemClick(Categoryitems.url)}
+                          onClick={(e) => {
+                            handleItemClick(Categoryitems.url);
+                            e.stopPropagation(); // 이벤트 버블링 중지
+                          }}
                         >
-                          {Categoryitems.title}{' '}
-                          {hoveredItem === index && (
-                            <img
-                              src={`${process.env.PUBLIC_URL}/image/right-arrow.png`}
-                              alt="Right Arrow"
-                            />
-                          )}
+                          {Categoryitems.title}
                         </span>
                       ))}
                     </div>
@@ -162,38 +175,110 @@ export default function Header() {
                   <img
                     src={`${process.env.PUBLIC_URL}/image/shopping-cart.png`}
                     alt="shopping cart"
+                    onClick={() =>
+                      localStorage.getItem('oneroomToken')
+                        ? navigate('/mypage')
+                        : navigate('/shop')
+                    }
                   />
                 </div>
               </Link>
-              <Link to="login">
-                <div>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/image/user.png`}
-                    alt="user"
-                    onClick={loginState}
-                  />
-                </div>
-              </Link>
+              <div>
+                <img
+                  src={`${process.env.PUBLIC_URL}/image/user.png`}
+                  alt="user"
+                  onClick={() =>
+                    localStorage.getItem('oneroomToken')
+                      ? navigate('/mypage')
+                      : navigate('/login')
+                  }
+                />
+              </div>
             </span>
           </div>
           <div className="line"></div>
-          <div className="headerConUnder">
-            <Link to="/AllSet" className="AllSet" onClick={scrollToTop}>
-              세트 메뉴
-            </Link>
-            <Link to="/Popular" className="menu-link" onClick={scrollToTop}>
-              인기 차트
-            </Link>
-            <Link to="/Money" className="menu-link" onClick={scrollToTop}>
-              만원 이하
-            </Link>
-            <Link to="/HouseGift" className="menu-link " onClick={scrollToTop}>
-              집들이 선물
-            </Link>
-            <Link to="/Good/10" className="menu-link" onClick={scrollToTop}>
-              모든 상품
-            </Link>
+
+          <div onClick={toggleMenu} className="toggleMenu">
+            {isSmallScreen ? (
+              isOpen ? (
+                <div className="MenuToggle2">
+                  <img
+                    src={`${process.env.PUBLIC_URL}/image/upArrow.png`}
+                    alt="arrow_down"
+                    onClick={handleToggle}
+                  />
+                  <div className="headerConUnder">
+                    <div style={{ display: isOpen ? 'block' : 'none' }}>
+                      <Link
+                        to="/AllSet"
+                        className="AllSet"
+                        onClick={scrollToTop}
+                      >
+                        세트 메뉴
+                      </Link>
+                      <Link
+                        to="/Popular"
+                        className="menu-link"
+                        onClick={scrollToTop}
+                      >
+                        인기 차트
+                      </Link>
+                      <Link
+                        to="/Money"
+                        className="menu-link"
+                        onClick={scrollToTop}
+                      >
+                        만원 이하
+                      </Link>
+                      <Link
+                        to="/HouseGift"
+                        className="menu-link"
+                        onClick={scrollToTop}
+                      >
+                        집들이 선물
+                      </Link>
+                      <Link
+                        to="/Good/10"
+                        className="menu-link"
+                        onClick={scrollToTop}
+                      >
+                        모든 상품
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={`${process.env.PUBLIC_URL}/image/UnderArrow.png`}
+                  alt="arrow_up"
+                  onClick={handleToggle}
+                />
+              )
+            ) : (
+              <div className="headerConUnder">
+                <Link to="/AllSet" className="AllSet" onClick={scrollToTop}>
+                  세트 메뉴
+                </Link>
+                <Link to="/Popular" className="menu-link" onClick={scrollToTop}>
+                  인기 차트
+                </Link>
+                <Link to="/Money" className="menu-link" onClick={scrollToTop}>
+                  만원 이하
+                </Link>
+                <Link
+                  to="/HouseGift"
+                  className="menu-link"
+                  onClick={scrollToTop}
+                >
+                  집들이 선물
+                </Link>
+                <Link to="/Good/10" className="menu-link" onClick={scrollToTop}>
+                  모든 상품
+                </Link>
+              </div>
+            )}
           </div>
+
           {searchPopup && (
             <div ref={searchUseRef} className="SearchPopupLayout">
               <div className="searchPoppupDiv">
@@ -204,7 +289,7 @@ export default function Header() {
                     placeholder="입력해주세요"
                     required
                     className="search
-                  "
+                    "
                   />
                   <button type="submit" className="serchButton">
                     <img

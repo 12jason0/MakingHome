@@ -215,14 +215,7 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
               <option value="리뷰 적은 수">리뷰 적은 수</option>
             </select>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              paddingTop: '50px',
-            }}
-          >
+          <div className="AllStart">
             <div className="allToolCon">
               {filteredItems
                 .filter((_, index) => index % 2 !== 1)

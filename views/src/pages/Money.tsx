@@ -140,8 +140,8 @@ export default function Money() {
 
   return (
     <>
-      <div className="AllCon">
-        <div className="AllDiv">
+      <div className="MoneyCon">
+        <div className="MoneyDiv">
           <div className="navigate2">
             <div
               className={navigate2State === 'viewAll' ? navigate2State : ''}
@@ -181,7 +181,7 @@ export default function Money() {
             </div>
           </div>
           <hr />
-          <div className="AllKind">
+          <div className="MoneyKind">
             <select name="" id="" onChange={handleSortChange}>
               <option value="정렬방식" hidden>
                 정렬방식
@@ -200,15 +200,8 @@ export default function Money() {
             </div>
           )}
           {/* //////////////////////////////////////결과 화면 시작//////////////////////////////////////// */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              paddingTop: '50px',
-            }}
-          >
-            <div className="allToolCon">
+          <div className="MoneyStart">
+            <div className="MoneyToolCon">
               {furnitureItems
                 .filter((_, index) => index % 2 !== 1)
                 .slice(
@@ -218,7 +211,7 @@ export default function Money() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="AllImgDiv"
+                    className="MoneyImgDiv"
                     onClick={() => {
                       navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
                     }}
@@ -250,17 +243,17 @@ export default function Money() {
                       </div>
                       <div className="titleDiv">
                         <h4>{item.title}</h4>
-                        <div className="allPrice">
-                          <div className="allSale">{item.sale}</div>
+                        <div className="MoneyPrice">
+                          <div className="MoneySale">{item.sale}</div>
                           {item.price.toLocaleString()}원
                         </div>
-                        <div className="allBody">{item.body}</div>
+                        <div className="MoneyBody">{item.body}</div>
                         <div style={{ display: 'flex' }}>
                           {item.delivery && (
-                            <div className="allDelivery">{item.delivery}</div>
+                            <div className="MoneyDelivery">{item.delivery}</div>
                           )}
                           {item.review && (
-                            <div className="allReview">
+                            <div className="MoneyReview">
                               리뷰 : {item.review}
                             </div>
                           )}
@@ -270,7 +263,7 @@ export default function Money() {
                   </div>
                 ))}
             </div>
-            <div className="allToolCon">
+            <div className="MoneyToolCon">
               {furnitureItems
                 .filter((_, index) => index % 2 !== 0)
                 .slice(
@@ -280,7 +273,7 @@ export default function Money() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="AllImgDiv"
+                    className="MoneyImgDiv"
                     onClick={() => {
                       navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
                     }}
@@ -312,17 +305,17 @@ export default function Money() {
                       </div>
                       <div className="titleDiv">
                         <h4>{item.title}</h4>
-                        <div className="allPrice">
-                          <div className="allSale">{item.sale}</div>
+                        <div className="MoneyPrice">
+                          <div className="MoneySale">{item.sale}</div>
                           {item.price.toLocaleString()}원
                         </div>
-                        <div className="allBody">{item.body}</div>
+                        <div className="MoneyBody">{item.body}</div>
                         <div style={{ display: 'flex' }}>
                           {item.delivery && (
-                            <div className="allDelivery">{item.delivery}</div>
+                            <div className="MoneyDelivery">{item.delivery}</div>
                           )}
                           {item.review && (
-                            <div className="allReview">
+                            <div className="MoneyReview">
                               리뷰 : {item.review}
                             </div>
                           )}
@@ -334,7 +327,7 @@ export default function Money() {
             </div>
           </div>
 
-          <div className="allButtonDiv">
+          <div className="MoneyButtonDiv">
             <button
               onClick={() => {
                 handlePageChange(currentPage - 1);
