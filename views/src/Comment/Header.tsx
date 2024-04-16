@@ -93,6 +93,14 @@ export default function Header() {
       behavior: 'smooth',
     });
   };
+  const loginState = () => {
+    if (!window.confirm('로그아웃 하시겠습니까?')) {
+      return;
+    } else {
+      localStorage.clear();
+      alert('로그아웃 되었습니다.');
+    }
+  };
 
   return (
     <>
@@ -162,6 +170,7 @@ export default function Header() {
                   <img
                     src={`${process.env.PUBLIC_URL}/image/user.png`}
                     alt="user"
+                    onClick={loginState}
                   />
                 </div>
               </Link>

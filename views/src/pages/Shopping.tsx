@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import './css/Shopping.scss';
+import { useNavigate } from 'react-router';
 
 // 각 항목의 형태를 나타내는 인터페이스 정의
 interface Item {
@@ -27,6 +28,7 @@ interface Pay {
 export default function Shopping() {
   // items 상태를 명시적으로 정의
   const [items, setItems] = useState<Item[]>([]);
+  const navigate = useNavigate();
   const [pay, setPay] = useState<Pay>({
     price: 0,
     delivery_fee: 0,
@@ -34,20 +36,24 @@ export default function Shopping() {
   });
   // 데이터 불러오기
   useEffect(() => {
-    const getUserBucket = async () => {
-      const res = await axios.get('http://localhost:5000/user/bucketView', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-        },
-      });
-      const { viewItem } = res.data;
-      const itemSelected = viewItem.map((item: Item) => ({
-        ...item,
-        selected: false,
-      }));
-      setItems(itemSelected);
-    };
-    getUserBucket();
+    if (localStorage.getItem('oneroomToken')) {
+      const getUserBucket = async () => {
+        const res = await axios.get('http://localhost:5000/user/bucketView', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        });
+        const { viewItem } = res.data;
+        const itemSelected = viewItem.map((item: Item) => ({
+          ...item,
+          selected: false,
+        }));
+        setItems(itemSelected);
+      };
+      getUserBucket();
+    } else {
+      navigate('/login');
+    }
   }, []);
 
   // 전체 선택 기능
@@ -76,7 +82,6 @@ export default function Shopping() {
     price: number,
     delivery: string
   ) => {
-    console.log(selected);
     // 구매 선택
     if (selected) {
       if (delivery === '무료배송')
@@ -117,7 +122,46 @@ export default function Shopping() {
       }
     }
   };
-
+  const itemAdd = (title: string) => {
+    const updatedItems = items.filter((item) => item.title === title);
+    if (updatedItems[0].selected === false) {
+      setItems((prev) => {
+        return prev.map((item) => {
+          if (updatedItems.includes(item)) {
+            return { ...item, selected: true };
+          }
+          return item;
+        });
+      });
+      itemSelectedEvent(true, updatedItems[0].price, updatedItems[0].delivery);
+    } else {
+      alert('이미 추가하신 상품입니다.');
+    }
+  };
+  const itemDel = async (title: string) => {
+    if (!window.confirm('구매 목록에서 삭제하시겠습니까?')) {
+      return;
+    } else {
+      const res = await axios.post(
+        'http://localhost:5000/user/bucketDel',
+        {
+          title,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        }
+      );
+      const { success, message } = res.data;
+      if (success) {
+        alert(`${message}`);
+        document.location.reload();
+      } else {
+        alert(`오류가 발생하였습니다.`);
+      }
+    }
+  };
   return (
     <>
       <div className="shoppingCon">
@@ -132,46 +176,74 @@ export default function Shopping() {
                 />
                 <div onClick={handleSelectAll}> 전체 선택</div>
               </div>
-              <div className="allExit" onClick={handleDeleteAll}>
-                전체 삭제
-              </div>
+              <div className="allExit" onClick={handleDeleteAll}></div>
             </div>
             <div style={{ height: '20px' }}></div>
             {/* 각 항목을 form 요소 안에 표시 */}
             {items.map((item) => (
-              <form>
-                {/* 체크박스로 선택 여부 표시 */}
-                <input
-                  key={item.id}
-                  type="checkbox"
-                  checked={item.selected}
-                  onChange={() => {
-                    const updatedItems = items.map((i) =>
-                      i.id === item.id ? { ...i, selected: !i.selected } : i
-                    );
-                    setItems(updatedItems);
-                    itemSelectedEvent(
-                      !item.selected,
-                      item.price,
-                      item.delivery
-                    );
-                  }}
-                />
-                <div className="shoppingImg">
-                  <img src={item.img} alt="" />
+              <>
+                <form style={{ display: 'flex', justifyContent: 'start' }}>
+                  {/* 체크박스로 선택 여부 표시 */}
+                  <input
+                    key={item.id}
+                    type="checkbox"
+                    checked={item.selected}
+                    onChange={() => {
+                      const updatedItems = items.map((i) =>
+                        i.id === item.id ? { ...i, selected: !i.selected } : i
+                      );
+                      setItems(updatedItems);
+                      itemSelectedEvent(
+                        !item.selected,
+                        item.price,
+                        item.delivery
+                      );
+                    }}
+                  />
+                </form>
+                <div className="shoopingElement">
+                  <div className="shoppingImg">
+                    <img src={item.img} alt="" />
+                  </div>
+                  <div className="Attributes">
+                    <div className="shoppingTitle">{item.title}</div>
+                    <div className="shoppingBody">{item.body}</div>
+                    <div className="PriceSale">
+                      <div className="shoppingSale">{item.sale}</div>
+                      <div className="shoppingPrice">
+                        {item.price.toLocaleString()}원
+                      </div>
+                    </div>
+                    <div className="shopDel">
+                      <div
+                        className="itemAdd"
+                        onClick={() => {
+                          itemAdd(item.title);
+                        }}
+                      >
+                        추가
+                      </div>
+                      <div
+                        className="itemDel"
+                        onClick={() => {
+                          itemDel(item.title);
+                        }}
+                      >
+                        삭제
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <span className="shoppingTitle">{item.title}</span>
-                <div className="shoppingPrice">{item.body}</div>
-              </form>
+              </>
             ))}
           </div>
           <div className="shoppingMoney">
-            <div></div>
             <form>
-              {' '}
-              <label>총 상품 금액 : {pay.price}원</label>
-              <label>배송비 : {pay.delivery_fee}원</label>
-              <label>결제 예정 금액 : {pay.total_payment}원</label>
+              <label>총 상품 금액 : {pay.price.toLocaleString()}원</label>
+              <label>배송비 : {pay.delivery_fee.toLocaleString()}원</label>
+              <label>
+                결제 예정 금액 : {pay.total_payment.toLocaleString()}원
+              </label>
               <button>
                 <div
                   className="paymentDiv"

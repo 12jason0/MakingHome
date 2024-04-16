@@ -60,6 +60,31 @@ const GoodIssue: React.FC = () => {
   if (!itemDetail) {
     return <div>Loading...</div>;
   }
+  // 구매하기 버튼 클릭 이벤트 : 장바구니에 추가
+  const bucketAdd = async (title: string) => {
+    if (localStorage.getItem('oneroomToken')) {
+      const res = await axios.post(
+        'http://localhost:5000/user/bucketAdd',
+        {
+          title,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        }
+      );
+      const { success, message } = res.data;
+      if (success) {
+        alert(`${message}`);
+      } else {
+        alert(`${message}`);
+      }
+    } else {
+      alert('로그인을 하셔야 해당 서비스를 이용하실 수 있습니다.');
+      navigate('/login');
+    }
+  };
 
   return (
     <>
@@ -96,7 +121,15 @@ const GoodIssue: React.FC = () => {
                   )}
                 </div>
                 <button type="button">
-                  <div className="IssuepaymentDiv">구매하기 </div>
+                  {/* onClick 이벤트 추가 : 구매하기 버튼 */}
+                  <div
+                    className="IssuepaymentDiv"
+                    onClick={(e) => {
+                      bucketAdd(itemDetail.title);
+                    }}
+                  >
+                    구매하기{' '}
+                  </div>
                 </button>
               </div>
             </div>
