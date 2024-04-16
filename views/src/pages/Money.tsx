@@ -127,6 +127,9 @@ export default function Money() {
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+
+  const navigator = useNavigate();
+
   /////////////////////////////////option, 페이지 번호, 이동 할 시 페이지 맨 위로 이동//////////////////////////////////////
   const scrollToTop = () => {
     window.scrollTo({
@@ -213,55 +216,57 @@ export default function Money() {
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <div className="imageBox">
-                          <img
-                            className="toolImg"
-                            src={item.img}
-                            alt={item.title}
-                          />
-                          <img
-                            className="heart"
-                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
-                            src={
-                              heart.find(
-                                (product: HeartState) =>
-                                  product.title === item.title
-                              )?.heartStatus
-                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
-                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
-                            }
-                            alt="하트 이미지"
-                            onClick={(e) => {
-                              handleHeart(e, item.title);
-                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
-                            }}
-                          />
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => {
+                      navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
+                    }}
+                  >
+                    <div>
+                      <div className="imageBox">
+                        <img
+                          className="toolImg"
+                          src={item.img}
+                          alt={item.title}
+                        />
+                        <img
+                          className="heart"
+                          // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                          src={
+                            heart.find(
+                              (product: HeartState) =>
+                                product.title === item.title
+                            )?.heartStatus
+                              ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                              : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                          }
+                          alt="하트 이미지"
+                          onClick={(e) => {
+                            handleHeart(e, item.title);
+                            // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                          }}
+                        />
+                      </div>
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
                         </div>
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>
@@ -273,55 +278,57 @@ export default function Money() {
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <div className="imageBox">
-                          <img
-                            className="toolImg"
-                            src={item.img}
-                            alt={item.title}
-                          />
-                          <img
-                            className="heart"
-                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
-                            src={
-                              heart.find(
-                                (product: HeartState) =>
-                                  product.title === item.title
-                              )?.heartStatus
-                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
-                                : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
-                            }
-                            alt="하트 이미지"
-                            onClick={(e) => {
-                              handleHeart(e, item.title);
-                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
-                            }}
-                          />
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => {
+                      navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
+                    }}
+                  >
+                    <div>
+                      <div className="imageBox">
+                        <img
+                          className="toolImg"
+                          src={item.img}
+                          alt={item.title}
+                        />
+                        <img
+                          className="heart"
+                          // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                          src={
+                            heart.find(
+                              (product: HeartState) =>
+                                product.title === item.title
+                            )?.heartStatus
+                              ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
+                              : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                          }
+                          alt="하트 이미지"
+                          onClick={(e) => {
+                            handleHeart(e, item.title);
+                            // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                          }}
+                        />
+                      </div>
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
                         </div>
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>

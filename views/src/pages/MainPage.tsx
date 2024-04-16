@@ -13,32 +13,37 @@ interface RMainPageProps {
 function MainPage({ setShowHeader }: RMainPageProps) {
   setShowHeader(true);
 
+  const handleClick = (url: string) => {
+    if (url) {
+      window.location.href = url;
+    }
+  };
   const Slide = () => {
     const slideImages = [
       {
         id: '0',
         img: 'https://m.oneroommaking.com/web/upload/appfiles/ZaReJam3QiELznoZeGGkMG/651b0ef01c3a8964e1b33285c0cdbcad.png',
-        url: '',
+        url: '/GoodIssue/5',
       },
       {
         id: '1',
         img: 'https://m.oneroommaking.com/web/product/extra/big/202312/a465bdb5a1fe7d4b3a585d4cf9bbfc5d.jpg',
-        url: '',
+        url: '/GoodIssue/8',
       },
       {
         id: '2',
         img: 'https://m.oneroommaking.com/web/product/big/202311/656b8a84bc76dc0a514c4845f547e9f3.jpg',
-        url: '',
+        url: '/GoodIssue/9',
       },
       {
         id: '3',
         img: 'https://m.oneroommaking.com/web/product/big/202206/edca24f5e9d8e1ca73a84d437f273c2c.gif',
-        url: '',
+        url: '/GoodIssue/15',
       },
       {
         id: '4',
         img: 'https://m.oneroommaking.com/web/product/medium/202402/2552f300917e6066714b5dbb7a8d0e43.jpg',
-        url: '',
+        url: '/GoodIssue/39',
       },
     ];
 
@@ -147,7 +152,10 @@ function MainPage({ setShowHeader }: RMainPageProps) {
       <div className="main">
         <div className="BannerSlide">
           <div className="swiperNumber">
-            <div className="slideImgContainer">
+            <div
+              className="slideImgContainer"
+              onClick={() => handleClick(slideImages[currentIdx].url)}
+            >
               <img
                 src={slideImages[currentIdx].img}
                 alt={`Slide ${currentIdx}`}
@@ -196,16 +204,18 @@ function MainPage({ setShowHeader }: RMainPageProps) {
               />
             </div>
             {MiddleImages.slice(startIndex, endIndex).map((item, index) => (
-              <div className="ImgBox" key={index}>
-                <a href="">
-                  <div className="MiddleSlide">
-                    <img src={item.img} alt={`Slide ${slideImg + index}`} />
-                  </div>
-                  <div className="ImgText">
-                    <h5>{item.title}</h5>
-                    <p>{item.body}</p>
-                  </div>
-                </a>
+              <div
+                className="ImgBox"
+                key={index}
+                onClick={() => handleClick(item.url)}
+              >
+                <div className="MiddleSlide">
+                  <img src={item.img} alt={`Slide ${slideImg + index}`} />
+                </div>
+                <div className="ImgText">
+                  <h5>{item.title}</h5>
+                  <p>{item.body}</p>
+                </div>
               </div>
             ))}
             <div className="MiddleButton" onClick={rightSlide}>
@@ -288,22 +298,23 @@ function MainPage({ setShowHeader }: RMainPageProps) {
             <div className="giftDiv">
               {MainGiftImg.slice(startGitfIndex, endGiftIndex).map(
                 (item, index) => (
-                  <a href="/" key={index}>
-                    <div className="giftImgdiv">
-                      <img
-                        src={item.img}
-                        alt={`slide ${startGitfIndex + index}`}
-                      />
-                      <div className="title">{item.title}</div>
-                      <div className="body">{item.body}</div>
-                      <div className="sale">
-                        {item.sale} <span>{item.price}</span>
-                      </div>
-                      {item.delivery && (
-                        <div className="delivery">{item.delivery}</div>
-                      )}
+                  <div
+                    className="giftImgdiv"
+                    onClick={() => handleClick(item.url)}
+                  >
+                    <img
+                      src={item.img}
+                      alt={`slide ${startGitfIndex + index}`}
+                    />
+                    <div className="title">{item.title}</div>
+                    <div className="body">{item.body}</div>
+                    <div className="sale">
+                      {item.sale} <span>{item.price}</span>
                     </div>
-                  </a>
+                    {item.delivery && (
+                      <div className="delivery">{item.delivery}</div>
+                    )}
+                  </div>
                 )
               )}
             </div>
@@ -317,30 +328,26 @@ function MainPage({ setShowHeader }: RMainPageProps) {
             <div className="giftUnder">
               {MainUnderGift.slice(startGitfUnderIndex, endGiftUnderIndex).map(
                 (item, index) => (
-                  <a href="/" key={index}>
-                    <div className="giftImgUnderdiv">
-                      <img
-                        className="giftImg"
-                        src={item.img}
-                        alt={`slide ${startGitfUnderIndex + index}`}
-                      />
-                      <div className="heartDiv">
-                        <img
-                          className="heart"
-                          src="https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="title">{item.title}</div>
-                      <div className="body">{item.body}</div>
-                      <div className="sale">
-                        {item.sale} <span>{item.price}</span>
-                      </div>
-                      {item.delivery && (
-                        <div className="delivery">{item.delivery}</div>
-                      )}
+                  <div
+                    className="giftImgUnderdiv"
+                    onClick={() => {
+                      handleClick(item.url);
+                    }}
+                  >
+                    <img
+                      className="giftImg"
+                      src={item.img}
+                      alt={`slide ${startGitfUnderIndex + index}`}
+                    />
+                    <div className="title">{item.title}</div>
+                    <div className="body">{item.body}</div>
+                    <div className="sale">
+                      {item.sale} <span>{item.price}</span>
                     </div>
-                  </a>
+                    {item.delivery && (
+                      <div className="delivery">{item.delivery}</div>
+                    )}
+                  </div>
                 )
               )}
             </div>

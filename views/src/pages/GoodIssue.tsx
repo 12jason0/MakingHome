@@ -8,6 +8,7 @@ const GoodIssue: React.FC = () => {
   const [itemDetail, setItemDetail] = useState<any | null>(null);
   const [issueImages, setIssueImages] = useState<string[]>([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchItemDetail = async () => {
       try {
@@ -52,6 +53,10 @@ const GoodIssue: React.FC = () => {
     fetchItemDetail();
   }, [id]);
 
+  const goBack = () => {
+    navigate(-1); // Navigate back
+  };
+
   if (!itemDetail) {
     return <div>Loading...</div>;
   }
@@ -66,9 +71,7 @@ const GoodIssue: React.FC = () => {
                 className="reverseImg"
                 src={`${process.env.PUBLIC_URL}/image/setLeftArrow.png`}
                 alt="뒤로가기"
-                onClick={() => {
-                  navigate(-1);
-                }}
+                onClick={goBack}
               />
             </div>
           </div>

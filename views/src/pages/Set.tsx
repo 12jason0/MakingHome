@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './css/ItemPage.scss';
 
@@ -33,6 +33,7 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const navigator = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -165,35 +166,34 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
               {getDisplayedItems().map((item, index) => {
                 if (index % 2 === 0) {
                   return (
-                    <div key={item.id} className="AllImgDiv">
-                      <a href="/">
-                        <div>
-                          <img src={item.img} alt={item.title} />
-                          <div className="titleDiv">
-                            <h4>{item.title}</h4>
-                            <div className="allPrice">
-                              <div className="allSale">{item.sale}</div>
-                              {item.price.toLocaleString()}원{' '}
-                              {/* 원화 표시 추가 */}
-                            </div>
-                            <div className="allBody">{item.body}</div>
-                            <div style={{ display: 'flex' }}>
-                              {item.delivery && (
-                                <div className="allDelivery">
-                                  {item.delivery}
-                                </div>
-                              )}
-                              {item.review && (
-                                <a href="/">
-                                  <div className="allReview">
-                                    리뷰 : {item.review}
-                                  </div>
-                                </a>
-                              )}
-                            </div>
+                    <div
+                      key={item.id}
+                      className="AllImgDiv"
+                      onClick={() => {
+                        navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
+                      }}
+                    >
+                      <div>
+                        <img src={item.img} alt={item.title} />
+                        <div className="titleDiv">
+                          <h4>{item.title}</h4>
+                          <div className="allPrice">
+                            <div className="allSale">{item.sale}</div>
+                            {item.price.toLocaleString()}원{' '}
+                          </div>
+                          <div className="allBody">{item.body}</div>
+                          <div style={{ display: 'flex' }}>
+                            {item.delivery && (
+                              <div className="allDelivery">{item.delivery}</div>
+                            )}
+                            {item.review && (
+                              <div className="allReview">
+                                리뷰 : {item.review}
+                              </div>
+                            )}
                           </div>
                         </div>
-                      </a>
+                      </div>
                     </div>
                   );
                 }
@@ -205,35 +205,35 @@ const Set: React.FC<SetProps> = ({ MainsetImg }: SetProps) => {
               {getDisplayedItems().map((item, index) => {
                 if (index % 2 !== 0) {
                   return (
-                    <div key={item.id} className="AllImgDiv">
-                      <a href="/">
-                        <div>
-                          <img src={item.img} alt={item.title} />
-                          <div className="titleDiv">
-                            <h4>{item.title}</h4>
-                            <div className="allPrice">
-                              <div className="allSale">{item.sale}</div>
-                              {item.price.toLocaleString()}원{' '}
-                              {/* 원화 표시 추가 */}
-                            </div>
-                            <div className="allBody">{item.body}</div>
-                            <div style={{ display: 'flex' }}>
-                              {item.delivery && (
-                                <div className="allDelivery">
-                                  {item.delivery}
-                                </div>
-                              )}
-                              {item.review && (
-                                <a href="/">
-                                  <div className="allReview">
-                                    리뷰 : {item.review}
-                                  </div>
-                                </a>
-                              )}
-                            </div>
+                    <div
+                      key={item.id}
+                      className="AllImgDiv"
+                      onClick={() => {
+                        navigator(`/GoodIssue/${item.id}`); // 해당 아이템의 상세 페이지로 이동
+                      }}
+                    >
+                      <div>
+                        <img src={item.img} alt={item.title} />
+                        <div className="titleDiv">
+                          <h4>{item.title}</h4>
+                          <div className="allPrice">
+                            <div className="allSale">{item.sale}</div>
+                            {item.price.toLocaleString()}원{' '}
+                            {/* 원화 표시 추가 */}
+                          </div>
+                          <div className="allBody">{item.body}</div>
+                          <div style={{ display: 'flex' }}>
+                            {item.delivery && (
+                              <div className="allDelivery">{item.delivery}</div>
+                            )}
+                            {item.review && (
+                              <div className="allReview">
+                                리뷰 : {item.review}
+                              </div>
+                            )}
                           </div>
                         </div>
-                      </a>
+                      </div>
                     </div>
                   );
                 }

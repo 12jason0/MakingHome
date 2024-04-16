@@ -7,6 +7,7 @@ const MainGiftImg = [
     sale: '43%',
     price: ' 6,900원',
     delivery: '',
+    url: '/GoodIssue/89',
   },
   {
     id: '1',
@@ -16,6 +17,7 @@ const MainGiftImg = [
     sale: '52%',
     price: '16,800원',
     delivery: '무료배송',
+    url: '/GoodIssue/115',
   },
   {
     id: '2',
@@ -25,15 +27,17 @@ const MainGiftImg = [
     sale: '65%',
     price: '69,000원',
     delivery: '무료배송',
+    url: '/GoodIssue/123',
   },
   {
     id: '3',
-    img: 'https://m.oneroommaking.com/web/product/medium/202309/c0a8e9c46437cf2c670b8134c863eafd.jpg',
-    title: '무선 충전 스피커 무드등',
-    body: '내 장점이 뭔지 알아?',
-    sale: '2%',
-    price: '63,800원',
+    img: 'https://m.oneroommaking.com/web/product/medium/202308/3b82ea96d3567b6dbf17083d0b2b9e7a.jpg',
+    title: '고속 무선 충전 무드등',
+    body: '무드등이 왜 빠른지 알아요?',
+    sale: '17%',
+    price: '24,800원',
     delivery: '무료배송',
+    url: '/GoodIssue/117',
   },
 ];
 
