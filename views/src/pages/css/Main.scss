@@ -151,6 +151,7 @@
   background-color: white;
   border-radius: 20px;
   box-shadow: rgba(100, 111, 124, 0.1) 0px 20px 8px 0px;
+  cursor: pointer;
   img {
     object-fit: cover;
     transition: all 0.2s ease-in-out 0s;
@@ -319,25 +320,23 @@
   padding-top: 15px;
   justify-content: center;
   position: relative;
-  a {
+  .giftImgdiv {
+    position: relative;
+    width: 205px;
+    height: 400px;
     font-size: 15px;
     text-decoration: none;
     color: black;
     padding-right: 20px;
-    .giftImgdiv {
-      position: relative;
-      width: 205px;
-      height: 400px;
-      .title {
-        font-size: 20px;
-        font-weight: bold;
-        padding: 10px 0;
-      }
-      .sale {
-        color: red;
-        span {
-          color: black;
-        }
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 0;
+    }
+    .sale {
+      color: red;
+      span {
+        color: black;
       }
       .delivery {
         border-radius: 4px;
@@ -395,26 +394,25 @@
   height: auto;
   padding-top: 15px;
   justify-content: center;
-  a {
+
+  .giftImgUnderdiv {
+    position: relative;
+    width: 205px;
+    height: 400px;
     font-size: 15px;
     text-decoration: none;
     color: black;
     padding-right: 20px;
     position: relative;
-    .giftImgUnderdiv {
-      position: relative;
-      width: 205px;
-      height: 400px;
-      .title {
-        font-size: 20px;
-        font-weight: bold;
-        padding: 10px 0;
-      }
-      .sale {
-        color: red;
-        span {
-          color: black;
-        }
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 0;
+    }
+    .sale {
+      color: red;
+      span {
+        color: black;
       }
       .delivery {
         border-radius: 4px;
@@ -424,18 +422,6 @@
         background: rgb(241, 243, 246);
         width: 70px;
         text-align: center;
-      }
-      .heartDiv {
-        position: absolute;
-        bottom: 115px;
-        right: 10px;
-        width: 30px;
-        height: 30px;
-        z-index: 100;
-        .heart {
-          width: 100%;
-          height: 100%;
-        }
       }
     }
   }

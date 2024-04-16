@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { activeHeart, deactiveHeart } from '../store/heartReducer';
 import { HeartState } from '../component/interface';
-interface item {
+interface Item {
   id: number;
   body: string;
   img: string;
@@ -21,11 +21,12 @@ interface item {
 }
 
 export default function HouseGift() {
-  const [items, setItems] = useState<item[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const totalPages = Math.ceil(2);
   const [navigate2State, setNavigate2State] = useState<string>('viewAll');
+  const navigator = useNavigate();
 
   const all = () => {
     setNavigate2State('viewAll');
@@ -52,7 +53,6 @@ export default function HouseGift() {
       try {
         const response = await axios.get('http://localhost:5000/api/item/gift');
         const { gift_item } = response.data;
-
         setItems(gift_item);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -71,7 +71,7 @@ export default function HouseGift() {
     }
   };
   /////////////////////////////////////////option///////////////////////////////////////////////
-  const sortGoods = (option: string): item[] => {
+  const sortGoods = (option: string): Item[] => {
     if (option === '리뷰 많은 수') {
       return items.slice().sort((a, b) => (b.review || 0) - (a.review || 0));
     } else if (option === '리뷰 적은 수') {
@@ -139,6 +139,22 @@ export default function HouseGift() {
     } else {
       alert('로그인 후 이용가능 합니다.');
       navigate('/login');
+    }
+  };
+
+  ///////////////////////////////////////title 비교 해서 /all의 id 가져오기///////////////////////////////////////
+  const navigateToDetail = async (title: string) => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/item/all');
+      const { all_item } = response.data;
+      const foundItem = all_item.find((item: Item) => item.title === title);
+      if (foundItem) {
+        navigator(`/GoodIssue/${foundItem.id}`);
+      } else {
+        console.error('Item not found');
+      }
+    } catch (error) {
+      console.error('Error fetching all items:', error);
     }
   };
 
@@ -214,57 +230,57 @@ export default function HouseGift() {
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <div className="imageBox">
-                          <img
-                            className="toolImg"
-                            src={item.img}
-                            alt={item.title}
-                          />
-                          <img
-                            className="heart"
-                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
-                            src={
-                              localStorage.getItem('oneroomToken')
-                                ? heart.find(
-                                    (product: HeartState) =>
-                                      product.title === item.title
-                                  )?.heartStatus
-                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
-                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => navigateToDetail(item.title)}
+                  >
+                    <div>
+                      <div className="imageBox">
+                        <img
+                          className="toolImg"
+                          src={item.img}
+                          alt={item.title}
+                        />
+                        <img
+                          className="heart"
+                          // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                          src={
+                            localStorage.getItem('oneroomToken')
+                              ? heart.find(
+                                  (product: HeartState) =>
+                                    product.title === item.title
+                                )?.heartStatus
+                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
                                 : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
-                            }
-                            alt="하트 이미지"
-                            onClick={(e) => {
-                              handleHeart(e, item.title);
-                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
-                            }}
-                          />
+                              : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                          }
+                          alt="하트 이미지"
+                          onClick={(e) => {
+                            handleHeart(e, item.title);
+                            // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                          }}
+                        />
+                      </div>
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
                         </div>
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>
@@ -276,57 +292,57 @@ export default function HouseGift() {
                   currentPage * itemsPerPage
                 )
                 .map((item) => (
-                  <div key={item.id} className="AllImgDiv">
-                    <a href="/">
-                      <div>
-                        <div className="imageBox">
-                          <img
-                            className="toolImg"
-                            src={item.img}
-                            alt={item.title}
-                          />
-                          <img
-                            className="heart"
-                            // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
-                            src={
-                              localStorage.getItem('oneroomToken')
-                                ? heart.find(
-                                    (product: HeartState) =>
-                                      product.title === item.title
-                                  )?.heartStatus
-                                  ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
-                                  : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                  <div
+                    key={item.id}
+                    className="AllImgDiv"
+                    onClick={() => navigateToDetail(item.title)}
+                  >
+                    <div>
+                      <div className="imageBox">
+                        <img
+                          className="toolImg"
+                          src={item.img}
+                          alt={item.title}
+                        />
+                        <img
+                          className="heart"
+                          // src도 현재 상품이 Store 상의 상태를 보고 바꿔줘야함(빈하트, 하트) / 그렇게 되면 item ishearted삭제해야함
+                          src={
+                            localStorage.getItem('oneroomToken')
+                              ? heart.find(
+                                  (product: HeartState) =>
+                                    product.title === item.title
+                                )?.heartStatus
+                                ? 'https://m.oneroommaking.com/web/upload/icon_202008221349389500.png'
                                 : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
-                            }
-                            alt="하트 이미지"
-                            onClick={(e) => {
-                              handleHeart(e, item.title);
-                              // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
-                            }}
-                          />
+                              : 'https://m.oneroommaking.com/_sp/image/mobile/bookmark_h.png'
+                          }
+                          alt="하트 이미지"
+                          onClick={(e) => {
+                            handleHeart(e, item.title);
+                            // 하트 클릭 시, Store 상태 변경 + Store 상태에 맞는 찜한 상품 페이지 상태 변경 + Store 상태에 맞는 이미지 변경
+                          }}
+                        />
+                      </div>
+                      <div className="titleDiv">
+                        <h4>{item.title}</h4>
+                        <div className="allPrice">
+                          <div className="allSale">{item.sale}</div>
+                          {item.price.toLocaleString()}원
                         </div>
-                        <div className="titleDiv">
-                          <h4>{item.title}</h4>
-                          <div className="allPrice">
-                            <div className="allSale">{item.sale}</div>
-                            {item.price.toLocaleString()}원
-                          </div>
-                          <div className="allBody">{item.body}</div>
-                          <div style={{ display: 'flex' }}>
-                            {item.delivery && (
-                              <div className="allDelivery">{item.delivery}</div>
-                            )}
-                            {item.review && (
-                              <a href="/">
-                                <div className="allReview">
-                                  리뷰 : {item.review}
-                                </div>
-                              </a>
-                            )}
-                          </div>
+                        <div className="allBody">{item.body}</div>
+                        <div style={{ display: 'flex' }}>
+                          {item.delivery && (
+                            <div className="allDelivery">{item.delivery}</div>
+                          )}
+                          {item.review && (
+                            <div className="allReview">
+                              리뷰 : {item.review}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   </div>
                 ))}
             </div>

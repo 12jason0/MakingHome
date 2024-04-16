@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import Pagination from 'react-js-pagination';
 import axios from 'axios';
 import './css/all.scss';
@@ -33,10 +33,19 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
   const navigate = useNavigate();
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const itemsPerPage = 10;
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<string>(''); // 선택된 카테고리 상태를 정의합니다.
+  const handlePageChange = (pageNumber: number): void => {
+    setCurrentPage(pageNumber);
+    scrollToTop();
+  };
+  const sliceItems = (items: Item[], currentPage: number): Item[] => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  };
 
   useEffect(() => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -104,11 +113,6 @@ const Good: React.FC<AllProps> = ({ Categoryitems }: AllProps) => {
     } else {
       return items;
     }
-  };
-
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    scrollToTop();
   };
 
   const scrollToTop = () => {
