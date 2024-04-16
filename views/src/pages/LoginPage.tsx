@@ -125,21 +125,21 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
     console.log(data);
     // 로그인
     // 로컬용 api 호출
-    // const result = async () => {
-    //   const res = await axios.post('http://localhost:5000/api/login', {
-    //     userInput: {
-    //       userId: data.userId,
-    //       password: data.userPw,
-    //     },
-    //   });
-    // 배포용 api 호출
     const result = async () => {
-      const res = await axios.post('http://54.180.183.108/api/login', {
+      const res = await axios.post('http://localhost:5000/api/login', {
         userInput: {
           userId: data.userId,
           password: data.userPw,
         },
       });
+      // 배포용 api 호출
+      // const result = async () => {
+      //   const res = await axios.post('http://54.180.183.108/api/login', {
+      //     userInput: {
+      //       userId: data.userId,
+      //       password: data.userPw,
+      //     },
+      //   });
       const { success, message, token, userId } = res.data;
       console.log('resdata', res.data);
       const item: serverData = res.data.item;
