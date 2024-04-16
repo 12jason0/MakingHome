@@ -151,17 +151,17 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
         Cookie.set('oneroomUsername', userId, { expires: 1 });
         // 로그인 시 사용자 찜 목록 리스트로 Store 초기화
         // 로컬용 api
-        // const res = await axios.get('http://localhost:5000/user/itemView', {
-        //   headers: {
-        //     Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-        //   },
-        // });
-        // 배포용 api
-        const res = await axios.get('http://54.180.183.108/user/itemView', {
+        const res = await axios.get('http://localhost:5000/user/itemView', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
           },
         });
+        // 배포용 api
+        // const res = await axios.get('http://54.180.183.108/user/itemView', {
+        //   headers: {
+        //     Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+        //   },
+        // });
         const { viewItem } = res.data;
         dispatch(
           userHeart({
@@ -216,7 +216,7 @@ export default function LoginPage({ setShowHeader }: RegisterPageProps) {
         ></img>
       )}
       <br />
-      <hr />
+
       <form onSubmit={handleSubmit(onValid, onInValid)} className="loginForm">
         {localStorage.getItem('oneroomToken') ||
         localStorage.getItem('Token') ? (

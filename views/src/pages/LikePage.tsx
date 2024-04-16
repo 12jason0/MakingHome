@@ -10,16 +10,20 @@ export default function LikePage() {
   const [items, setItems] = useState<Item[]>([]);
   const [userName, setUserName] = useState<string>('');
   useEffect(() => {
-    const getUserName = async () => {
-      const res = await axios.get('http://localhost:5000/user/name', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
-        },
-      });
-      const { username } = res.data;
-      setUserName(username);
-    };
-    getUserName();
+    if (localStorage.getItem('oneroomToken')) {
+      const getUserName = async () => {
+        const res = await axios.get('http://localhost:5000/user/name', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('oneroomToken')}`,
+          },
+        });
+        const { username } = res.data;
+        setUserName(username);
+      };
+      getUserName();
+    } else {
+      navigate('/login');
+    }
   }, []);
   // useEffect 로 페이지 열릴 시, user가 heart를 누른 상태에 대한 녀석들만 가지고온다. 로그인해야함
   const heart = useSelector((store: any) => store.heartStateA);
