@@ -7,7 +7,7 @@
 
 # 원룸 만들기
 
-<p align="center">
+<p>
   <br>
   <img src="./images/logo.png">
   <br>
