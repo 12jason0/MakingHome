@@ -55,10 +55,6 @@ GIF Images
 
 <br>
 
-## 라이센스
-
-MIT &copy; [NoHack](mailto:lbjp114@gmail.com)
-
 <!-- Stack Icon Refernces -->
 
 [js]: /images/javascript.svg
