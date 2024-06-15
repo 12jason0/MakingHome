@@ -5,11 +5,11 @@
 2. 상세 페이지 수정
 3. 상품 구매 시 자동으로 적립금액 추가
 
-# 프로젝트 이름
+# 원룸 만들기
 
 <p align="center">
   <br>
-  <img src="./images/common/logo-sample.jpeg">
+  <img src="./images/logo.png">
   <br>
 </p>
 
